@@ -1,0 +1,14 @@
+module.exports = {
+	useTabs: true,
+	singleQuote: true,
+	semi: true,
+	trailingComma: 'es5',
+	printWidth: 100,
+	plugins: ['prettier-plugin-astro'],
+	overrides: [
+		{
+			files: '*.astro',
+			options: { parser: 'astro' },
+		},
+	],
+};

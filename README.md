@@ -24,10 +24,12 @@ npm run preview
 ## Deployment (Cloudflare Pages)
 
 Build settings:
+
 - Build command: `npm ci && npm run build`
 - Output directory: `dist`
 
 Environment variables:
+
 - `RESEND_API_KEY`
 - `RESEND_FROM_EMAIL` (default `hello@liewcf.org`)
 - `CONTACT_TO_EMAIL` (default `liewcf@gmail.com`)

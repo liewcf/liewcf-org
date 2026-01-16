@@ -11,6 +11,7 @@ tags:
 I like to start by listing the steps people already take, then removing the most painful ones. The best features are the ones that feel obvious in hindsight.
 
 ## What I look for
+
 - Repeatable tasks that should be one click.
 - Moments where context gets lost.
 - Places where clarity is worth more than extra features.

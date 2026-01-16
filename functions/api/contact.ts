@@ -7,16 +7,9 @@ interface Env {
 
 const EMAIL_SUBJECT_PREFIX = '[LiewCF.ORG] ';
 
-const isValidEmail = (value: string) =>
-	/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+const isValidEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 
-export const onRequestPost = async ({
-	request,
-	env,
-}: {
-	request: Request;
-	env: Env;
-}) => {
+export const onRequestPost = async ({ request, env }: { request: Request; env: Env }) => {
 	const formData = await request.formData();
 	const name = String(formData.get('name') || '').trim();
 	const email = String(formData.get('email') || '').trim();
@@ -30,11 +23,17 @@ export const onRequestPost = async ({
 	}
 
 	if (!name || !email || !subject || !message) {
-		return Response.json({ ok: false, error: 'Please complete all required fields.' }, { status: 400 });
+		return Response.json(
+			{ ok: false, error: 'Please complete all required fields.' },
+			{ status: 400 }
+		);
 	}
 
 	if (!isValidEmail(email)) {
-		return Response.json({ ok: false, error: 'Please provide a valid email address.' }, { status: 400 });
+		return Response.json(
+			{ ok: false, error: 'Please provide a valid email address.' },
+			{ status: 400 }
+		);
 	}
 
 	if (!env.TURNSTILE_SECRET_KEY) {
@@ -49,7 +48,7 @@ export const onRequestPost = async ({
 				secret: env.TURNSTILE_SECRET_KEY,
 				response: turnstileToken,
 			}),
-		},
+		}
 	);
 
 	if (!turnstileResponse.ok) {
@@ -70,13 +69,9 @@ export const onRequestPost = async ({
 	const toEmail = env.CONTACT_TO_EMAIL || 'liewcf@gmail.com';
 	const safeSubject = `${EMAIL_SUBJECT_PREFIX}${subject}`;
 
-	const emailBody = [
-		`Name: ${name}`,
-		`Email: ${email}`,
-		`Subject: ${subject}`,
-		'',
-		message,
-	].join('\n');
+	const emailBody = [`Name: ${name}`, `Email: ${email}`, `Subject: ${subject}`, '', message].join(
+		'\n'
+	);
 
 	const resendResponse = await fetch('https://api.resend.com/emails', {
 		method: 'POST',

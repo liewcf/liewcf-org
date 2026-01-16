@@ -12,12 +12,15 @@ repoUrl: https://github.com/liewcf/enjinmel-smtp
 ---
 
 ## Overview
+
 Enjinmel SMTP replaces the default WordPress mail flow with Enginemailer’s REST API, making email delivery more reliable and easier to monitor.
 
 ## Highlights
+
 - Simple configuration and onboarding.
 - Built to improve deliverability and diagnostics.
 - Lightweight plugin footprint for production sites.
 
 ## Links
+
 - GitHub: https://github.com/liewcf/enjinmel-smtp

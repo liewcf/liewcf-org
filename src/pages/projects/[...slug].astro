@@ -38,16 +38,14 @@ const { Content } = await render(entry);
 								{entry.data.tags.map((t) => <Pill>{t}</Pill>)}
 							</div>
 							<p class="description">{entry.data.description}</p>
-							{(entry.data.repoUrl || entry.data.liveUrl) && (
-								<div class="links">
-									{entry.data.repoUrl && (
-										<a href={entry.data.repoUrl}>GitHub</a>
-									)}
-									{entry.data.liveUrl && (
-										<a href={entry.data.liveUrl}>Live Site</a>
-									)}
-								</div>
-							)}
+							{
+								(entry.data.repoUrl || entry.data.liveUrl) && (
+									<div class="links">
+										{entry.data.repoUrl && <a href={entry.data.repoUrl}>GitHub</a>}
+										{entry.data.liveUrl && <a href={entry.data.liveUrl}>Live Site</a>}
+									</div>
+								)
+							}
 						</div>
 					</Hero>
 				</div>

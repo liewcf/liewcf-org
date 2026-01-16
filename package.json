@@ -1,14 +1,35 @@
 {
-  "name": "liewcf-org",
-  "type": "module",
-  "version": "0.0.1",
-  "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
-  },
-  "dependencies": {
-    "astro": "^5.16.9"
-  }
+	"name": "liewcf-org",
+	"type": "module",
+	"version": "0.0.1",
+	"scripts": {
+		"dev": "astro dev",
+		"build": "astro build",
+		"preview": "astro preview",
+		"astro": "astro",
+		"lint": "eslint .",
+		"lint:fix": "eslint . --fix",
+		"format": "prettier . --write",
+		"format:check": "prettier . --check",
+		"typecheck": "astro check",
+		"test:e2e": "playwright test",
+		"test:e2e:ui": "playwright test --ui",
+		"test:e2e:debug": "playwright test --debug"
+	},
+	"dependencies": {
+		"astro": "^5.16.9"
+	},
+	"devDependencies": {
+		"@astrojs/check": "^0.9.6",
+		"@eslint/compat": "^2.0.1",
+		"@playwright/test": "^1.57.0",
+		"@typescript-eslint/eslint-plugin": "^8.53.0",
+		"@typescript-eslint/parser": "^8.53.0",
+		"eslint": "^9.39.2",
+		"eslint-config-prettier": "^10.1.8",
+		"eslint-plugin-astro": "^1.5.0",
+		"prettier": "^3.8.0",
+		"prettier-plugin-astro": "^0.14.1",
+		"typescript": "^5.9.3"
+	}
 }

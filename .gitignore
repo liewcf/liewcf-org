@@ -25,5 +25,12 @@ pnpm-debug.log*
 # IDE
 .idea/
 
+# Local notes
+notes/
+
+# Playwright
+playwright-report/
+test-results/
+
 # OS
 .DS_Store

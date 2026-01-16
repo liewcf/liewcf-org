@@ -12,12 +12,15 @@ repoUrl: https://github.com/liewcf/public-draft-share
 ---
 
 ## Overview
+
 Public Draft Share generates secure preview links so collaborators can review drafts without logging in.
 
 ## Highlights
+
 - Share links without exposing admin access.
 - Simple toggles for generating and revoking previews.
 - Built for editorial workflows and client reviews.
 
 ## Links
+
 - GitHub: https://github.com/liewcf/public-draft-share

@@ -5,14 +5,18 @@ import Hero from '../../components/Hero.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
+	(a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
 );
 ---
 
 <BaseLayout title="Blog | Liew CheonFong" description="Notes on building and shipping">
 	<div class="stack gap-20">
 		<main class="wrapper stack gap-8">
-			<Hero title="Blog" tagline="Notes on building, shipping, and staying focused." align="start" />
+			<Hero
+				title="Blog"
+				tagline="Notes on building, shipping, and staying focused."
+				align="start"
+			/>
 			<ul class="post-list">
 				{
 					posts.map((post) => (
