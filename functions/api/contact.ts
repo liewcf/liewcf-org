@@ -98,10 +98,6 @@ export const onRequestPost = async ({ request, env }: { request: Request; env: E
 	);
 
 	if (!turnstileResponse.ok) {
-		console.error('Turnstile verify request failed.', {
-			status: turnstileResponse.status,
-			statusText: turnstileResponse.statusText,
-		});
 		return Response.json({ ok: false, error: 'Turnstile verification failed.' }, { status: 502 });
 	}
 
@@ -109,10 +105,6 @@ export const onRequestPost = async ({ request, env }: { request: Request; env: E
 
 	if (!turnstileResult.success) {
 		const errorCodes = (turnstileResult['error-codes'] || []).filter((code) => Boolean(code));
-		console.error('Turnstile verification failed.', {
-			errorCodes,
-			hostname: turnstileResult.hostname,
-		});
 
 		const { status, message } = formatTurnstileError(errorCodes);
 		return Response.json({ ok: false, error: message }, { status });
