@@ -1,8 +1,9 @@
 ---
 title: Starting With Focus
 publishDate: 2026-01-10 00:00:00
-description: |
+excerpt: |
   A simple checklist I use to keep small projects moving without overengineering.
+isFeatured: true
 tags:
   - Workflow
   - Productivity

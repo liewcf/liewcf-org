@@ -1,143 +1,164 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Hero from '../components/Hero.astro';
 ---
 
-<BaseLayout title="Contact | Liew CheonFong" description="Send a message to Liew CheonFong">
-	<div class="stack gap-20">
-		<main class="wrapper stack gap-8">
-			<Hero title="Contact" tagline="Send a message and I’ll get back to you." align="start" />
+<BaseLayout title="Contact" description="Send a message to Liew CheonFong" showHeader={false}>
+	<article class="mb-16 sm:mb-24">
+		<header class="mb-8">
+			<h1 class="font-serif text-3xl leading-tight font-medium sm:text-5xl sm:leading-tight">
+				Contact
+			</h1>
+			<p class="mt-4 text-sm sm:text-base">
+				Send a message and I’ll get back to you.
+			</p>
+		</header>
 
-			<form id="contact-form" class="contact-form">
-				<div class="field">
-					<label for="name">Name</label>
-					<input id="name" name="name" type="text" autocomplete="name" required />
-				</div>
-				<div class="field">
-					<label for="email">Email</label>
-					<input id="email" name="email" type="email" autocomplete="email" required />
-				</div>
-				<div class="field">
-					<label for="subject">Subject</label>
-					<input id="subject" name="subject" type="text" required />
-				</div>
-				<div class="field">
-					<label for="message">Message</label>
-					<textarea id="message" name="message" rows="6" required></textarea>
-				</div>
+		<form id="contact-form" class="flex max-w-xl flex-col gap-6">
+			<div class="flex flex-col gap-2">
+				<label class="font-serif" for="name">Name</label>
+				<input
+					id="name"
+					name="name"
+					type="text"
+					autocomplete="name"
+					required
+					class="border-main text-main placeholder:text-main/60 h-10 rounded-full border border-dashed bg-transparent px-5 text-sm focus:outline-hidden"
+				/>
+			</div>
+			<div class="flex flex-col gap-2">
+				<label class="font-serif" for="email">Email</label>
+				<input
+					id="email"
+					name="email"
+					type="email"
+					autocomplete="email"
+					required
+					class="border-main text-main placeholder:text-main/60 h-10 rounded-full border border-dashed bg-transparent px-5 text-sm focus:outline-hidden"
+				/>
+			</div>
+			<div class="flex flex-col gap-2">
+				<label class="font-serif" for="subject">Subject</label>
+				<input
+					id="subject"
+					name="subject"
+					type="text"
+					required
+					class="border-main text-main placeholder:text-main/60 h-10 rounded-full border border-dashed bg-transparent px-5 text-sm focus:outline-hidden"
+				/>
+			</div>
+			<div class="flex flex-col gap-2">
+				<label class="font-serif" for="message">Message</label>
+				<textarea
+					id="message"
+					name="message"
+					rows="6"
+					required
+					class="border-main text-main placeholder:text-main/60 min-h-40 rounded-3xl border border-dashed bg-transparent px-5 py-3 text-sm focus:outline-hidden"
+				/>
+			</div>
 
-				<input class="honeypot" name="company" type="text" tabindex="-1" autocomplete="off" />
+			<input class="hidden" name="company" type="text" tabindex="-1" autocomplete="off" />
 
-				<div class="turnstile">
-					<div class="cf-turnstile" data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY}></div>
-				</div>
+			<div>
+				<div
+					id="turnstile"
+					class="cf-turnstile"
+					data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY}
+				/>
+			</div>
 
-				<button type="submit" class="submit-button">Send Message</button>
-				<p id="form-status" class="status" aria-live="polite"></p>
-			</form>
-		</main>
-	</div>
-</BaseLayout>
+			<div class="flex flex-col gap-3">
+				<button
+					type="submit"
+					class="border-main inline-flex h-10 w-fit items-center justify-center rounded-full border border-dashed px-6 text-sm font-medium"
+				>
+					Send Message
+				</button>
+				<p id="form-status" class="text-sm" aria-live="polite"></p>
+			</div>
+		</form>
+	</article>
 
-<script is:inline>
-	const form = document.getElementById('contact-form');
-	const status = document.getElementById('form-status');
+	<script is:inline>
+		const TURNSTILE_SRC = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
 
-	if (form) {
-		form.addEventListener('submit', async (event) => {
-			event.preventDefault();
-			status.textContent = 'Sending...';
+		const ensureTurnstileLoaded = () => {
+			if (window.turnstile) return Promise.resolve();
 
-			const formData = new FormData(form);
-			try {
-				const response = await fetch('/api/contact', {
-					method: 'POST',
-					body: formData,
-				});
-				const result = await response.json().catch(() => ({}));
-
-				if (response.ok) {
-					status.textContent = 'Thanks! Your message has been sent.';
-					form.reset();
-					if (window.turnstile) {
-						window.turnstile.reset();
-					}
-				} else {
-					status.textContent = result?.error ?? 'Something went wrong. Please try again.';
+			return new Promise((resolve, reject) => {
+				const existing = document.querySelector(`script[src="${TURNSTILE_SRC}"]`);
+				if (existing) {
+					existing.addEventListener('load', () => resolve());
+					existing.addEventListener('error', () => reject());
+					return;
 				}
+
+				const script = document.createElement('script');
+				script.src = TURNSTILE_SRC;
+				script.async = true;
+				script.defer = true;
+				script.addEventListener('load', () => resolve());
+				script.addEventListener('error', () => reject());
+				document.head.appendChild(script);
+			});
+		};
+
+		const initTurnstile = async () => {
+			const container = document.getElementById('turnstile');
+			if (!(container instanceof HTMLElement)) return;
+			if (container.dataset.rendered === 'true') return;
+
+			try {
+				await ensureTurnstileLoaded();
 			} catch (error) {
-				status.textContent = 'Unable to send right now. Please try again later.';
+				return;
 			}
+
+			const sitekey = container.getAttribute('data-sitekey') || '';
+			if (!sitekey) return;
+			if (!window.turnstile?.render) return;
+
+			window.turnstile.render(container, { sitekey });
+			container.dataset.rendered = 'true';
+		};
+
+		const attachContactHandler = () => {
+			const form = document.getElementById('contact-form');
+			const status = document.getElementById('form-status');
+			if (!(form instanceof HTMLFormElement) || !(status instanceof HTMLElement)) return;
+			if (form.dataset.bound === 'true') return;
+			form.dataset.bound = 'true';
+
+			form.addEventListener('submit', async (event) => {
+				event.preventDefault();
+				status.textContent = 'Sending...';
+
+				const formData = new FormData(form);
+				try {
+					const response = await fetch('/api/contact', {
+						method: 'POST',
+						body: formData,
+					});
+					const result = await response.json().catch(() => ({}));
+
+					if (response.ok) {
+						status.textContent = 'Thanks! Your message has been sent.';
+						form.reset();
+						if (window.turnstile) {
+							window.turnstile.reset();
+						}
+					} else {
+						status.textContent = result?.error ?? 'Something went wrong. Please try again.';
+					}
+				} catch (error) {
+					status.textContent = 'Unable to send right now. Please try again later.';
+				}
+			});
+		};
+
+		document.addEventListener('astro:page-load', () => {
+			initTurnstile();
+			attachContactHandler();
 		});
-	}
-</script>
-
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer is:inline></script>
-
-<style>
-	.contact-form {
-		display: grid;
-		gap: 1.5rem;
-		max-width: 40rem;
-	}
-
-	.field {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-		color: var(--gray-200);
-	}
-
-	label {
-		font-family: var(--font-brand);
-		color: var(--gray-0);
-	}
-
-	input,
-	textarea {
-		border-radius: 0.75rem;
-		border: 1px solid var(--gray-800);
-		background: var(--gray-999);
-		padding: 0.75rem 1rem;
-		color: var(--gray-0);
-		font: inherit;
-		box-shadow: var(--shadow-sm);
-	}
-
-	input:focus,
-	textarea:focus {
-		outline: 2px solid var(--accent-regular);
-		outline-offset: 2px;
-	}
-
-	.honeypot {
-		display: none;
-	}
-
-	.turnstile {
-		display: flex;
-		justify-content: flex-start;
-	}
-
-	.submit-button {
-		align-self: flex-start;
-		padding: 0.75rem 2.5rem;
-		border: none;
-		border-radius: 999rem;
-		background: var(--gradient-accent-orange);
-		color: var(--accent-text-over);
-		font-family: var(--font-brand);
-		font-size: var(--text-lg);
-		box-shadow: var(--shadow-md);
-		cursor: pointer;
-	}
-
-	.submit-button:hover {
-		box-shadow: var(--shadow-lg);
-	}
-
-	.status {
-		min-height: 1.5rem;
-		color: var(--gray-300);
-	}
-</style>
+	</script>
+</BaseLayout>

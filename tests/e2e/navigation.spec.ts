@@ -7,7 +7,7 @@ test('home page loads and shows hero heading', async ({ page }) => {
 
 test('navigate to about page', async ({ page }) => {
 	await page.goto('/');
-	await page.getByRole('navigation').getByRole('link', { name: 'About' }).click();
+	await page.getByRole('contentinfo').getByRole('link', { name: 'About' }).click();
 	await expect(page).toHaveURL(/\/about\/?$/);
 	await expect(page.getByRole('heading', { name: 'About' })).toBeVisible();
 });
@@ -21,7 +21,7 @@ test('navigate to projects page', async ({ page }) => {
 
 test('navigate to contact page', async ({ page }) => {
 	await page.goto('/');
-	await page.getByRole('navigation').getByRole('link', { name: 'Contact' }).click();
+	await page.getByRole('navigation', { name: 'Primary navigation' }).getByRole('link', { name: 'Contact' }).click();
 	await expect(page).toHaveURL(/\/contact\/?$/);
 	await expect(page.getByRole('heading', { name: 'Contact' })).toBeVisible();
 });

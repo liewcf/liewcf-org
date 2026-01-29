@@ -1,14 +1,9 @@
 ---
 title: Enjinmel SMTP
 publishDate: 2026-01-15 00:00:00
-img: /assets/stock-1.jpg
-img_alt: Placeholder preview for Enjinmel SMTP
 description: |
   Replace the default WordPress email sender with the Enginemailer REST API for stronger deliverability.
-tags:
-  - WordPress
-  - Email
-repoUrl: https://github.com/liewcf/enjinmel-smtp
+isFeatured: true
 ---
 
 ## Overview

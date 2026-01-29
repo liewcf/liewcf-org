@@ -1,14 +1,9 @@
 ---
 title: Frens Edge Switch
 publishDate: 2026-01-13 00:00:00
-img: /assets/stock-1.jpg
-img_alt: Placeholder preview for Frens Edge Switch
 description: |
   Chrome/Chromium extension that opens the current tab or link in Microsoft Edge.
-tags:
-  - Browser Extension
-  - Productivity
-repoUrl: https://github.com/liewcf/frens-edge-switch
+isFeatured: true
 ---
 
 ## Overview

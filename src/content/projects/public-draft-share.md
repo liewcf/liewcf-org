@@ -1,14 +1,9 @@
 ---
 title: Public Draft Share
 publishDate: 2026-01-14 00:00:00
-img: /assets/stock-1.jpg
-img_alt: Placeholder preview for Public Draft Share
 description: |
   Share WordPress draft posts securely with one-time or private preview links.
-tags:
-  - WordPress
-  - Security
-repoUrl: https://github.com/liewcf/public-draft-share
+isFeatured: true
 ---
 
 ## Overview

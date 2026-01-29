@@ -1,8 +1,18 @@
 ---
-import Hero from '../components/Hero.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Not Found" description="404 Error — this page was not found">
-	<Hero title="Page Not Found" tagline="Not found" />
+<BaseLayout title="404" description="Page not found" showHeader={false}>
+	<article class="mb-16 sm:mb-24">
+		<header class="mb-8">
+			<h1 class="font-serif text-3xl leading-tight font-medium sm:text-5xl sm:leading-tight">
+				Page not found
+			</h1>
+			<p class="mt-4 text-sm sm:text-base">
+				The page you’re looking for doesn’t exist.
+			</p>
+		</header>
+		<a class="font-serif hover:underline hover:underline-offset-2" href="/">Go back home</a>
+	</article>
 </BaseLayout>
+

@@ -2,6 +2,8 @@
 
 Personal site and portfolio built with Astro.
 
+Theme: based on the Dante Astro Theme by Just Good UI (GPL-3.0). See `LICENSE`.
+
 ## Development
 
 ```sh

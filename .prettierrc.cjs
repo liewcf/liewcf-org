@@ -4,7 +4,7 @@ module.exports = {
 	semi: true,
 	trailingComma: 'es5',
 	printWidth: 100,
-	plugins: ['prettier-plugin-astro'],
+	plugins: ['prettier-plugin-astro', 'prettier-plugin-tailwindcss'],
 	overrides: [
 		{
 			files: '*.astro',

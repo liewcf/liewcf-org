@@ -1,8 +1,9 @@
 ---
 title: Building for Real Users
 publishDate: 2026-01-05 00:00:00
-description: |
+excerpt: |
   A quick reminder to ship features that solve the daily friction points.
+isFeatured: true
 tags:
   - Product
   - UX
