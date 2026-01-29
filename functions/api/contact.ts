@@ -9,6 +9,38 @@ const EMAIL_SUBJECT_PREFIX = '[LiewCF.ORG] ';
 
 const isValidEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 
+type TurnstileVerifyResult = {
+	success?: boolean;
+	'error-codes'?: string[];
+	hostname?: string;
+	action?: string;
+	cdata?: string;
+};
+
+const formatTurnstileError = (errorCodes: string[]): { status: number; message: string } => {
+	if (errorCodes.includes('missing-input-response')) {
+		return { status: 400, message: 'Please complete the Turnstile challenge and try again.' };
+	}
+
+	if (errorCodes.includes('timeout-or-duplicate')) {
+		return { status: 400, message: 'Turnstile token expired. Please try again.' };
+	}
+
+	if (errorCodes.includes('bad-hostname')) {
+		return {
+			status: 400,
+			message:
+				'Turnstile hostname mismatch. If you are testing a preview URL, add it to the widget’s allowed hostnames.',
+		};
+	}
+
+	if (errorCodes.includes('invalid-input-secret') || errorCodes.includes('missing-input-secret')) {
+		return { status: 500, message: 'Turnstile configuration error.' };
+	}
+
+	return { status: 400, message: 'Turnstile verification failed.' };
+};
+
 export const onRequestPost = async ({ request, env }: { request: Request; env: Env }) => {
 	const formData = await request.formData();
 	const name = String(formData.get('name') || '').trim();
@@ -40,25 +72,50 @@ export const onRequestPost = async ({ request, env }: { request: Request; env: E
 		return Response.json({ ok: false, error: 'Missing Turnstile configuration.' }, { status: 500 });
 	}
 
+	if (!turnstileToken) {
+		return Response.json(
+			{ ok: false, error: 'Please complete the Turnstile challenge and try again.' },
+			{ status: 400 }
+		);
+	}
+
+	const remoteIp =
+		request.headers.get('cf-connecting-ip') || request.headers.get('CF-Connecting-IP') || '';
+
 	const turnstileResponse = await fetch(
 		'https://challenges.cloudflare.com/turnstile/v0/siteverify',
 		{
 			method: 'POST',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+			},
 			body: new URLSearchParams({
 				secret: env.TURNSTILE_SECRET_KEY,
 				response: turnstileToken,
+				...(remoteIp ? { remoteip: remoteIp } : {}),
 			}),
 		}
 	);
 
 	if (!turnstileResponse.ok) {
-		return Response.json({ ok: false, error: 'Turnstile verification failed.' }, { status: 400 });
+		console.error('Turnstile verify request failed.', {
+			status: turnstileResponse.status,
+			statusText: turnstileResponse.statusText,
+		});
+		return Response.json({ ok: false, error: 'Turnstile verification failed.' }, { status: 502 });
 	}
 
-	const turnstileResult = (await turnstileResponse.json()) as { success?: boolean };
+	const turnstileResult = (await turnstileResponse.json()) as TurnstileVerifyResult;
 
 	if (!turnstileResult.success) {
-		return Response.json({ ok: false, error: 'Turnstile verification failed.' }, { status: 400 });
+		const errorCodes = (turnstileResult['error-codes'] || []).filter((code) => Boolean(code));
+		console.error('Turnstile verification failed.', {
+			errorCodes,
+			hostname: turnstileResult.hostname,
+		});
+
+		const { status, message } = formatTurnstileError(errorCodes);
+		return Response.json({ ok: false, error: message }, { status });
 	}
 
 	if (!env.RESEND_API_KEY) {

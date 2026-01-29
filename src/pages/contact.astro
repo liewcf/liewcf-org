@@ -82,6 +82,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 	<script is:inline>
 		const TURNSTILE_SRC = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
 
+		let turnstileToken = '';
+		let turnstileWidgetId = null;
+
 		const ensureTurnstileLoaded = () => {
 			if (window.turnstile) return Promise.resolve();
 
@@ -118,7 +121,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 			if (!sitekey) return;
 			if (!window.turnstile?.render) return;
 
-			window.turnstile.render(container, { sitekey });
+			turnstileWidgetId = window.turnstile.render(container, {
+				sitekey,
+				callback: (token) => {
+					turnstileToken = String(token || '');
+				},
+				'expired-callback': () => {
+					turnstileToken = '';
+				},
+				'error-callback': () => {
+					turnstileToken = '';
+				},
+			});
 			container.dataset.rendered = 'true';
 		};
 
@@ -134,6 +148,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 				status.textContent = 'Sending...';
 
 				const formData = new FormData(form);
+				const existingToken = String(formData.get('cf-turnstile-response') || '').trim();
+				if (!existingToken && turnstileToken) {
+					formData.set('cf-turnstile-response', turnstileToken);
+				}
+
+				const finalToken = String(formData.get('cf-turnstile-response') || '').trim();
+				if (!finalToken) {
+					status.textContent = 'Please complete the Turnstile challenge and try again.';
+					return;
+				}
+
 				try {
 					const response = await fetch('/api/contact', {
 						method: 'POST',
@@ -144,11 +169,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 					if (response.ok) {
 						status.textContent = 'Thanks! Your message has been sent.';
 						form.reset();
-						if (window.turnstile) {
-							window.turnstile.reset();
-						}
+						turnstileToken = '';
+						if (window.turnstile && turnstileWidgetId !== null) window.turnstile.reset(turnstileWidgetId);
 					} else {
 						status.textContent = result?.error ?? 'Something went wrong. Please try again.';
+						if (String(result?.error || '').toLowerCase().includes('turnstile')) {
+							turnstileToken = '';
+							if (window.turnstile && turnstileWidgetId !== null) window.turnstile.reset(turnstileWidgetId);
+						}
 					}
 				} catch (error) {
 					status.textContent = 'Unable to send right now. Please try again later.';
