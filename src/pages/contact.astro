@@ -61,7 +61,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 			<div>
 				<div
-					id="turnstile"
+					id="turnstile-container"
 					class="cf-turnstile"
 					data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY}
 				/>
@@ -79,19 +79,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 		</form>
 	</article>
 
-	<script is:inline>
-		const TURNSTILE_SRC = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+		<script is:inline>
+			const TURNSTILE_SRC = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
 
-		let turnstileToken = '';
-		let turnstileWidgetId = null;
+			let turnstileToken = '';
+			let turnstileWidgetId = null;
 
-		const ensureTurnstileLoaded = () => {
-			if (window.turnstile) return Promise.resolve();
+			const hasTurnstileApi = () => Boolean(window.turnstile && typeof window.turnstile.render === 'function');
 
-			return new Promise((resolve, reject) => {
-				const existing = document.querySelector(`script[src="${TURNSTILE_SRC}"]`);
-				if (existing) {
-					existing.addEventListener('load', () => resolve());
+			const ensureTurnstileLoaded = () => {
+				if (hasTurnstileApi()) return Promise.resolve();
+
+				return new Promise((resolve, reject) => {
+					const existing = document.querySelector(`script[src="${TURNSTILE_SRC}"]`);
+					if (existing) {
+						existing.addEventListener('load', () => resolve());
 					existing.addEventListener('error', () => reject());
 					return;
 				}
@@ -104,27 +106,27 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 				script.addEventListener('error', () => reject());
 				document.head.appendChild(script);
 			});
-		};
+			};
 
-		const initTurnstile = async () => {
-			const container = document.getElementById('turnstile');
-			if (!(container instanceof HTMLElement)) return;
-			if (container.dataset.rendered === 'true') return;
+			const initTurnstile = async () => {
+				const container = document.getElementById('turnstile-container');
+				if (!(container instanceof HTMLElement)) return;
+				if (container.dataset.rendered === 'true') return;
 
-			try {
-				await ensureTurnstileLoaded();
-			} catch (error) {
-				return;
-			}
+				try {
+					await ensureTurnstileLoaded();
+				} catch (error) {
+					return;
+				}
 
-			const sitekey = container.getAttribute('data-sitekey') || '';
-			if (!sitekey) return;
-			if (!window.turnstile?.render) return;
+				const sitekey = container.getAttribute('data-sitekey') || '';
+				if (!sitekey) return;
+				if (!hasTurnstileApi()) return;
 
-			turnstileWidgetId = window.turnstile.render(container, {
-				sitekey,
-				callback: (token) => {
-					turnstileToken = String(token || '');
+				turnstileWidgetId = window.turnstile.render(container, {
+					sitekey,
+					callback: (token) => {
+						turnstileToken = String(token || '');
 				},
 				'expired-callback': () => {
 					turnstileToken = '';
