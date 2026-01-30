@@ -1,0 +1,28 @@
+---
+import { getCollection } from 'astro:content';
+import Hero from '../components/Hero.astro';
+import ProjectPreview from '../components/ProjectPreview.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const projects = (await getCollection('projects')).sort(
+	(a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
+);
+---
+
+<BaseLayout title="Projects | Liew CheonFong" description="Selected projects by Liew CheonFong">
+	<div class="stack gap-20">
+		<main id="main-content" class="wrapper stack gap-8">
+			<Hero
+				title="Projects"
+				text="Featured projects and experiments I've shipped recently."
+			/>
+			<div class="flex flex-col gap-8">
+				{
+					projects.map((project) => (
+						<ProjectPreview project={project} />
+					))
+				}
+			</div>
+		</main>
+	</div>
+</BaseLayout>
