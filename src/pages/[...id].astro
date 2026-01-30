@@ -4,7 +4,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 export async function getStaticPaths() {
     const pages = await getCollection('pages');
-    return pages.map((page) => {
+    const reservedPaths = new Set(['about', 'blog', 'projects', 'contact', 'tags', 'rss.xml', '404']);
+    const routablePages = pages.filter((page) => !reservedPaths.has(page.id));
+    return routablePages.map((page) => {
         return {
             params: { id: page.id },
             props: { page }

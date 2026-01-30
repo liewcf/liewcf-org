@@ -9,7 +9,9 @@ import { sortItemsByDateDesc } from '../../utils/data-utils';
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
     const projects = (await getCollection('projects')).sort(sortItemsByDateDesc);
-    return paginate(projects, { pageSize: siteConfig.projectsPerPage || 6 });
+    const pageSize = siteConfig.projectsPerPage || 6;
+    const pages = paginate(projects, { pageSize });
+    return pages.slice(1);
 }
 
 type Props = { page: Page<CollectionEntry<'projects'>> };
