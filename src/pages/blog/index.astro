@@ -1,0 +1,28 @@
+---
+import { getCollection } from 'astro:content';
+import Hero from '../../components/Hero.astro';
+import PostPreview from '../../components/PostPreview.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
+);
+---
+
+<BaseLayout title="Blog | Liew CheonFong" description="Notes on building and shipping">
+	<div class="stack gap-20">
+		<main id="main-content" class="wrapper stack gap-8">
+			<Hero
+				title="Blog"
+				text="Notes on building, shipping, and staying focused."
+			/>
+			<div class="flex flex-col gap-8">
+				{
+					posts.map((post) => (
+						<PostPreview post={post} />
+					))
+				}
+			</div>
+		</main>
+	</div>
+</BaseLayout>
