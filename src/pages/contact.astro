@@ -9,11 +9,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 				Contact
 			</h1>
 			<p class="mt-4 text-sm sm:text-base">
-				Send a message and I’ll get back to you.
+				Send a message and I'll get back to you.
 			</p>
 		</header>
 
-		<form id="contact-form" class="flex max-w-xl flex-col gap-6">
+		<form id="contact-form" class="flex max-w-xl flex-col gap-6" novalidate>
 			<div class="flex flex-col gap-2">
 				<label class="font-serif" for="name">Name</label>
 				<input
@@ -22,8 +22,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 					type="text"
 					autocomplete="name"
 					required
-					class="border-main text-main placeholder:text-main/60 h-10 rounded-full border border-dashed bg-transparent px-5 text-sm focus:outline-hidden"
+					maxlength="100"
+					class="border-main text-main placeholder:text-main/60 h-10 rounded-full border bg-transparent px-5 text-sm transition-colors focus:border-current focus:outline-hidden"
+					aria-describedby="name-error"
 				/>
+				<p id="name-error" class="hidden text-sm text-red-600 dark:text-red-400" aria-live="polite"></p>
 			</div>
 			<div class="flex flex-col gap-2">
 				<label class="font-serif" for="email">Email</label>
@@ -33,8 +36,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 					type="email"
 					autocomplete="email"
 					required
-					class="border-main text-main placeholder:text-main/60 h-10 rounded-full border border-dashed bg-transparent px-5 text-sm focus:outline-hidden"
+					class="border-main text-main placeholder:text-main/60 h-10 rounded-full border bg-transparent px-5 text-sm transition-colors focus:border-current focus:outline-hidden"
+					aria-describedby="email-error"
 				/>
+				<p id="email-error" class="hidden text-sm text-red-600 dark:text-red-400" aria-live="polite"></p>
 			</div>
 			<div class="flex flex-col gap-2">
 				<label class="font-serif" for="subject">Subject</label>
@@ -43,8 +48,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 					name="subject"
 					type="text"
 					required
-					class="border-main text-main placeholder:text-main/60 h-10 rounded-full border border-dashed bg-transparent px-5 text-sm focus:outline-hidden"
+					maxlength="200"
+					class="border-main text-main placeholder:text-main/60 h-10 rounded-full border bg-transparent px-5 text-sm transition-colors focus:border-current focus:outline-hidden"
+					aria-describedby="subject-error"
 				/>
+				<p id="subject-error" class="hidden text-sm text-red-600 dark:text-red-400" aria-live="polite"></p>
 			</div>
 			<div class="flex flex-col gap-2">
 				<label class="font-serif" for="message">Message</label>
@@ -53,8 +61,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 					name="message"
 					rows="6"
 					required
-					class="border-main text-main placeholder:text-main/60 min-h-40 rounded-3xl border border-dashed bg-transparent px-5 py-3 text-sm focus:outline-hidden"
+					maxlength="5000"
+					class="border-main text-main placeholder:text-main/60 min-h-40 rounded-3xl border bg-transparent px-5 py-3 text-sm transition-colors focus:border-current focus:outline-hidden"
+					aria-describedby="message-error"
 				/>
+				<p id="message-error" class="hidden text-sm text-red-600 dark:text-red-400" aria-live="polite"></p>
 			</div>
 
 			<input class="hidden" name="company" type="text" tabindex="-1" autocomplete="off" />
@@ -69,12 +80,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 			<div class="flex flex-col gap-3">
 				<button
+					id="submit-btn"
 					type="submit"
-					class="border-main inline-flex h-10 w-fit items-center justify-center rounded-full border border-dashed px-6 text-sm font-medium"
+					disabled
+					class="border-main inline-flex h-10 w-fit items-center justify-center rounded-full border px-6 text-sm font-medium transition-opacity hover:opacity-70 disabled:cursor-not-allowed disabled:opacity-50"
 				>
-					Send Message
+					<span id="btn-text">Send Message</span>
+					<span id="btn-loading" class="hidden items-center gap-2">
+						<svg class="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+							<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+							<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+						</svg>
+						Sending...
+					</span>
 				</button>
-				<p id="form-status" class="text-sm" aria-live="polite"></p>
+				<p id="form-status" class="hidden text-sm" aria-live="polite"></p>
 			</div>
 		</form>
 	</article>
@@ -127,18 +147,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 					const existing = document.querySelector(`script[src="${TURNSTILE_SRC}"]`);
 					if (existing) {
 						existing.addEventListener('load', () => resolve());
-					existing.addEventListener('error', () => reject());
-					return;
-				}
+						existing.addEventListener('error', () => reject());
+						return;
+					}
 
-				const script = document.createElement('script');
-				script.src = TURNSTILE_SRC;
-				script.async = true;
-				script.defer = true;
-				script.addEventListener('load', () => resolve());
-				script.addEventListener('error', () => reject());
-				document.head.appendChild(script);
-			});
+					const script = document.createElement('script');
+					script.src = TURNSTILE_SRC;
+					script.async = true;
+					script.defer = true;
+					script.addEventListener('load', () => resolve());
+					script.addEventListener('error', () => reject());
+					document.head.appendChild(script);
+				});
 			};
 
 			const initTurnstile = async () => {
@@ -160,76 +180,223 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 					sitekey,
 					callback: (token) => {
 						turnstileToken = String(token || '');
-				},
-				'expired-callback': () => {
-					turnstileToken = '';
-				},
-				'error-callback': () => {
-					turnstileToken = '';
-				},
-			});
-			container.dataset.rendered = 'true';
-		};
-
-		const attachContactHandler = () => {
-			const form = document.getElementById('contact-form');
-			const status = document.getElementById('form-status');
-			if (!(form instanceof HTMLFormElement) || !(status instanceof HTMLElement)) return;
-			if (form.dataset.bound === 'true') return;
-			form.dataset.bound = 'true';
-
-			form.addEventListener('submit', async (event) => {
-				event.preventDefault();
-
-				const rateCheck = checkRateLimit();
-				if (!rateCheck.allowed) {
-					status.textContent = `Too many messages sent. Please try again in ${rateCheck.waitMinutes} minute(s).`;
-					return;
-				}
-
-				status.textContent = 'Sending...';
-
-				const formData = new FormData(form);
-				const existingToken = String(formData.get('cf-turnstile-response') || '').trim();
-				if (!existingToken && turnstileToken) {
-					formData.set('cf-turnstile-response', turnstileToken);
-				}
-
-				const finalToken = String(formData.get('cf-turnstile-response') || '').trim();
-				if (!finalToken) {
-					status.textContent = 'Please complete the Turnstile challenge and try again.';
-					return;
-				}
-
-				try {
-					const response = await fetch('/api/contact', {
-						method: 'POST',
-						body: formData,
-					});
-					const result = await response.json().catch(() => ({}));
-
-					if (response.ok) {
-						status.textContent = 'Thanks! Your message has been sent.';
-						recordSubmission();
-						form.reset();
+						updateSubmitButton();
+					},
+					'expired-callback': () => {
 						turnstileToken = '';
-						if (window.turnstile && turnstileWidgetId !== null) window.turnstile.reset(turnstileWidgetId);
-					} else {
-						status.textContent = result?.error ?? 'Something went wrong. Please try again.';
-						if (String(result?.error || '').toLowerCase().includes('turnstile')) {
-							turnstileToken = '';
-							if (window.turnstile && turnstileWidgetId !== null) window.turnstile.reset(turnstileWidgetId);
-						}
-					}
-				} catch (error) {
-					status.textContent = 'Unable to send right now. Please try again later.';
-				}
-			});
-		};
+						updateSubmitButton();
+					},
+					'error-callback': () => {
+						turnstileToken = '';
+						updateSubmitButton();
+					},
+				});
+				container.dataset.rendered = 'true';
+			};
 
-		document.addEventListener('astro:page-load', () => {
-			initTurnstile();
-			attachContactHandler();
-		});
-	</script>
+			const VALIDATION = {
+				name: {
+					required: 'Please enter your name.',
+					maxLength: { value: 100, message: 'Name must be 100 characters or less.' },
+				},
+				email: {
+					required: 'Please enter your email address.',
+					pattern: { regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Please enter a valid email address.' },
+				},
+				subject: {
+					required: 'Please enter a subject.',
+					maxLength: { value: 200, message: 'Subject must be 200 characters or less.' },
+				},
+				message: {
+					required: 'Please enter your message.',
+					maxLength: { value: 5000, message: 'Message must be 5000 characters or less.' },
+				},
+			};
+
+			const validateField = (field, value) => {
+				const rules = VALIDATION[field];
+				if (!rules) return null;
+				const trimmed = value.trim();
+				if (rules.required && !trimmed) {
+					return rules.required;
+				}
+				if (rules.pattern && trimmed && !rules.pattern.regex.test(trimmed)) {
+					return rules.pattern.message;
+				}
+				if (rules.maxLength && trimmed.length > rules.maxLength.value) {
+					return rules.maxLength.message;
+				}
+				return null;
+			};
+
+			const showFieldError = (fieldName, error) => {
+				const field = document.getElementById(fieldName);
+				const errorEl = document.getElementById(`${fieldName}-error`);
+				if (!field || !errorEl) return;
+				if (error) {
+					field.classList.add('border-red-500', 'dark:border-red-400');
+					field.classList.remove('border-main');
+					errorEl.textContent = error;
+					errorEl.classList.remove('hidden');
+				} else {
+					field.classList.remove('border-red-500', 'dark:border-red-400');
+					field.classList.add('border-main');
+					errorEl.classList.add('hidden');
+					errorEl.textContent = '';
+				}
+			};
+
+			const clearAllFieldErrors = () => {
+				['name', 'email', 'subject', 'message'].forEach((field) => showFieldError(field, null));
+			};
+
+			const validateAllFields = () => {
+				const form = document.getElementById('contact-form');
+				if (!(form instanceof HTMLFormElement)) return { valid: false, errors: {} };
+				const formData = new FormData(form);
+				const errors = {};
+				let firstErrorField = null;
+				for (const field of Object.keys(VALIDATION)) {
+					const value = String(formData.get(field) || '');
+					const error = validateField(field, value);
+					if (error) {
+						errors[field] = error;
+						if (!firstErrorField) firstErrorField = field;
+					}
+				}
+				return { valid: Object.keys(errors).length === 0, errors, firstErrorField };
+			};
+
+			const updateSubmitButton = () => {
+				const btn = document.getElementById('submit-btn');
+				if (!btn) return;
+				btn.disabled = !turnstileToken;
+			};
+
+			const setLoading = (loading) => {
+				const btn = document.getElementById('submit-btn');
+				const btnText = document.getElementById('btn-text');
+				const btnLoading = document.getElementById('btn-loading');
+				if (!btn || !btnText || !btnLoading) return;
+				btn.disabled = loading || !turnstileToken;
+				btnText.classList.toggle('hidden', loading);
+				btnLoading.classList.toggle('hidden', !loading);
+				btnLoading.classList.toggle('flex', loading);
+			};
+
+			const showStatus = (message, type) => {
+				const status = document.getElementById('form-status');
+				if (!status) return;
+				status.classList.remove('hidden', 'text-green-700', 'dark:text-green-400', 'text-red-600', 'dark:text-red-400');
+				if (type === 'success') {
+					status.classList.add('text-green-700', 'dark:text-green-400');
+				} else if (type === 'error') {
+					status.classList.add('text-red-600', 'dark:text-red-400');
+				}
+				status.textContent = message;
+				const rect = status.getBoundingClientRect();
+				if (rect.top < 0 || rect.bottom > window.innerHeight) {
+					status.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+				}
+			};
+
+			const clearStatus = () => {
+				const status = document.getElementById('form-status');
+				if (!status) return;
+				status.classList.add('hidden');
+				status.textContent = '';
+			};
+
+			const attachContactHandler = () => {
+				const form = document.getElementById('contact-form');
+				if (!(form instanceof HTMLFormElement)) return;
+				if (form.dataset.bound === 'true') return;
+				form.dataset.bound = 'true';
+
+				for (const fieldName of Object.keys(VALIDATION)) {
+					const field = document.getElementById(fieldName);
+					if (!field) continue;
+					field.addEventListener('blur', () => {
+						const error = validateField(fieldName, field.value);
+						showFieldError(fieldName, error);
+					});
+					field.addEventListener('input', () => {
+						const errorEl = document.getElementById(`${fieldName}-error`);
+						if (errorEl && !errorEl.classList.contains('hidden')) {
+							const error = validateField(fieldName, field.value);
+							if (!error) showFieldError(fieldName, null);
+						}
+					});
+				}
+
+				form.addEventListener('submit', async (event) => {
+					event.preventDefault();
+					clearStatus();
+					clearAllFieldErrors();
+
+					const rateCheck = checkRateLimit();
+					if (!rateCheck.allowed) {
+						showStatus(`Too many messages sent. Please try again in ${rateCheck.waitMinutes} minute(s).`, 'error');
+						return;
+					}
+
+					const { valid, errors, firstErrorField } = validateAllFields();
+					if (!valid) {
+						for (const [field, error] of Object.entries(errors)) {
+							showFieldError(field, error);
+						}
+						if (firstErrorField) {
+							document.getElementById(firstErrorField)?.focus();
+						}
+						return;
+					}
+
+					if (!turnstileToken) {
+						showStatus('Please complete the Turnstile challenge and try again.', 'error');
+						return;
+					}
+
+					setLoading(true);
+					const formData = new FormData(form);
+					formData.set('cf-turnstile-response', turnstileToken);
+
+					try {
+						const response = await fetch('/api/contact', {
+							method: 'POST',
+							body: formData,
+						});
+						const result = await response.json().catch(() => ({}));
+
+						if (response.ok) {
+							showStatus('Thanks! Your message has been sent.', 'success');
+							recordSubmission();
+							form.reset();
+							turnstileToken = '';
+							if (window.turnstile && turnstileWidgetId !== null) {
+								window.turnstile.reset(turnstileWidgetId);
+							}
+							updateSubmitButton();
+						} else {
+							showStatus(result?.error ?? 'Something went wrong. Please try again.', 'error');
+							if (String(result?.error || '').toLowerCase().includes('turnstile')) {
+								turnstileToken = '';
+								if (window.turnstile && turnstileWidgetId !== null) {
+									window.turnstile.reset(turnstileWidgetId);
+								}
+								updateSubmitButton();
+							}
+						}
+					} catch (error) {
+						showStatus('Unable to send right now. Please try again later.', 'error');
+					} finally {
+						setLoading(false);
+					}
+				});
+			};
+
+			document.addEventListener('astro:page-load', () => {
+				initTurnstile();
+				attachContactHandler();
+			});
+		</script>
 </BaseLayout>
