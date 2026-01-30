@@ -81,9 +81,42 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 		<script is:inline>
 			const TURNSTILE_SRC = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+			const RATE_LIMIT_KEY = 'contact_submissions';
+			const RATE_LIMIT_MAX = 5;
+			const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // 1 hour
 
 			let turnstileToken = '';
 			let turnstileWidgetId = null;
+
+			const checkRateLimit = () => {
+				try {
+					const stored = localStorage.getItem(RATE_LIMIT_KEY);
+					const now = Date.now();
+					const windowStart = now - RATE_LIMIT_WINDOW_MS;
+					const submissions = stored ? JSON.parse(stored) : [];
+					const validSubmissions = submissions.filter((ts) => ts > windowStart);
+
+					if (validSubmissions.length >= RATE_LIMIT_MAX) {
+						const oldestValid = validSubmissions[0];
+						const waitMinutes = Math.ceil((oldestValid + RATE_LIMIT_WINDOW_MS - now) / 60000);
+						return { allowed: false, waitMinutes };
+					}
+
+					return { allowed: true, validSubmissions };
+				} catch (e) {
+					return { allowed: true, validSubmissions: [] };
+				}
+			};
+
+			const recordSubmission = () => {
+				try {
+					const { validSubmissions } = checkRateLimit();
+					validSubmissions.push(Date.now());
+					localStorage.setItem(RATE_LIMIT_KEY, JSON.stringify(validSubmissions));
+				} catch (e) {
+					// Ignore localStorage errors
+				}
+			};
 
 			const hasTurnstileApi = () => Boolean(window.turnstile && typeof window.turnstile.render === 'function');
 
@@ -147,6 +180,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 			form.addEventListener('submit', async (event) => {
 				event.preventDefault();
+
+				const rateCheck = checkRateLimit();
+				if (!rateCheck.allowed) {
+					status.textContent = `Too many messages sent. Please try again in ${rateCheck.waitMinutes} minute(s).`;
+					return;
+				}
+
 				status.textContent = 'Sending...';
 
 				const formData = new FormData(form);
@@ -170,6 +210,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 					if (response.ok) {
 						status.textContent = 'Thanks! Your message has been sent.';
+						recordSubmission();
 						form.reset();
 						turnstileToken = '';
 						if (window.turnstile && turnstileWidgetId !== null) window.turnstile.reset(turnstileWidgetId);

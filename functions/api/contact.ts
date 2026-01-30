@@ -5,6 +5,10 @@ interface Env {
 	CONTACT_TO_EMAIL?: string;
 }
 
+const MAX_NAME_LENGTH = 100;
+const MAX_SUBJECT_LENGTH = 200;
+const MAX_MESSAGE_LENGTH = 5000;
+
 const EMAIL_SUBJECT_PREFIX = '[LiewCF.ORG] ';
 
 const isValidEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
@@ -64,6 +68,13 @@ export const onRequestPost = async ({ request, env }: { request: Request; env: E
 	if (!isValidEmail(email)) {
 		return Response.json(
 			{ ok: false, error: 'Please provide a valid email address.' },
+			{ status: 400 }
+		);
+	}
+
+	if (name.length > MAX_NAME_LENGTH || subject.length > MAX_SUBJECT_LENGTH || message.length > MAX_MESSAGE_LENGTH) {
+		return Response.json(
+			{ ok: false, error: 'Input exceeds maximum allowed length.' },
 			{ status: 400 }
 		);
 	}
