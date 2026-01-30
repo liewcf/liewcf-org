@@ -1,103 +1,101 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
 ---
 
-<BaseLayout title="Contact" description="Send a message to Liew CheonFong" showHeader={false}>
-	<article class="mb-16 sm:mb-24">
-		<header class="mb-8">
-			<h1 class="font-serif text-3xl leading-tight font-medium sm:text-5xl sm:leading-tight">
-				Contact
-			</h1>
-			<p class="mt-4 text-sm sm:text-base">
-				Send a message and I'll get back to you.
-			</p>
-		</header>
+<BaseLayout title="Contact" description="Send a message to Liew CheonFong">
+	<div class="stack gap-20">
+		<main id="main-content" class="wrapper stack gap-8">
+			<Hero
+				title="Contact"
+				text="Send a message and I'll get back to you."
+			/>
+			<form id="contact-form" class="flex max-w-xl flex-col gap-6" novalidate>
+				<div class="flex flex-col gap-2">
+					<label class="font-serif" for="name">Name</label>
+					<input
+						id="name"
+						name="name"
+						type="text"
+						autocomplete="name"
+						required
+						maxlength="100"
+						class="border-main text-main placeholder:text-main/60 h-10 rounded-full border bg-transparent px-5 text-sm transition-colors focus:border-current focus:outline-hidden"
+						aria-describedby="name-error"
+					/>
+					<p id="name-error" class="hidden text-sm text-red-600 dark:text-red-400" aria-live="polite"></p>
+				</div>
+				<div class="flex flex-col gap-2">
+					<label class="font-serif" for="email">Email</label>
+					<input
+						id="email"
+						name="email"
+						type="email"
+						autocomplete="email"
+						required
+						class="border-main text-main placeholder:text-main/60 h-10 rounded-full border bg-transparent px-5 text-sm transition-colors focus:border-current focus:outline-hidden"
+						aria-describedby="email-error"
+					/>
+					<p id="email-error" class="hidden text-sm text-red-600 dark:text-red-400" aria-live="polite"></p>
+				</div>
+				<div class="flex flex-col gap-2">
+					<label class="font-serif" for="subject">Subject</label>
+					<input
+						id="subject"
+						name="subject"
+						type="text"
+						required
+						maxlength="200"
+						class="border-main text-main placeholder:text-main/60 h-10 rounded-full border bg-transparent px-5 text-sm transition-colors focus:border-current focus:outline-hidden"
+						aria-describedby="subject-error"
+					/>
+					<p id="subject-error" class="hidden text-sm text-red-600 dark:text-red-400" aria-live="polite"></p>
+				</div>
+				<div class="flex flex-col gap-2">
+					<label class="font-serif" for="message">Message</label>
+					<textarea
+						id="message"
+						name="message"
+						rows="6"
+						required
+						maxlength="5000"
+						class="border-main text-main placeholder:text-main/60 min-h-40 rounded-3xl border bg-transparent px-5 py-3 text-sm transition-colors focus:border-current focus:outline-hidden"
+						aria-describedby="message-error"
+					/>
+					<p id="message-error" class="hidden text-sm text-red-600 dark:text-red-400" aria-live="polite"></p>
+				</div>
 
-		<form id="contact-form" class="flex max-w-xl flex-col gap-6" novalidate>
-			<div class="flex flex-col gap-2">
-				<label class="font-serif" for="name">Name</label>
-				<input
-					id="name"
-					name="name"
-					type="text"
-					autocomplete="name"
-					required
-					maxlength="100"
-					class="border-main text-main placeholder:text-main/60 h-10 rounded-full border bg-transparent px-5 text-sm transition-colors focus:border-current focus:outline-hidden"
-					aria-describedby="name-error"
-				/>
-				<p id="name-error" class="hidden text-sm text-red-600 dark:text-red-400" aria-live="polite"></p>
-			</div>
-			<div class="flex flex-col gap-2">
-				<label class="font-serif" for="email">Email</label>
-				<input
-					id="email"
-					name="email"
-					type="email"
-					autocomplete="email"
-					required
-					class="border-main text-main placeholder:text-main/60 h-10 rounded-full border bg-transparent px-5 text-sm transition-colors focus:border-current focus:outline-hidden"
-					aria-describedby="email-error"
-				/>
-				<p id="email-error" class="hidden text-sm text-red-600 dark:text-red-400" aria-live="polite"></p>
-			</div>
-			<div class="flex flex-col gap-2">
-				<label class="font-serif" for="subject">Subject</label>
-				<input
-					id="subject"
-					name="subject"
-					type="text"
-					required
-					maxlength="200"
-					class="border-main text-main placeholder:text-main/60 h-10 rounded-full border bg-transparent px-5 text-sm transition-colors focus:border-current focus:outline-hidden"
-					aria-describedby="subject-error"
-				/>
-				<p id="subject-error" class="hidden text-sm text-red-600 dark:text-red-400" aria-live="polite"></p>
-			</div>
-			<div class="flex flex-col gap-2">
-				<label class="font-serif" for="message">Message</label>
-				<textarea
-					id="message"
-					name="message"
-					rows="6"
-					required
-					maxlength="5000"
-					class="border-main text-main placeholder:text-main/60 min-h-40 rounded-3xl border bg-transparent px-5 py-3 text-sm transition-colors focus:border-current focus:outline-hidden"
-					aria-describedby="message-error"
-				/>
-				<p id="message-error" class="hidden text-sm text-red-600 dark:text-red-400" aria-live="polite"></p>
-			</div>
+				<input class="hidden" name="company" type="text" tabindex="-1" autocomplete="off" />
 
-			<input class="hidden" name="company" type="text" tabindex="-1" autocomplete="off" />
+				<div>
+					<div
+						id="turnstile-container"
+						class="cf-turnstile"
+						data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY}
+					/>
+				</div>
 
-			<div>
-				<div
-					id="turnstile-container"
-					class="cf-turnstile"
-					data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY}
-				/>
-			</div>
-
-			<div class="flex flex-col gap-3">
-				<button
-					id="submit-btn"
-					type="submit"
-					disabled
-					class="border-main inline-flex h-10 w-fit items-center justify-center rounded-full border px-6 text-sm font-medium transition-opacity hover:opacity-70 disabled:cursor-not-allowed disabled:opacity-50"
-				>
-					<span id="btn-text">Send Message</span>
-					<span id="btn-loading" class="hidden items-center gap-2">
-						<svg class="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-							<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-							<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-						</svg>
-						Sending...
-					</span>
-				</button>
-				<p id="form-status" class="hidden text-sm" aria-live="polite"></p>
-			</div>
-		</form>
-	</article>
+				<div class="flex flex-col gap-3">
+					<button
+						id="submit-btn"
+						type="submit"
+						disabled
+						class="border-main inline-flex h-10 w-fit items-center justify-center rounded-full border px-6 text-sm font-medium transition-opacity hover:opacity-70 disabled:cursor-not-allowed disabled:opacity-50"
+					>
+						<span id="btn-text">Send Message</span>
+						<span id="btn-loading" class="hidden items-center gap-2">
+							<svg class="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+								<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+								<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+							</svg>
+							Sending...
+						</span>
+					</button>
+					<p id="form-status" class="hidden text-sm" aria-live="polite"></p>
+				</div>
+			</form>
+		</main>
+	</div>
 
 		<script is:inline>
 			const TURNSTILE_SRC = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
