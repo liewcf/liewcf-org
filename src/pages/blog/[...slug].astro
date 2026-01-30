@@ -21,11 +21,11 @@ const { entry } = Astro.props;
 const { Content } = await render(entry);
 ---
 
-<BaseLayout title={entry.data.title} description={entry.data.description}>
+<BaseLayout title={entry.data.title} description={entry.data.description || entry.data.excerpt}>
 	<div class="stack gap-20">
 		<main id="main-content" class="wrapper stack gap-8">
 			<a class="back-link" href="/blog/"><Icon icon="arrow-left" /> Blog</a>
-			<Hero title={entry.data.title} tagline={entry.data.description} align="start" />
+			<Hero title={entry.data.title} text={entry.data.description || entry.data.excerpt} />
 			<article class="content">
 				<Content />
 			</article>
