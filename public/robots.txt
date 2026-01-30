@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://liewcf.org/sitemap.xml
+Sitemap: https://liewcf.org/sitemap-index.xml

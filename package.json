@@ -14,11 +14,7 @@
 		"lint:fix": "eslint . --fix",
 		"format": "prettier . --write",
 		"format:check": "prettier . --check",
-		"typecheck": "astro check",
-		"test:e2e": "node scripts/playwright.mjs test",
-		"test:e2e:ui": "node scripts/playwright.mjs test --ui",
-		"test:e2e:debug": "node scripts/playwright.mjs test --debug",
-		"test:e2e:install": "node scripts/playwright.mjs install chromium"
+		"typecheck": "astro check"
 	},
 	"dependencies": {
 		"@astrojs/mdx": "^4.3.10",
