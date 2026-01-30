@@ -1,23 +1,77 @@
 ---
 import '../styles/global.css';
+import siteConfig from '../data/site-config';
 
 interface Props {
 	title?: string | undefined;
 	description?: string | undefined;
+	ogImage?: string | undefined;
+	canonicalUrl?: string | undefined;
+	jsonLd?: Record<string, unknown> | undefined;
 }
 
 const {
 	title = 'Liew CheonFong | Personal Site',
 	description = 'The personal site of Liew CheonFong',
+	ogImage = siteConfig.ogImage || siteConfig.image?.src,
+	canonicalUrl = new URL(Astro.url.pathname, siteConfig.website).href,
+	jsonLd,
 } = Astro.props;
+
+const ogImageUrl = ogImage ? new URL(ogImage, siteConfig.website).href : undefined;
+
+// Default JSON-LD structured data (Person + WebSite)
+const defaultJsonLd = {
+	'@context': 'https://schema.org',
+	'@graph': [
+		{
+			'@type': 'Person',
+			name: siteConfig.title,
+			url: siteConfig.website,
+			sameAs: siteConfig.socialLinks?.map((link) => link.href) || [],
+			description: siteConfig.description,
+			image: siteConfig.image?.src
+				? new URL(siteConfig.image.src, siteConfig.website).href
+				: undefined,
+		},
+		{
+			'@type': 'WebSite',
+			name: siteConfig.title,
+			url: siteConfig.website,
+			description: siteConfig.description,
+		},
+	],
+};
+
+const finalJsonLd = jsonLd || defaultJsonLd;
 ---
 
 <meta charset="UTF-8" />
-<meta name="description" property="og:description" content={description} />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="color-scheme" content="light dark" />
 <meta name="generator" content={Astro.generator} />
+
+<!-- Primary Meta Tags -->
 <title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalUrl} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+{ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={canonicalUrl} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+{ogImageUrl && <meta property="twitter:image" content={ogImageUrl} />}
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json" set:html={JSON.stringify(finalJsonLd)} />
 
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />

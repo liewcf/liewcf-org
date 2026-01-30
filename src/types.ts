@@ -37,6 +37,7 @@ export type SiteConfig = {
     subtitle?: string;
     description: string;
     image?: ImageInput;
+    ogImage?: string;
     headerNavLinks?: Link[];
     footerNavLinks?: Link[];
     socialLinks?: Link[];

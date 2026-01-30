@@ -13,6 +13,7 @@ const siteConfig: SiteConfig = {
 		src: '/assets/liewcf-profile.jpg',
 		alt: 'Liew CheonFong',
 	},
+	ogImage: '/og-image.jpg',
 	headerNavLinks: [
 		{ text: 'Home', href: '/' },
 		{ text: 'Projects', href: '/projects' },
