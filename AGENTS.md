@@ -45,6 +45,7 @@ If any of the above files are added later, treat them as higher-priority and upd
 - Debug: `npm run test:e2e:debug`
 - Single file: `npx playwright test tests/e2e/navigation.spec.ts`
 - Single test by name: `npx playwright test -g "navigate to about page"`
+- Apple Silicon sandbox workaround: `node scripts/playwright.mjs [args...]`
 
 One-time setup if browsers are missing:
 
