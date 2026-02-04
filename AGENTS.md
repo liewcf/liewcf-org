@@ -27,6 +27,7 @@ If any of the above files are added later, treat them as higher-priority and upd
 - Dev server: `npm run dev`
 - Production build: `npm run build`
 - Preview build: `npm run preview`
+- Astro CLI passthrough: `npm run astro`
 - Cloudflare Pages build: `npm ci && npm run build`
 
 ### Lint / format / typecheck
@@ -125,7 +126,9 @@ One-time setup if browsers are missing:
 
 - Projects: Markdown files in `src/content/projects/`.
 - Blog posts: Markdown files in `src/content/blog/`.
+- Static pages: Markdown files in `src/content/pages/`.
 - Keep frontmatter in sync with `src/content.config.ts` schemas.
+- Site configuration: update `src/data/site-config.ts` for nav/social/hero changes.
 
 ---
 
