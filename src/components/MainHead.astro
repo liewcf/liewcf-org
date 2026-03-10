@@ -10,6 +10,9 @@ interface Props {
 	jsonLd?: Record<string, unknown> | undefined;
 }
 
+const getImageSource = (image?: string | ImageMetadata) =>
+	typeof image === 'string' ? image : image?.src;
+
 const {
 	title = 'Liew CheonFong | Personal Site',
 	description = 'The personal site of Liew CheonFong',
@@ -18,7 +21,9 @@ const {
 	jsonLd,
 } = Astro.props;
 
-const ogImageUrl = ogImage ? new URL(ogImage, siteConfig.website).href : undefined;
+const ogImageSrc = getImageSource(ogImage);
+const ogImageUrl = ogImageSrc ? new URL(ogImageSrc, siteConfig.website).href : undefined;
+const siteImageSrc = getImageSource(siteConfig.image?.src);
 
 // Default JSON-LD structured data (Person + WebSite)
 const defaultJsonLd = {
@@ -26,14 +31,12 @@ const defaultJsonLd = {
 	'@graph': [
 		{
 			'@type': 'Person',
-			name: siteConfig.title,
-			url: siteConfig.website,
-			sameAs: siteConfig.socialLinks?.map((link) => link.href) || [],
-			description: siteConfig.description,
-			image: siteConfig.image?.src
-				? new URL(siteConfig.image.src, siteConfig.website).href
-				: undefined,
-		},
+				name: siteConfig.title,
+				url: siteConfig.website,
+				sameAs: siteConfig.socialLinks?.map((link) => link.href) || [],
+				description: siteConfig.description,
+				image: siteImageSrc ? new URL(siteImageSrc, siteConfig.website).href : undefined,
+			},
 		{
 			'@type': 'WebSite',
 			name: siteConfig.title,
@@ -71,7 +74,7 @@ const finalJsonLd = jsonLd || defaultJsonLd;
 {ogImageUrl && <meta property="twitter:image" content={ogImageUrl} />}
 
 <!-- JSON-LD Structured Data -->
-<script type="application/ld+json" set:html={JSON.stringify(finalJsonLd)} />
+<script is:inline type="application/ld+json" set:html={JSON.stringify(finalJsonLd)} />
 
 <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
