@@ -23,7 +23,7 @@
 - Dev server: `npm run dev`.
 - Smoke checks: `npm run check`.
 - E2E tests: `npm run test:e2e`.
-- Cloudflare Pages: publish static files from the repository root. A build step is optional and should stay limited to install plus checks.
+- Cloudflare Pages: publish static files from the repository root with build command `exit 0`; run `npm run check` locally or in CI before deployment.
 
 ## Constraints
 

@@ -6,3 +6,8 @@
 - Remove blog, project pages, content collections, the contact form, and the Cloudflare Pages contact API rather than archiving them in the repo.
 - Keep a tiny npm workflow for local preview and Playwright smoke checks.
 - Keep repo-level project memory in `AGENTS.md` plus `docs/PROJECT_CONTEXT.md`, `docs/DECISIONS.md`, `docs/TASKS.md`, and `docs/CHANGELOG_WORK.md`.
+
+## 2026-05-11
+
+- Use Cloudflare Pages build command `exit 0` for this static site; keep `npm run check` as local/CI verification rather than a Pages deployment build step.
+- Use the square portrait asset for the hero image because the landscape WordCamp image cropped poorly on mobile.
