@@ -1,6 +1,6 @@
 # AGENTS.md
 
-This repo powers `liewcf.org`, a personal site built with Astro + TypeScript (ESM).
+This repo powers `liewcf.org`, a personal site built with Astro 6 + TypeScript (ESM) and Tailwind CSS 4.
 
 No Cursor rules found:
 
@@ -19,6 +19,7 @@ If any of the above files are added later, treat them as higher-priority and upd
 
 ### Install
 
+- Node: `>=22.13.0 <23` (from `package.json` engines)
 - Preferred: `npm ci` (uses `package-lock.json`)
 - Local: `npm install`
 
@@ -50,6 +51,7 @@ If any of the above files are added later, treat them as higher-priority and upd
 One-time setup if browsers are missing:
 
 - `npx playwright install chromium`
+- In sandboxed Apple Silicon environments, prefer `node scripts/playwright.mjs install chromium`
 
 ---
 
@@ -71,9 +73,12 @@ One-time setup if browsers are missing:
 - `src/content/` — Markdown content
   - `src/content/projects/` — project entries
   - `src/content/blog/` — blog posts
+- `src/data/site-config.ts` — site URL, nav/social links, hero copy/images, pagination counts
 - `src/content.config.ts` — content collection schema
 - `functions/api/` — Cloudflare Pages Functions
 - `public/` — static assets
+- `tests/e2e/` — Playwright specs
+- `scripts/playwright.mjs` — Playwright wrapper for macOS arm64 sandbox platform detection
 - `dist/` — build output (generated; do not edit)
 
 ---
@@ -127,9 +132,17 @@ One-time setup if browsers are missing:
 
 - Projects: Markdown files in `src/content/projects/`.
 - Blog posts: Markdown files in `src/content/blog/`.
-- Static pages: Markdown files in `src/content/pages/`.
+- Static pages: current routes may be Astro files in `src/pages/`; if using Markdown files in `src/content/pages/`, make sure the matching dynamic route still exists.
 - Keep frontmatter in sync with `src/content.config.ts` schemas.
 - Site configuration: update `src/data/site-config.ts` for nav/social/hero changes.
+
+---
+
+## Metadata / assets
+
+- `BaseLayout.astro` uses `BaseHead.astro` for canonical URLs, OG/Twitter metadata, icons, JSON-LD-capable images, and font preloads.
+- `src/data/site-config.ts` is the source for `website`, default image, `ogImage`, nav links, social links, hero content, and pagination counts.
+- Favicons and touch icons live in `public/`; keep `BaseHead.astro` links aligned with generated assets.
 
 ---
 
@@ -150,3 +163,4 @@ From README:
 - Keep changes small and focused.
 - Do not add new tooling unless asked.
 - Validate with `npm run build` when feasible.
+- For route/content work, run `npm run typecheck` and the relevant Playwright spec when feasible.
