@@ -11,3 +11,4 @@
 
 - Use Cloudflare Pages build command `exit 0` for this static site; keep `npm run check` as local/CI verification rather than a Pages deployment build step.
 - Use the square portrait asset for the hero image because the landscape WordCamp image cropped poorly on mobile.
+- Keep featured GitHub projects as a curated static section in `index.html`, using placeholder entries until exact repository URLs and copy are chosen.

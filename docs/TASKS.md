@@ -16,3 +16,4 @@
 - [x] Kept a tiny npm workflow for preview and smoke checks.
 - [x] Updated Cloudflare guidance to use `exit 0` and keep checks local/CI.
 - [x] Refined one-page copy, renamed "Proof points" to "Things I've Built", and switched the hero to the portrait image.
+- [x] Added a placeholder-backed featured GitHub projects section for later curated repo copy.

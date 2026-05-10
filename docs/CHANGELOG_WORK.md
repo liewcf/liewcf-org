@@ -15,3 +15,5 @@
 - Switched the hero image from the landscape WordCamp photo to `assets/liewcf-profile.jpg` so mobile cropping shows the person clearly.
 - Updated `tests/e2e/navigation.spec.ts` to expect the portrait hero image alt text.
 - Verified the current static site with `npm run check`; Playwright reported 2 passing tests.
+- Added a static featured GitHub projects section with three placeholder project cards, responsive styling, and Playwright coverage for the new section.
+- Verified the featured projects update with `npm run check`; Playwright reported 2 passing tests. Previewed desktop and mobile widths with no horizontal overflow.
