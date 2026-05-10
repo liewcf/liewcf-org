@@ -1,8 +1,8 @@
 # liewcf.org
 
-Personal site and portfolio built with Astro.
+Static one-page profile site for `liewcf.org`.
 
-Theme: based on the Dante Astro Theme by Just Good UI (GPL-3.0). See `LICENSE`.
+The site is plain HTML and CSS. It is intentionally not a blog, CMS, Astro app, or multi-page portfolio.
 
 ## Development
 
@@ -11,96 +11,32 @@ npm install
 npm run dev
 ```
 
-## Build
+Open `http://127.0.0.1:4321`.
+
+## Checks
 
 ```sh
-npm run build
-npm run preview
+npm run check
 ```
 
-## Content
+This runs the Playwright smoke tests for the static profile page.
 
-Content is managed through Astro's content collections. Each collection has a Zod schema defined in `src/content.config.ts`.
+## Files
 
-### Blog Posts
+- `index.html` — page content, metadata, and outbound links.
+- `styles.css` — all visual styling and responsive layout.
+- `assets/` — profile, Open Graph, favicon, and touch-icon assets.
+- `robots.txt` — crawler access rules.
+- `tests/e2e/navigation.spec.ts` — static page smoke tests.
 
-**Location:** `src/content/blog/`
+## Deployment
 
-Create a `.md` or `.mdx` file:
+Cloudflare Pages should publish the static site directly.
 
-```yaml
----
-title: Post Title
-publishDate: 2026-01-31 00:00:00
-excerpt: Optional summary text
-isFeatured: false
-tags:
-  - Tag1
-  - Tag2
-seo:
-  title: SEO Title (optional)
-  description: Meta description (15-160 chars)
----
+Recommended settings:
 
-Your Markdown content here.
-```
+- Build command: `npm install && npm run check`
+- Output directory: `/`
+- Runtime environment variables: none
 
-### Projects
-
-**Location:** `src/content/projects/`
-
-```yaml
----
-title: Project Name
-publishDate: 2026-01-31 00:00:00
-description: Project description
-isFeatured: true
-img: ./project-image.jpg
-img_alt: Alt text
-tags:
-  - Tag1
-repoUrl: https://github.com/...
-liveUrl: https://example.com
----
-
-Project details in Markdown.
-```
-
-### Static Pages
-
-**Location:** `src/content/pages/`
-
-```yaml
----
-title: Page Title
-seo:
-  title: Page Title | Site Name
-  description: Meta description
----
-
-Page content in Markdown.
-```
-
-### Site Configuration
-
-Edit `src/data/site-config.ts` to update:
-- Site title, subtitle, description
-- Navigation links (header/footer)
-- Social links
-- Hero section
-- Posts per page
-
-## Deployment (Cloudflare Pages)
-
-Build settings:
-
-- Build command: `npm ci && npm run build`
-- Output directory: `dist`
-
-Environment variables:
-
-- `RESEND_API_KEY`
-- `RESEND_FROM_EMAIL` (default `hello@liewcf.org`)
-- `CONTACT_TO_EMAIL` (default `liewcf@gmail.com`)
-- `TURNSTILE_SECRET_KEY`
-- `PUBLIC_TURNSTILE_SITE_KEY`
+If Cloudflare Pages is configured to skip builds, publish the repository root as the static output.

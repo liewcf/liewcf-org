@@ -1,6 +1,6 @@
 # AGENTS.md
 
-This repo powers `liewcf.org`, a personal site built with Astro 6 + TypeScript (ESM) and Tailwind CSS 4.
+This repo powers `liewcf.org`, a simple static one-page profile site built with plain HTML and CSS.
 
 No Cursor rules found:
 
@@ -13,154 +13,53 @@ No Copilot instructions found:
 
 If any of the above files are added later, treat them as higher-priority and update this doc.
 
----
-
 ## Quick commands
 
-### Install
-
-- Node: `>=22.13.0 <23` (from `package.json` engines)
-- Preferred: `npm ci` (uses `package-lock.json`)
-- Local: `npm install`
-
-### Dev / build
-
+- Install: `npm install`
 - Dev server: `npm run dev`
-- Production build: `npm run build`
-- Preview build: `npm run preview`
-- Astro CLI passthrough: `npm run astro`
-- Cloudflare Pages build: `npm ci && npm run build`
-
-### Lint / format / typecheck
-
-- Lint: `npm run lint`
-- Fix lint: `npm run lint:fix`
-- Format: `npm run format`
-- Check formatting: `npm run format:check`
-- Typecheck: `npm run typecheck`
-
-### E2E tests (Playwright, Chromium only)
-
-- Run all: `npm run test:e2e`
-- UI mode: `npm run test:e2e:ui`
-- Debug: `npm run test:e2e:debug`
-- Single file: `npx playwright test tests/e2e/navigation.spec.ts`
-- Single test by name: `npx playwright test -g "navigate to about page"`
-- Apple Silicon sandbox workaround: `node scripts/playwright.mjs [args...]`
-
-One-time setup if browsers are missing:
-
-- `npx playwright install chromium`
-- In sandboxed Apple Silicon environments, prefer `node scripts/playwright.mjs install chromium`
-
----
-
-## Tests policy
-
-- Only E2E tests are configured right now.
-- Unit tests are intentionally not set up (avoid refactors purely for tests).
-- API endpoint tests are intentionally not configured.
-- Contact form submission tests are excluded (requires Turnstile/Resend secrets).
-
----
+- Smoke checks: `npm run check`
+- E2E tests: `npm run test:e2e`
 
 ## Project structure
 
-- `src/pages/` — Astro pages and routes
-- `src/components/` — Astro/TS components
-- `src/layouts/` — shared layouts
-- `src/styles/` — global CSS
-- `src/content/` — Markdown content
-  - `src/content/projects/` — project entries
-  - `src/content/blog/` — blog posts
-- `src/data/site-config.ts` — site URL, nav/social links, hero copy/images, pagination counts
-- `src/content.config.ts` — content collection schema
-- `functions/api/` — Cloudflare Pages Functions
-- `public/` — static assets
-- `tests/e2e/` — Playwright specs
-- `scripts/playwright.mjs` — Playwright wrapper for macOS arm64 sandbox platform detection
-- `dist/` — build output (generated; do not edit)
+- `index.html` — the full one-page profile, metadata, and outbound links.
+- `styles.css` — all styling and responsive behavior.
+- `assets/` — profile image, Open Graph image, favicons, and touch icons.
+- `robots.txt` — crawler access rules.
+- `tests/e2e/` — Playwright smoke tests.
+- `docs/` — repo-level memory, decisions, tasks, changelog, and superpowers specs/plans.
 
----
+## Code style
 
-## Code style (match existing)
-
-### Indentation / whitespace
-
-- Use tabs where existing TS files do.
-- Avoid reformatting unrelated files.
-
-### Quotes / ESM
-
-- Prefer single quotes in TS/JS.
-- Repo uses ESM (`"type": "module"`), keep `import`/`export` syntax.
-
-### Semicolons and commas
-
-- Semicolons enabled (`semi: true`).
-- Trailing commas: `es5` style.
-
-### Imports
-
-- Imports go at top of file.
-- Avoid unused imports.
-- Prefer named imports where available.
-
-### Naming
-
-- `camelCase` for variables/functions.
-- `PascalCase` for components/types.
-- `SCREAMING_SNAKE_CASE` for true constants (example: `EMAIL_SUBJECT_PREFIX`).
-
-### TypeScript
-
-- Avoid `any`.
-- Add explicit types to exported functions and public shapes.
-- Use `as` assertions sparingly.
-
-### Error handling (API endpoints)
-
-- Prefer early returns for validation failures.
-- Return consistent JSON:
-  - success: `{ ok: true }`
-  - error: `{ ok: false, error: string }`
-- Use `4xx` for user errors, `5xx` for server errors.
-
----
-
-## Content conventions
-
-- Projects: Markdown files in `src/content/projects/`.
-- Blog posts: Markdown files in `src/content/blog/`.
-- Static pages: current routes may be Astro files in `src/pages/`; if using Markdown files in `src/content/pages/`, make sure the matching dynamic route still exists.
-- Keep frontmatter in sync with `src/content.config.ts` schemas.
-- Site configuration: update `src/data/site-config.ts` for nav/social/hero changes.
-
----
-
-## Metadata / assets
-
-- `BaseLayout.astro` uses `BaseHead.astro` for canonical URLs, OG/Twitter metadata, icons, JSON-LD-capable images, and font preloads.
-- `src/data/site-config.ts` is the source for `website`, default image, `ogImage`, nav links, social links, hero content, and pagination counts.
-- Favicons and touch icons live in `public/`; keep `BaseHead.astro` links aligned with generated assets.
-
----
-
-## Environment variables
-
-From README:
-
-- `RESEND_API_KEY`
-- `RESEND_FROM_EMAIL` (default `hello@liewcf.org`)
-- `CONTACT_TO_EMAIL` (default `liewcf@gmail.com`)
-- `TURNSTILE_SECRET_KEY`
-- `PUBLIC_TURNSTILE_SITE_KEY`
-
----
-
-## Agent workflow expectations
-
+- Keep the site framework-free unless the user explicitly asks otherwise.
+- Prefer plain semantic HTML and CSS.
+- Keep page copy concise and profile-focused.
+- Avoid adding blogs, CMS behavior, routing, contact forms, API functions, or build pipelines.
 - Keep changes small and focused.
-- Do not add new tooling unless asked.
-- Validate with `npm run build` when feasible.
-- For route/content work, run `npm run typecheck` and the relevant Playwright spec when feasible.
+
+## Contact and links
+
+- Contact is outbound-link only.
+- Email uses `mailto:`.
+- Social/profile links should have clear accessible names.
+- Do not add secrets, forms, Turnstile, Resend, or runtime environment variables.
+
+## Validation
+
+- Run `npm run check` when feasible after page, link, or asset changes.
+- For visual changes, preview with `npm run dev` and inspect desktop and mobile widths.
+
+## Deployment
+
+Cloudflare Pages should publish the static site directly from the repository root. No runtime environment variables are required.
+
+## Project Memory Requirement
+
+Keep these repo-level memory files accurate and concise when work changes project context:
+
+- `docs/PROJECT_CONTEXT.md` for stable project facts, architecture, workflows, and constraints.
+- `docs/DECISIONS.md` for dated technical or product decisions and rationale.
+- `docs/TASKS.md` for current tasks, blockers, and next actions.
+- `docs/CHANGELOG_WORK.md` for dated notes on changed files, behavior, docs, config, dependencies, tooling, tests, and verification.
+
+Do not store secrets, credentials, API keys, private tokens, database dumps, or sensitive personal data in project memory.

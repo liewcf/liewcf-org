@@ -34,3 +34,6 @@ test-results/
 
 # OS
 .DS_Store
+
+# Superpowers brainstorming scratchpad
+.superpowers/
