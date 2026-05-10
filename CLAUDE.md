@@ -1,71 +1,56 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code when working in this repository.
+
+## Project
+
+`liewcf.org` is a simple static one-page profile site built with plain HTML and CSS.
+
+It is intentionally not an Astro app, blog, CMS, multi-page portfolio, contact form, or API-backed site.
 
 ## Commands
 
-### Development
-- `npm run dev` - Start development server
-- `npm run build` - Production build
-- `npm run preview` - Preview production build
-
-### Quality Checks
-- `npm run lint` - Run ESLint
-- `npm run lint:fix` - Fix ESLint issues
-- `npm run format` - Format with Prettier
-- `npm run typecheck` - Run Astro type check
-
-### Testing
-- `npm run test:e2e` - Run all Playwright E2E tests
-- `npx playwright test tests/e2e/navigation.spec.ts` - Run single test file
-- `npx playwright test -g "navigate to about page"` - Run single test by name
-- `npm run test:e2e:ui` - Open Playwright UI mode
+- Install dependencies: `npm install`
+- Start local preview: `npm run dev`
+- Run smoke checks: `npm run check`
+- Run Playwright directly: `npm run test:e2e`
 
 ## Architecture
 
-### Framework & Stack
-- **Astro 5** with TypeScript (ESM, strict mode)
-- **Tailwind CSS 4** with Vite plugin
-- **Content collections** for Markdown/MDX content with Zod schemas
-- Deployed to **Cloudflare Pages** with edge functions in `functions/api/`
+- `index.html` owns all page content, metadata, and outbound links.
+- `styles.css` owns all visual styling and responsive behavior.
+- `assets/` contains profile images, Open Graph image, favicons, and touch icons.
+- `robots.txt` contains crawler access rules.
+- `tests/e2e/navigation.spec.ts` contains Playwright smoke checks.
 
-### Content System
-Content is managed through Astro's content collections defined in `src/content.config.ts`:
-- **Blog posts**: `src/content/blog/` - Uses `glob` loader for Markdown/MDX files
-- **Projects**: `src/content/projects/` - Portfolio entries
-- **Pages**: `src/content/pages/` - Static pages (about, terms)
-
-Each collection has a Zod schema. Frontmatter in content files must match these schemas.
-
-### API Endpoints
-Cloudflare Pages Functions in `functions/api/`:
-- `contact.ts` - Contact form handler with Turnstile verification, input validation, and Resend email delivery
-
-### Testing Policy
-- Only E2E tests with Playwright (Chromium)
-- Unit tests intentionally not configured
-- Contact form tests excluded (requires Turnstile/Resend secrets)
+There is no framework runtime, generated route layer, content collection system, Cloudflare Pages Function, or runtime environment-variable requirement.
 
 ## Code Style
 
-- Tabs for indentation (match existing files)
-- Single quotes in TS/JS
-- Semicolons enabled
-- `camelCase` for variables/functions, `PascalCase` for components/types, `SCREAMING_SNAKE_CASE` for constants
-- ESM imports/exports only
+- Prefer semantic HTML and plain CSS.
+- Keep the page concise and profile-focused.
+- Keep changes small and easy to inspect.
+- Do not add a framework, blog, CMS behavior, routing, API functions, contact form, Turnstile, Resend, or a large build pipeline unless the user explicitly asks for a new direction.
 
-## Environment Variables
+## Contact And Links
 
-Required for contact form:
-- `RESEND_API_KEY`
-- `RESEND_FROM_EMAIL` (default: `hello@liewcf.org`)
-- `CONTACT_TO_EMAIL` (default: `liewcf@gmail.com`)
-- `TURNSTILE_SECRET_KEY`
-- `PUBLIC_TURNSTILE_SITE_KEY`
+- Contact is outbound-link only.
+- Email uses `mailto:`.
+- External profile links should have clear accessible names and safe `rel` attributes where appropriate.
 
-## Important Files
+## Validation
 
-- `src/content.config.ts` - Content collection schemas
-- `src/data/site-config.ts` - Site configuration (URL, metadata)
-- `astro.config.mjs` - Astro configuration with MDX, sitemap, Tailwind
-- `functions/api/contact.ts` - Contact form API endpoint
+- Run `npm run check` after page, asset, or link changes when feasible.
+- For visual changes, preview with `npm run dev` and inspect desktop and mobile widths.
+
+## Deployment
+
+Cloudflare Pages should publish the static site directly from the repository root.
+
+Recommended settings:
+
+- Build command: `exit 0`
+- Output directory: `/`
+- Runtime environment variables: none
+
+Run `npm run check` locally or in CI before deploying.

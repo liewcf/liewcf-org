@@ -35,8 +35,8 @@ Cloudflare Pages should publish the static site directly.
 
 Recommended settings:
 
-- Build command: `npm install && npm run check`
+- Build command: `exit 0`
 - Output directory: `/`
 - Runtime environment variables: none
 
-If Cloudflare Pages is configured to skip builds, publish the repository root as the static output.
+Run `npm run check` locally or in CI before deploying. Cloudflare Pages should only upload the static files from the repository root.
