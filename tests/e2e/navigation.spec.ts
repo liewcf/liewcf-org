@@ -5,7 +5,7 @@ test('static profile page loads with key content and links', async ({ page }) =>
 
 	await expect(page).toHaveTitle(/Liew CheonFong/);
 	await expect(page.getByRole('heading', { name: "Hello, I'm Liew CheonFong" })).toBeVisible();
-	await expect(page.getByRole('img', { name: 'Liew CheonFong at WordCamp Malaysia 2025' })).toBeVisible();
+	await expect(page.getByRole('img', { name: 'Portrait of Liew CheonFong' })).toBeVisible();
 
 	await expect(page.getByRole('link', { name: 'Email' })).toHaveAttribute('href', 'mailto:liewcf@gmail.com');
 	await expect(page.getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', 'https://github.com/liewcf');
