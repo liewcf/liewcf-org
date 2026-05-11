@@ -15,8 +15,10 @@ test('static profile page loads with key content and links', async ({ page }) =>
 		'https://www.facebook.com/LiewCheonFong',
 	);
 
-	await expect(page.getByRole('heading', { name: 'Selected projects worth a closer look.' })).toBeVisible();
-	await expect(page.getByRole('article').filter({ hasText: 'WordPress Utility Project' })).toBeVisible();
+	await expect(page.getByRole('heading', { name: 'A few shipped tools from my workbench.' })).toBeVisible();
+	for (const project of ['project-memory', 'QuickRes', 'enjinmel-smtp', 'public-draft-share']) {
+		await expect(page.getByRole('article').filter({ hasText: project })).toBeVisible();
+	}
 });
 
 test('removed routes do not behave like live site pages', async ({ page }) => {

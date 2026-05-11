@@ -17,3 +17,4 @@
 - [x] Updated Cloudflare guidance to use `exit 0` and keep checks local/CI.
 - [x] Refined one-page copy, renamed "Proof points" to "Things I've Built", and switched the hero to the portrait image.
 - [x] Added a placeholder-backed featured GitHub projects section for later curated repo copy.
+- [x] Featured `project-memory`, `QuickRes`, `enjinmel-smtp`, and `public-draft-share` on the static homepage with direct GitHub links.

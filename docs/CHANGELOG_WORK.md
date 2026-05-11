@@ -17,3 +17,5 @@
 - Verified the current static site with `npm run check`; Playwright reported 2 passing tests.
 - Added a static featured GitHub projects section with three placeholder project cards, responsive styling, and Playwright coverage for the new section.
 - Verified the featured projects update with `npm run check`; Playwright reported 2 passing tests. Previewed desktop and mobile widths with no horizontal overflow.
+- Replaced the featured-project placeholders with `project-memory`, `QuickRes`, `enjinmel-smtp`, and `public-draft-share`, then adjusted the project grid to a two-column desktop layout.
+- Updated Playwright coverage to assert the four featured project names and verified with `npm run check`; Playwright reported 2 passing tests.
