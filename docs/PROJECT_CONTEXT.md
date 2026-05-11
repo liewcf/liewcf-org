@@ -4,14 +4,14 @@
 
 - Project purpose: Personal profile and credibility page for `liewcf.org`.
 - Primary users: Visitors who want to understand who Liew CheonFong is, what he builds, and how to contact or follow him.
-- Current status: Static one-page site with plain HTML, CSS, image assets, and Playwright smoke checks.
+- Current status: Static one-page site with plain HTML, CSS, only live referenced image/icon assets, and Playwright smoke checks.
 
 ## Architecture
 
 - Framework: None.
 - Styling: Plain CSS in `styles.css`.
 - Content: Hand-authored HTML in `index.html`.
-- Assets: Root-level `assets/` directory.
+- Assets: Root-level `assets/` directory for the portrait, Open Graph image, favicon, and touch icon used by `index.html`.
 - Contact: Outbound links only; email uses `mailto:`.
 - API: None.
 - Runtime environment variables: None.
@@ -23,7 +23,7 @@
 - Dev server: `npm run dev`.
 - Smoke checks: `npm run check`.
 - E2E tests: `npm run test:e2e`.
-- Cloudflare Pages: publish static files from the repository root with build command `exit 0`; run `npm run check` locally or in CI before deployment.
+- Cloudflare Pages: publish static files from the repository root; build command set to `npm ci && npm run build` (with `"build": "exit 0"` in package.json), output directory `/`. Custom domain `liewcf.org` with fallback `liewcf-org.pages.dev`. Run `npm run check` locally or in CI before deployment.
 
 ## Constraints
 

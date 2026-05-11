@@ -2,8 +2,36 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@graph": [
+				{
+					"@type": "Person",
+					"@id": "https://liewcf.org/#person",
+					"name": "Liew CheonFong",
+					"url": "https://liewcf.org/",
+					"image": "https://liewcf.org/assets/liewcf-profile.jpg",
+					"email": "mailto:liewcf@gmail.com",
+					"sameAs": [
+						"https://github.com/liewcf",
+						"https://www.facebook.com/LiewCheonFong"
+					],
+					"knowsAbout": ["WordPress","Developer utilities","Practical websites","SEO","Web development"]
+				},
+				{
+					"@type": "WebSite",
+					"@id": "https://liewcf.org/#website",
+					"url": "https://liewcf.org/",
+					"name": "Liew CheonFong",
+					"publisher": { "@id": "https://liewcf.org/#person" },
+					"inLanguage": "en"
+				}
+			]
+		}
+		</script>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Liew CheonFong | WordPress Tools and Practical Developer Utilities</title>
+		<title>Liew CheonFong | WordPress Tools, Developer Utilities, and Practical Websites</title>
 		<meta name="description" content="Liew CheonFong builds practical WordPress tools, developer utilities, and focused websites that make repeated work easier.">
 		<link rel="canonical" href="https://liewcf.org/">
 		<meta property="og:type" content="website">
@@ -11,6 +39,7 @@
 		<meta property="og:description" content="Practical WordPress tools, developer utilities, and focused websites that make repeated work easier.">
 		<meta property="og:url" content="https://liewcf.org/">
 		<meta property="og:image" content="https://liewcf.org/assets/og-image.jpg">
+		<meta property="og:site_name" content="Liew CheonFong">
 		<meta name="twitter:card" content="summary_large_image">
 		<meta name="twitter:title" content="Liew CheonFong">
 		<meta name="twitter:description" content="Practical WordPress tools, developer utilities, and focused websites that make repeated work easier.">

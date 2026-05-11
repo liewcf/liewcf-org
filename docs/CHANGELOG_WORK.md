@@ -19,3 +19,12 @@
 - Verified the featured projects update with `npm run check`; Playwright reported 2 passing tests. Previewed desktop and mobile widths with no horizontal overflow.
 - Replaced the featured-project placeholders with `project-memory`, `QuickRes`, `enjinmel-smtp`, and `public-draft-share`, then adjusted the project grid to a two-column desktop layout.
 - Updated Playwright coverage to assert the four featured project names and verified with `npm run check`; Playwright reported 2 passing tests.
+- Removed ignored generated leftovers (`.astro/`, `dist/`, Playwright reports/results, local notes, `.DS_Store`) and unused tracked assets no longer referenced by `index.html`.
+- Verified the cleanup with `npm run check`; Playwright reported 2 passing tests.
+- Fixed Cloudflare Pages deployment: added `"build": "exit 0"` to package.json scripts (Pages runs `npm run build` by default) and changed the output directory from `dist` to `/` in Cloudflare Dashboard to match the static root structure.
+- Confirmed live site at `https://liewcf.org` (custom domain, backed by Cloudflare Pages on `liewcf-org.pages.dev`) matches local `index.html` after redeploy.
+- Added `sitemap.xml` with canonical `https://liewcf.org/` and referenced it from `robots.txt`.
+- Added static `Person` and `WebSite` JSON-LD to `index.html` with absolute production URLs.
+- Tightened page `<title>` and added `og:site_name` meta.
+- Extended Playwright tests to assert sitemap, robots.txt sitemap line, and JSON-LD presence/parsing.
+- Verified with `npm run check`; 4 Playwright tests passing.
