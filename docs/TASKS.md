@@ -3,7 +3,9 @@
 ## Current
 
 - [ ] Preview the final static page on desktop and mobile widths before launch if visual layout changes continue.
-- [ ] Validate live DNS/index status and Search Console submission from an external network after deployment.
+- [ ] Configure and verify `www.liewcf.org` in Cloudflare so it redirects cleanly to `https://liewcf.org/`.
+- [ ] Validate Google Search Console indexing and sitemap submission after deployment.
+- [ ] Enable Cloudflare Markdown for Agents for `liewcf.org`, then verify `Accept: text/markdown` returns `Content-Type: text/markdown`.
 
 ## Blockers
 
@@ -21,3 +23,6 @@
 - [x] Removed ignored migration/build leftovers and deleted unused tracked image/favicon files no longer referenced by the static page.
 - [x] Confirmed Cloudflare Pages settings: build command `npm ci && npm run build` works with no-op build script, output directory set to `/`. Live site at `liewcf.org` (custom domain) matches local source.
 - [x] Added sitemap and JSON-LD structured data from `docs/SEO_AUDIT_FIX_PLAN.md`.
+- [x] Added AVIF/WebP hero image sources with JPG fallback and `fetchpriority="high"` for the LCP image.
+- [x] Added Cloudflare Pages `_redirects` rules for removed routes: `/about/`, `/blog/`, `/projects/`, and `/contact/`.
+- [x] Added static agent discovery: Cloudflare Pages `_headers`, open Content Signals in `robots.txt`, an empty API catalog Linkset, an Agent Skills index with verified digest, and read-only homepage WebMCP tools.

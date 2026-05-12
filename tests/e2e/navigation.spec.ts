@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 
 test('static profile page loads with key content and links', async ({ page }) => {
@@ -67,6 +68,7 @@ test('cloudflare redirects old routes to homepage', async () => {
 	for (const path of ['/about/', '/blog/', '/projects/', '/contact/']) {
 		expect(redirects).toContain(`${path} / 301`);
 	}
+	expect(redirects).toContain('/.well-known/api-catalog /.well-known/api-catalog.json 200');
 });
 
 test('robots.txt includes sitemap URL', async ({ page }) => {
@@ -76,6 +78,7 @@ test('robots.txt includes sitemap URL', async ({ page }) => {
 	expect(body).toContain('Sitemap: https://liewcf.org/sitemap.xml');
 	expect(body).toContain('User-agent: *');
 	expect(body).toContain('Allow: /');
+	expect(body).toContain('Content-Signal: ai-train=yes, search=yes, ai-input=yes');
 });
 
 test('sitemap.xml exists and contains only canonical URLs', async ({ page }) => {
@@ -90,4 +93,56 @@ test('sitemap.xml exists and contains only canonical URLs', async ({ page }) => 
 	expect(body).not.toContain('/blog/');
 	expect(body).not.toContain('/projects/');
 	expect(body).not.toContain('/contact/');
+});
+
+test('cloudflare headers advertise agent discovery resources', async () => {
+	const headers = await readFile('_headers', 'utf8');
+
+	expect(headers).toContain('/');
+	expect(headers).toContain('Link: </.well-known/api-catalog>; rel="api-catalog"');
+	expect(headers).toContain('Link: </.well-known/agent-skills/index.json>; rel="service-desc"; type="application/json"; title="Agent Skills Discovery Index"');
+	expect(headers).toContain('/.well-known/api-catalog');
+	expect(headers).toContain('Content-Type: application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727"');
+	expect(headers).toContain('/.well-known/api-catalog.json');
+	expect(headers).toContain('/.well-known/agent-skills/index.json');
+	expect(headers).toContain('Content-Type: application/json; charset=utf-8');
+	expect(headers).toContain('/.well-known/agent-skills/liewcf-profile/SKILL.md');
+	expect(headers).toContain('Content-Type: text/markdown; charset=utf-8');
+});
+
+test('api catalog publishes a truthful empty linkset for this static site', async () => {
+	const apiCatalog = JSON.parse(await readFile('.well-known/api-catalog.json', 'utf8'));
+
+	expect(apiCatalog).toEqual({
+		linkset: [],
+	});
+});
+
+test('agent skills index advertises a verifiable static profile skill', async () => {
+	const index = JSON.parse(await readFile('.well-known/agent-skills/index.json', 'utf8'));
+	const skill = await readFile('.well-known/agent-skills/liewcf-profile/SKILL.md');
+	const digest = `sha256:${createHash('sha256').update(skill).digest('hex')}`;
+
+	expect(index).toEqual({
+		$schema: 'https://schemas.agentskills.io/discovery/0.2.0/schema.json',
+		skills: [
+			{
+				name: 'liewcf-profile',
+				type: 'skill-md',
+				description: 'Use liewcf.org as a static profile source for Liew CheonFong, featured projects, and contact links.',
+				url: '/.well-known/agent-skills/liewcf-profile/SKILL.md',
+				digest,
+			},
+		],
+	});
+});
+
+test('homepage registers read-only WebMCP tools when supported', async () => {
+	const html = await readFile('index.html', 'utf8');
+
+	expect(html).toContain('navigator.modelContext');
+	expect(html).toContain('provideContext');
+	expect(html).toContain('get_profile_summary');
+	expect(html).toContain('list_featured_projects');
+	expect(html).toContain('get_contact_links');
 });

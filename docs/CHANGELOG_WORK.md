@@ -30,3 +30,18 @@
 - Verified with `npm run check`; 4 Playwright tests passing.
 - Committed and pushed the SEO/static cleanup work to `origin/main` as `02a7557` (`Improve static site SEO metadata and sitemap`).
 - Updated project memory to record the static SEO architecture and remaining external validation follow-up.
+
+## 2026-05-12
+
+- Added `assets/liewcf-profile.avif` and `assets/liewcf-profile.webp`, updated the hero image to use AVIF/WebP/JPG fallback, and added `fetchpriority="high"` plus `decoding="async"` for the LCP image.
+- Extended Playwright coverage for the modern hero image sources and LCP attributes; verified with `npm run check` reporting 4 passing tests.
+- Pushed `e57b5f9` (`Optimize hero image delivery`); PageSpeed API retest reported 100 scores for performance, accessibility, best practices, and SEO on both mobile and desktop.
+- Added root `_redirects` rules so removed legacy routes redirect to `/` with 301 status on Cloudflare Pages.
+- Extended Playwright coverage to assert `_redirects` contains `/about/`, `/blog/`, `/projects/`, and `/contact/` rules; verified with `npm run check` reporting 5 passing tests.
+- Pushed `c65c5b1` (`Redirect removed routes to homepage`).
+- Added Cloudflare Pages `_headers` with homepage Link headers for `/.well-known/api-catalog` and the Agent Skills index, plus content-type overrides for the discovery files.
+- Added `Content-Signal: ai-train=yes, search=yes, ai-input=yes` to `robots.txt`.
+- Added `/.well-known/api-catalog` as an empty `application/linkset+json` Linkset because the site has no real API.
+- Added `/.well-known/agent-skills/index.json` and `/.well-known/agent-skills/liewcf-profile/SKILL.md` with a verified SHA-256 digest.
+- Added read-only WebMCP tools in `index.html` for profile summary, featured projects, and contact links when `navigator.modelContext` is available.
+- Extended Playwright coverage for agent-readiness headers, Content Signals, discovery files, digest verification, and WebMCP registration; verified the focused spec with 9 passing tests.

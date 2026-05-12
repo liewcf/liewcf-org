@@ -13,3 +13,10 @@
 - Use the square portrait asset for the hero image because the landscape WordCamp image cropped poorly on mobile.
 - Keep featured GitHub projects as a curated static section in `index.html`, using placeholder entries until exact repository URLs and copy are chosen.
 - Keep SEO enhancements static and hand-authored: a one-URL root `sitemap.xml`, a sitemap reference in `robots.txt`, and factual `Person`/`WebSite` JSON-LD in `index.html`.
+
+## 2026-05-12
+
+- Use Cloudflare Pages `_redirects` for removed legacy routes instead of restoring those pages.
+- Keep the hero portrait as AVIF/WebP with JPG fallback and `fetchpriority="high"` for the LCP image.
+- Add agent-readiness metadata as static files and headers only: Link headers, Content Signals, an empty API catalog, an Agent Skills index, and browser WebMCP tools.
+- Prefer truthful discovery over placeholder protocols: do not publish OAuth/OIDC metadata, OAuth protected-resource metadata, or an MCP Server Card until the site actually has protected APIs or a remote MCP server.

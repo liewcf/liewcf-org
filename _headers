@@ -1,0 +1,15 @@
+/
+  Link: </.well-known/api-catalog>; rel="api-catalog"
+  Link: </.well-known/agent-skills/index.json>; rel="service-desc"; type="application/json"; title="Agent Skills Discovery Index"
+
+/.well-known/api-catalog
+  Content-Type: application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727"
+
+/.well-known/api-catalog.json
+  Content-Type: application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727"
+
+/.well-known/agent-skills/index.json
+  Content-Type: application/json; charset=utf-8
+
+/.well-known/agent-skills/liewcf-profile/SKILL.md
+  Content-Type: text/markdown; charset=utf-8
