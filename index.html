@@ -65,7 +65,18 @@
 					</nav>
 				</div>
 				<figure class="hero-image">
-					<img src="/assets/liewcf-profile.jpg" alt="Portrait of Liew CheonFong" width="864" height="864">
+					<picture>
+						<source srcset="/assets/liewcf-profile.avif" type="image/avif">
+						<source srcset="/assets/liewcf-profile.webp" type="image/webp">
+						<img
+							src="/assets/liewcf-profile.jpg"
+							alt="Portrait of Liew CheonFong"
+							width="864"
+							height="864"
+							fetchpriority="high"
+							decoding="async"
+						>
+					</picture>
 				</figure>
 			</section>
 

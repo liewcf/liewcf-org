@@ -152,6 +152,10 @@ h1 {
 	transform: rotate(1.5deg);
 }
 
+.hero-image picture {
+	display: block;
+}
+
 .hero-image img {
 	width: 100%;
 	aspect-ratio: 4 / 5;

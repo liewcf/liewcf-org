@@ -5,7 +5,12 @@ test('static profile page loads with key content and links', async ({ page }) =>
 
 	await expect(page).toHaveTitle(/Liew CheonFong/);
 	await expect(page.getByRole('heading', { name: "Hello, I'm Liew CheonFong" })).toBeVisible();
-	await expect(page.getByRole('img', { name: 'Portrait of Liew CheonFong' })).toBeVisible();
+	const portrait = page.getByRole('img', { name: 'Portrait of Liew CheonFong' });
+	await expect(portrait).toBeVisible();
+	await expect(portrait).toHaveAttribute('fetchpriority', 'high');
+	await expect(portrait).toHaveAttribute('decoding', 'async');
+	await expect(page.locator('source[type="image/avif"]')).toHaveAttribute('srcset', '/assets/liewcf-profile.avif');
+	await expect(page.locator('source[type="image/webp"]')).toHaveAttribute('srcset', '/assets/liewcf-profile.webp');
 
 	const profileLinks = page.getByRole('navigation', { name: 'Profile links' });
 	await expect(profileLinks.getByRole('link', { name: 'Email' })).toHaveAttribute('href', 'mailto:liewcf@gmail.com');
