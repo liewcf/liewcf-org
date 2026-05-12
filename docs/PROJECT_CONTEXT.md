@@ -4,13 +4,14 @@
 
 - Project purpose: Personal profile and credibility page for `liewcf.org`.
 - Primary users: Visitors who want to understand who Liew CheonFong is, what he builds, and how to contact or follow him.
-- Current status: Static one-page site with plain HTML, CSS, only live referenced image/icon assets, and Playwright smoke checks.
+- Current status: Static one-page site with plain HTML, CSS, static SEO metadata/sitemap, only live referenced image/icon assets, and Playwright smoke checks.
 
 ## Architecture
 
 - Framework: None.
 - Styling: Plain CSS in `styles.css`.
 - Content: Hand-authored HTML in `index.html`.
+- SEO: `index.html` owns canonical, Open Graph/Twitter metadata, and static `Person`/`WebSite` JSON-LD; root `sitemap.xml` contains only `https://liewcf.org/`, and `robots.txt` references it.
 - Assets: Root-level `assets/` directory for the portrait, Open Graph image, favicon, and touch icon used by `index.html`.
 - Contact: Outbound links only; email uses `mailto:`.
 - API: None.

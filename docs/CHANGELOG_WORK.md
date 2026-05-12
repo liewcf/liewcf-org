@@ -28,3 +28,5 @@
 - Tightened page `<title>` and added `og:site_name` meta.
 - Extended Playwright tests to assert sitemap, robots.txt sitemap line, and JSON-LD presence/parsing.
 - Verified with `npm run check`; 4 Playwright tests passing.
+- Committed and pushed the SEO/static cleanup work to `origin/main` as `02a7557` (`Improve static site SEO metadata and sitemap`).
+- Updated project memory to record the static SEO architecture and remaining external validation follow-up.
