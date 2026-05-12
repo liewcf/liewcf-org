@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { readFile } from 'node:fs/promises';
 
 test('static profile page loads with key content and links', async ({ page }) => {
 	await page.goto('/');
@@ -58,6 +59,13 @@ test('removed routes do not behave like live site pages', async ({ page }) => {
 	for (const path of ['/about/', '/blog/', '/projects/', '/contact/']) {
 		const response = await page.goto(path);
 		expect(response?.status(), `${path} should not be a successful page`).not.toBe(200);
+	}
+});
+
+test('cloudflare redirects old routes to homepage', async () => {
+	const redirects = await readFile('_redirects', 'utf8');
+	for (const path of ['/about/', '/blog/', '/projects/', '/contact/']) {
+		expect(redirects).toContain(`${path} / 301`);
 	}
 });
 
