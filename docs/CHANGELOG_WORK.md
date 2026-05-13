@@ -45,3 +45,7 @@
 - Added `/.well-known/agent-skills/index.json` and `/.well-known/agent-skills/liewcf-profile/SKILL.md` with a verified SHA-256 digest.
 - Added read-only WebMCP tools in `index.html` for profile summary, featured projects, and contact links when `navigator.modelContext` is available.
 - Extended Playwright coverage for agent-readiness headers, Content Signals, discovery files, digest verification, and WebMCP registration; verified the focused spec with 9 passing tests.
+
+## 2026-05-14
+
+- Reduced referenced image/icon asset weight without changing dimensions: rebuilt the legacy ICO favicon and recompressed the profile JPG/WebP/AVIF fallbacks.
