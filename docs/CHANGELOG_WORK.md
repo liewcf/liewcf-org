@@ -49,3 +49,7 @@
 ## 2026-05-14
 
 - Reduced referenced image/icon asset weight without changing dimensions: rebuilt the legacy ICO favicon and recompressed the profile JPG/WebP/AVIF fallbacks.
+
+## 2026-05-20
+
+- Applied small accessibility/UI polish in `styles.css`: darker muted text, smooth link/button color transitions, and 48px touch targets for profile, project, and footer links on coarse-pointer devices.
