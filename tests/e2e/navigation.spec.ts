@@ -17,10 +17,14 @@ test('static profile page loads with key content and links', async ({ page }) =>
 	const profileLinks = page.getByRole('navigation', { name: 'Profile links' });
 	await expect(profileLinks.getByRole('link', { name: 'Email' })).toHaveAttribute('href', 'mailto:liewcf@gmail.com');
 	await expect(profileLinks.getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', 'https://github.com/liewcf');
+	await expect(profileLinks.getByRole('link', { name: 'GitHub' })).toHaveAttribute('target', '_blank');
+	await expect(profileLinks.getByRole('link', { name: 'GitHub' })).toHaveAttribute('rel', /noopener/);
 	await expect(profileLinks.getByRole('link', { name: 'Facebook' })).toHaveAttribute(
 		'href',
 		'https://www.facebook.com/LiewCheonFong',
 	);
+	await expect(profileLinks.getByRole('link', { name: 'Facebook' })).toHaveAttribute('target', '_blank');
+	await expect(profileLinks.getByRole('link', { name: 'Facebook' })).toHaveAttribute('rel', /noopener/);
 
 	await expect(page.getByRole('heading', { name: 'A few shipped tools from my workbench.' })).toBeVisible();
 	for (const project of ['project-memory', 'QuickRes', 'enjinmel-smtp', 'public-draft-share']) {
@@ -54,6 +58,65 @@ test('static profile page loads with key content and links', async ({ page }) =>
 		publisher: { '@id': 'https://liewcf.org/#person' },
 		inLanguage: 'en',
 	});
+});
+
+test('static project filters narrow the curated project list', async ({ page }) => {
+	await page.goto('/');
+
+	const filters = page.getByRole('group', { name: 'Filter projects by category' });
+	const allButton = filters.getByRole('button', { name: 'All' });
+	const wordpressButton = filters.getByRole('button', { name: 'WordPress' });
+	const macosButton = filters.getByRole('button', { name: 'macOS' });
+	const developerToolButton = filters.getByRole('button', { name: 'Developer Tool' });
+	const status = page.getByRole('status');
+
+	await expect(allButton).toHaveAttribute('aria-pressed', 'true');
+
+	await wordpressButton.click();
+	await expect(wordpressButton).toHaveAttribute('aria-pressed', 'true');
+	await expect(status).toHaveText('2 projects in WordPress');
+	await expect(page.getByRole('article').filter({ hasText: 'enjinmel-smtp' })).toBeVisible();
+	await expect(page.getByRole('article').filter({ hasText: 'public-draft-share' })).toBeVisible();
+	await expect(page.getByRole('article').filter({ hasText: 'QuickRes' })).toBeHidden();
+
+	await macosButton.click();
+	await expect(macosButton).toHaveAttribute('aria-pressed', 'true');
+	await expect(status).toHaveText('1 project in macOS');
+	await expect(page.getByRole('article').filter({ hasText: 'QuickRes' })).toBeVisible();
+	await expect(page.getByRole('article').filter({ hasText: 'enjinmel-smtp' })).toBeHidden();
+
+	await developerToolButton.click();
+	await expect(developerToolButton).toHaveAttribute('aria-pressed', 'true');
+	await expect(status).toHaveText('1 project in Developer Tool');
+	await expect(page.getByRole('article').filter({ hasText: 'project-memory' })).toBeVisible();
+	await expect(page.getByRole('article').filter({ hasText: 'QuickRes' })).toBeHidden();
+
+	await allButton.click();
+	await expect(allButton).toHaveAttribute('aria-pressed', 'true');
+	await expect(status).toHaveText('');
+	for (const project of ['project-memory', 'QuickRes', 'enjinmel-smtp', 'public-draft-share']) {
+		await expect(page.getByRole('article').filter({ hasText: project })).toBeVisible();
+	}
+});
+
+test('contact remains outbound mailto only', async ({ page }) => {
+	await page.goto('/');
+
+	await expect(page.locator('form')).toHaveCount(0);
+	await expect(page.locator('footer').getByRole('link', { name: 'liewcf@gmail.com' })).toHaveAttribute(
+		'href',
+		'mailto:liewcf@gmail.com',
+	);
+});
+
+test('favicon is available from the conventional root path', async ({ page, request }) => {
+	await page.goto('/');
+
+	await expect(page.locator('link[rel="icon"][sizes="any"]')).toHaveAttribute('href', '/favicon.ico');
+
+	const response = await request.get('/favicon.ico');
+	expect(response.status()).toBe(200);
+	expect(response.headers()['content-type']).toContain('image/x-icon');
 });
 
 test('removed routes do not behave like live site pages', async ({ page }) => {

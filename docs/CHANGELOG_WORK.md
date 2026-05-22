@@ -54,3 +54,11 @@
 
 - Applied small accessibility/UI polish in `styles.css`: darker muted text, smooth link/button color transitions, and 48px touch targets for profile, project, and footer links on coarse-pointer devices. Verified with `npm run check` reporting 9 passing Playwright tests, then pushed commit `d887244`.
 - Completed post-deployment Search Console validation for homepage indexing and sitemap submission.
+- Updated project memory to record the completed `www` redirect/Search Console validation and the Cloudflare Markdown for Agents limitation on the current Cloudflare Free account.
+
+## 2026-05-22
+
+- Referenced the scratch preview in `/Users/cheonfongliew/.gemini/antigravity/scratch/liewcf-preview/` and updated `index.html`/`styles.css` with tighter editorial copy, light/dark styling tokens, visible focus states, numbered focus tiles, project repo labels, and a static category filter for featured projects.
+- Preserved the existing no-contact-form direction: kept contact as outbound `mailto:` links and did not copy the scratch preview's form section or external font links.
+- Extended Playwright coverage for external link safety, static project filtering, and outbound-only contact.
+- Added root `favicon.ico`, updated the homepage ICO link to `/favicon.ico`, and added Playwright coverage so browser chrome and tools that probe the conventional favicon path get a 200 response; regenerated both ICO files from `assets/apple-touch-icon.png` after the previous ICO rendered blank.

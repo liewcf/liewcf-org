@@ -20,3 +20,11 @@
 - Keep the hero portrait as AVIF/WebP with JPG fallback and `fetchpriority="high"` for the LCP image.
 - Add agent-readiness metadata as static files and headers only: Link headers, Content Signals, an empty API catalog, an Agent Skills index, and browser WebMCP tools.
 - Prefer truthful discovery over placeholder protocols: do not publish OAuth/OIDC metadata, OAuth protected-resource metadata, or an MCP Server Card until the site actually has protected APIs or a remote MCP server.
+
+## 2026-05-20
+
+- Do not pursue Cloudflare Markdown for Agents on the current Cloudflare Free account because the feature is not available there; keep the repo's existing static agent discovery as the supported agent-facing surface unless the account plan or feature availability changes.
+
+## 2026-05-22
+
+- Adopt the scratch preview's stronger editorial copy, light/dark CSS tokens, visible focus states, numbered focus tiles, and static project category filter while preserving the repo rule that contact stays outbound `mailto:` only. Do not add the preview contact form unless a future explicit decision changes the site's no-form/no-API direction.
