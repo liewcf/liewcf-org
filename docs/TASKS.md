@@ -2,14 +2,15 @@
 
 ## Current
 
-- [ ] Preview the final static page on desktop and mobile widths before launch if visual layout changes continue.
-- [ ] Configure and verify `www.liewcf.org` in Cloudflare so it redirects cleanly to `https://liewcf.org/`.
-- [ ] Validate Google Search Console indexing and sitemap submission after deployment.
-- [ ] Enable Cloudflare Markdown for Agents for `liewcf.org`, then verify `Accept: text/markdown` returns `Content-Type: text/markdown`.
+- No open tasks recorded.
 
 ## Blockers
 
 - None recorded.
+
+## Not Doing
+
+- Cloudflare Markdown for Agents is not currently being enabled because the site is on a Cloudflare Free account, where that feature is not available. Do not keep this as an open launch task unless the account plan or Cloudflare feature availability changes.
 
 ## Done
 
@@ -26,3 +27,7 @@
 - [x] Added AVIF/WebP hero image sources with JPG fallback and `fetchpriority="high"` for the LCP image.
 - [x] Added Cloudflare Pages `_redirects` rules for removed routes: `/about/`, `/blog/`, `/projects/`, and `/contact/`.
 - [x] Added static agent discovery: Cloudflare Pages `_headers`, open Content Signals in `robots.txt`, an empty API catalog Linkset, an Agent Skills index with verified digest, and read-only homepage WebMCP tools.
+- [x] Applied small accessibility/UI polish in `styles.css`: darker muted text, smooth link/button color transitions, and larger touch targets on coarse-pointer devices.
+- [x] Previewed the final static page on desktop and mobile widths before launch.
+- [x] Configured and verified `www.liewcf.org` redirects cleanly to `https://liewcf.org/` with a live `301` check.
+- [x] Validated Google Search Console indexing and sitemap submission after deployment.

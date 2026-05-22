@@ -52,4 +52,5 @@
 
 ## 2026-05-20
 
-- Applied small accessibility/UI polish in `styles.css`: darker muted text, smooth link/button color transitions, and 48px touch targets for profile, project, and footer links on coarse-pointer devices.
+- Applied small accessibility/UI polish in `styles.css`: darker muted text, smooth link/button color transitions, and 48px touch targets for profile, project, and footer links on coarse-pointer devices. Verified with `npm run check` reporting 9 passing Playwright tests, then pushed commit `d887244`.
+- Completed post-deployment Search Console validation for homepage indexing and sitemap submission.
