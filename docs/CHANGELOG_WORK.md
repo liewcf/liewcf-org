@@ -62,3 +62,7 @@
 - Preserved the existing no-contact-form direction: kept contact as outbound `mailto:` links and did not copy the scratch preview's form section or external font links.
 - Extended Playwright coverage for external link safety, static project filtering, and outbound-only contact.
 - Added root `favicon.ico`, updated the homepage ICO link to `/favicon.ico`, and added Playwright coverage so browser chrome and tools that probe the conventional favicon path get a 200 response; regenerated both ICO files from `assets/apple-touch-icon.png` after the previous ICO rendered blank.
+
+## 2026-05-23
+
+- Removed cleanup candidates that no longer matched the static site: ignored `test-results/` and `.superpowers/` generated leftovers, duplicate `assets/favicon.ico`, and stale Prettier config files that referenced old Astro/Tailwind plugins without an active formatting script.
