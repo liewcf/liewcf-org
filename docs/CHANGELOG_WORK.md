@@ -66,3 +66,4 @@
 ## 2026-05-23
 
 - Removed cleanup candidates that no longer matched the static site: ignored `test-results/` and `.superpowers/` generated leftovers, duplicate `assets/favicon.ico`, and stale Prettier config files that referenced old Astro/Tailwind plugins without an active formatting script.
+- Fixed the modern web audit findings by adding explicit list semantics to styled homepage lists, switching base font sizes from `px` to `rem`, and adding Playwright regression coverage.

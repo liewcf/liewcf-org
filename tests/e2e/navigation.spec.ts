@@ -99,6 +99,23 @@ test('static project filters narrow the curated project list', async ({ page }) 
 	}
 });
 
+test('styled lists keep explicit list semantics', async ({ page }) => {
+	await page.goto('/');
+
+	await expect(page.locator('.project-tags')).toHaveCount(4);
+	await expect(page.locator('.project-tags[role="list"]')).toHaveCount(4);
+	await expect(page.locator('.proof-list[role="list"]')).toHaveCount(1);
+});
+
+test('base type sizes use relative units', async () => {
+	const styles = await readFile('styles.css', 'utf8');
+
+	expect(styles).toContain('font-size: 1.125rem;');
+	expect(styles).toContain('font-size: 1rem;');
+	expect(styles).not.toContain('font-size: 18px;');
+	expect(styles).not.toContain('font-size: 16px;');
+});
+
 test('contact remains outbound mailto only', async ({ page }) => {
 	await page.goto('/');
 
