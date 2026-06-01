@@ -1,0 +1,13 @@
+# Liew CheonFong
+
+Public profile and project notes for Liew CheonFong.
+
+## Links
+
+- [Website](https://liewcf.org/)
+- [Markdown profile](https://liewcf.org/index.md)
+- [Agent Skills discovery](https://liewcf.org/.well-known/agent-skills/index.json)
+
+## Focus
+
+Liew CheonFong builds practical WordPress tools, macOS utilities, developer utilities, and focused websites.

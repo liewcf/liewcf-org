@@ -67,3 +67,10 @@
 
 - Removed cleanup candidates that no longer matched the static site: ignored `test-results/` and `.superpowers/` generated leftovers, duplicate `assets/favicon.ico`, and stale Prettier config files that referenced old Astro/Tailwind plugins without an active formatting script.
 - Fixed the modern web audit findings by adding explicit list semantics to styled homepage lists, switching base font sizes from `px` to `rem`, and adding Playwright regression coverage.
+
+## 2026-05-31
+
+- Added a root `404.html` so Cloudflare Pages can serve unknown routes with a real 404 response instead of the homepage SPA fallback.
+- Added site-wide Cloudflare Pages security headers in `_headers`: HSTS, CSP with `frame-ancestors 'none'`, `X-Frame-Options: DENY`, `X-Content-Type-Options`, `Referrer-Policy`, and `Permissions-Policy`.
+- Added `/.well-known/security.txt`, `/llms.txt`, and `/index.md`, plus explicit content-type rules for those files.
+- Extended Playwright smoke coverage for the audit fixes: 404 page source, security headers, security contact file, and agent-facing text files.

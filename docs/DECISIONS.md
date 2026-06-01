@@ -28,3 +28,8 @@
 ## 2026-05-22
 
 - Adopt the scratch preview's stronger editorial copy, light/dark CSS tokens, visible focus states, numbered focus tiles, and static project category filter while preserving the repo rule that contact stays outbound `mailto:` only. Do not add the preview contact form unless a future explicit decision changes the site's no-form/no-API direction.
+
+## 2026-05-31
+
+- Keep specification.website audit fixes static and Cloudflare Pages-native: use root `404.html` for real 404 status, root `_headers` for HSTS/CSP/clickjacking/permissions headers, and plain text files for `security.txt`, `llms.txt`, and the Markdown profile.
+- Keep the CSP compatible with the current inline JSON-LD and small inline homepage script; remove `'unsafe-inline'` only if those inline scripts move to external files.

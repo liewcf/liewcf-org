@@ -151,6 +151,50 @@ test('cloudflare redirects old routes to homepage', async () => {
 	expect(redirects).toContain('/.well-known/api-catalog /.well-known/api-catalog.json 200');
 });
 
+test('cloudflare pages has a real 404 page instead of SPA fallback', async () => {
+	const notFoundPage = await readFile('404.html', 'utf8');
+
+	expect(notFoundPage).toContain('<meta name="robots" content="noindex">');
+	expect(notFoundPage).toContain('Page not found');
+	expect(notFoundPage).toContain('href="/"');
+});
+
+test('cloudflare headers include security policy protections', async () => {
+	const headers = await readFile('_headers', 'utf8');
+
+	expect(headers).toContain('Strict-Transport-Security: max-age=31536000; includeSubDomains');
+	expect(headers).toContain("Content-Security-Policy: default-src 'self';");
+	expect(headers).toContain("frame-ancestors 'none'");
+	expect(headers).toContain('X-Frame-Options: DENY');
+	expect(headers).toContain('X-Content-Type-Options: nosniff');
+	expect(headers).toContain('Referrer-Policy: strict-origin-when-cross-origin');
+	expect(headers).toContain('Permissions-Policy:');
+	expect(headers).toContain('/.well-known/security.txt');
+	expect(headers).toContain('/llms.txt');
+	expect(headers).toContain('/index.md');
+	expect(headers).toContain('Content-Type: text/plain; charset=utf-8');
+});
+
+test('security.txt is a real well-known security contact file', async () => {
+	const securityTxt = await readFile('.well-known/security.txt', 'utf8');
+
+	expect(securityTxt).toContain('Contact: mailto:liewcf@gmail.com');
+	expect(securityTxt).toContain('Expires: 2027-05-31T00:00:00Z');
+	expect(securityTxt).toContain('Canonical: https://liewcf.org/.well-known/security.txt');
+});
+
+test('llms.txt and markdown profile give agents a static text entry point', async () => {
+	const llmsTxt = await readFile('llms.txt', 'utf8');
+	const markdownProfile = await readFile('index.md', 'utf8');
+
+	expect(llmsTxt).toContain('# Liew CheonFong');
+	expect(llmsTxt).toContain('- [Markdown profile](https://liewcf.org/index.md)');
+	expect(llmsTxt).toContain('- [Agent Skills discovery](https://liewcf.org/.well-known/agent-skills/index.json)');
+	expect(markdownProfile).toContain('# Liew CheonFong');
+	expect(markdownProfile).toContain('mailto:liewcf@gmail.com');
+	expect(markdownProfile).toContain('https://github.com/liewcf/project-memory');
+});
+
 test('robots.txt includes sitemap URL', async ({ page }) => {
 	const response = await page.goto('/robots.txt');
 	expect(response?.status()).toBe(200);
