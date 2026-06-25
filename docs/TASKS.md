@@ -2,7 +2,7 @@
 
 ## Current
 
-- No open tasks recorded.
+- None.
 
 ## Blockers
 
@@ -32,3 +32,4 @@
 - [x] Configured and verified `www.liewcf.org` redirects cleanly to `https://liewcf.org/` with a live `301` check.
 - [x] Validated Google Search Console indexing and sitemap submission after deployment.
 - [x] Fixed the specification.website audit gaps in source: real Cloudflare Pages 404 page, HSTS, clickjacking protection, CSP, Permissions-Policy, `/.well-known/security.txt`, `/llms.txt`, and `/index.md`.
+- [x] Verified live deployment: real 404 on nonexistent path, HSTS, CSP/frame-ancestors, and Permissions-Policy headers confirmed working.
