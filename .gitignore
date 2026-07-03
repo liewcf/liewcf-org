@@ -25,6 +25,9 @@ pnpm-debug.log*
 # IDE
 .idea/
 
+# Tooling cache
+.firecrawl/
+
 # Local notes
 notes/
 
