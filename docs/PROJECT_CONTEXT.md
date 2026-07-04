@@ -9,7 +9,7 @@
 ## Architecture
 
 - Framework: None.
-- Styling: Plain CSS in `styles.css`.
+- Styling: Plain CSS in `styles.css`. Neutral-premium palette (zinc off-white/near-black base with a single terracotta accent); self-hosted Outfit variable sans (latin woff2 in `assets/fonts/`) for all text with hierarchy via size/weight/tracking; dot-grid background with a fixed grain overlay (`assets/grain.svg`); asymmetric zig-zag focus grid; glassmorphism project cards with hover lift; staggered `IntersectionObserver` scroll reveals respecting `prefers-reduced-motion`; `:active` scale feedback; visible focus rings; `100dvh` viewport units; ~1200px max-width shell.
 - Content: Hand-authored HTML in `index.html`.
 - SEO: `index.html` owns canonical, Open Graph/Twitter metadata, and static `Person`/`WebSite` JSON-LD; root `sitemap.xml` contains only `https://liewcf.org/`, and `robots.txt` references it.
 - UI behavior: featured projects are static cards with a small client-side category filter; filtering must not introduce API calls, routing, or hidden build/runtime dependencies.
@@ -18,7 +18,7 @@
 - Security headers: root `_headers` applies HSTS, CSP with `frame-ancestors 'none'`, `X-Frame-Options: DENY`, `X-Content-Type-Options`, `Referrer-Policy`, and `Permissions-Policy` to static responses.
 - Agent discovery: root `_headers` advertises `/.well-known/api-catalog` and `/.well-known/agent-skills/index.json`; `robots.txt` declares `Content-Signal: ai-train=yes, search=yes, ai-input=yes`; `llms.txt` and `index.md` provide simple agent-facing text; `index.html` registers read-only WebMCP tools when `navigator.modelContext` is available.
 - Security contact: `/.well-known/security.txt` publishes the public email contact for security reports.
-- Assets: Root-level `assets/` directory for the portrait, AVIF/WebP/JPG hero image fallback, Open Graph image, SVG favicon, and touch icon used by `index.html`; root `favicon.ico` exists for browser and bot compatibility with the conventional favicon path.
+- Assets: Root-level `assets/` directory for the portrait, AVIF/WebP/JPG hero image fallback, Open Graph image, SVG favicon, touch icon, self-hosted Outfit variable woff2 (`assets/fonts/outfit-latin.woff2`), and grain overlay (`assets/grain.svg`) used by `index.html`; root `favicon.ico` exists for browser and bot compatibility with the conventional favicon path.
 - Contact: Outbound links only; email uses `mailto:`.
 - API: None; `/.well-known/api-catalog` intentionally returns an empty Linkset instead of inventing a public API.
 - Auth discovery: None; do not add OAuth/OIDC or OAuth protected-resource metadata unless the site gains protected APIs.

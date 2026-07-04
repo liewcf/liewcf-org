@@ -74,3 +74,11 @@
 - Added site-wide Cloudflare Pages security headers in `_headers`: HSTS, CSP with `frame-ancestors 'none'`, `X-Frame-Options: DENY`, `X-Content-Type-Options`, `Referrer-Policy`, and `Permissions-Policy`.
 - Added `/.well-known/security.txt`, `/llms.txt`, and `/index.md`, plus explicit content-type rules for those files.
 - Extended Playwright smoke coverage for the audit fixes: 404 page source, security headers, security contact file, and agent-facing text files.
+
+## 2026-07-04
+
+- Applied the `Leonxlnx/taste-skill` `redesign-existing-projects` skill in a new git worktree on branch `redesign/taste-skill` (sibling dir `liewcf.org-redesign`); `main` checkout untouched.
+- Changed `styles.css`: added `@font-face` for self-hosted Outfit (latin variable woff2); dropped Georgia serif from `h1`/`h2`/`.tile-number`; normalized `font-weight: 750` → 600; neutralized the palette (`--paper` `#fafaf9`, `--ink` `#18181b`, `--line` `#e4e4e7`, neutral shadows) while keeping terracotta as the single accent; swapped the graph-paper `body::before` for a dot grid and added a fixed `body::after` grain overlay; widened `.page-shell`/`.site-footer` 1120px → 1200px; bumped `.section` padding 54px → 72px; `100vh` → `100dvh`; softened card radius 8px → 14px and hero-image 8px → 12px; reworked the focus grid into an asymmetric zig-zag with per-tile `margin-top` offsets; added `:active` scale, card hover lift, true-glassmorphism inner border, `text-wrap: balance/pretty`, `scroll-behavior: smooth`, skip-link styles, and staggered reveal transitions.
+- Changed `index.html`: added a font preload link, a "Skip to content" link, and an `IntersectionObserver` reveal script (before the WebMCP guard) with a no-IO fallback; existing filter logic and WebMCP registration unchanged.
+- Added `assets/fonts/outfit-latin.woff2` (Outfit variable, latin subset, 32 KB) and `assets/grain.svg` (tiled `feTurbulence` noise, 323 B).
+- Verified with `npm run check`: 18/18 Playwright tests pass. Curl-checked both new assets serve 200 (`font/woff2`, `image/svg+xml`). Audited: no inline `style=""`, no external font/style/script refs, no `font-size: 18px`/`16px` in `styles.css`. Captured desktop + mobile screenshots; note: visual self-review was limited because the executing model cannot process image input.

@@ -47,9 +47,11 @@
 		<link rel="icon" href="/favicon.ico" sizes="any">
 		<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 		<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+		<link rel="preload" href="/assets/fonts/outfit-latin.woff2" as="font" type="font/woff2" crossorigin>
 		<link rel="stylesheet" href="/styles.css">
 	</head>
 	<body>
+		<a href="#intro-title" class="skip-link">Skip to content</a>
 		<main class="page-shell">
 			<section class="hero" aria-labelledby="intro-title">
 				<div class="hero-copy">
@@ -230,6 +232,27 @@
 			filterButtons.forEach((button) => {
 				button.addEventListener('click', () => setProjectFilter(button.dataset.filter || 'all'));
 			});
+
+			const revealTargets = document.querySelectorAll(
+				'.hero-copy, .hero-image, .focus-tile, .project-card, .proof-list li',
+			);
+
+			if (!('IntersectionObserver' in window)) {
+				revealTargets.forEach((el) => el.classList.add('is-revealed'));
+			} else {
+				const revealObserver = new IntersectionObserver(
+					(entries, observer) => {
+						entries.forEach((entry) => {
+							if (entry.isIntersecting) {
+								entry.target.classList.add('is-revealed');
+								observer.unobserve(entry.target);
+							}
+						});
+					},
+					{ threshold: 0.08, rootMargin: '0px 0px -40px 0px' },
+				);
+				revealTargets.forEach((el) => revealObserver.observe(el));
+			}
 
 			if (!('modelContext' in navigator) || !navigator.modelContext?.provideContext) {
 				return;

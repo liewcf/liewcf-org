@@ -33,3 +33,12 @@
 
 - Keep specification.website audit fixes static and Cloudflare Pages-native: use root `404.html` for real 404 status, root `_headers` for HSTS/CSP/clickjacking/permissions headers, and plain text files for `security.txt`, `llms.txt`, and the Markdown profile.
 - Keep the CSP compatible with the current inline JSON-LD and small inline homepage script; remove `'unsafe-inline'` only if those inline scripts move to external files.
+
+## 2026-07-04
+
+- Applied the `Leonxlnx/taste-skill` `redesign-existing-projects` skill (Scan → Diagnose → Fix) in a dedicated worktree on branch `redesign/taste-skill`; referenced the skill's `SKILL.md` rather than copying it into the repo.
+- Chose a neutral-premium aesthetic: neutralized the warm paper/ink/line palette to neutral zinc tones, kept the existing terracotta (`#b6402d`/`#7e2d21`) as the single accent, and dropped the Georgia serif display headings in favor of a self-hosted Outfit variable sans for hierarchy via size/weight/tracking.
+- Self-hosted the Outfit variable woff2 (latin subset, ~32 KB) under `assets/fonts/` with a local `@font-face` to fix the previously broken font reference within the CSP `font-src 'self'` constraint; no external font CDN.
+- Reworked the 3-equal-column focus grid (the skill's top-flagged "most generic AI layout") into an asymmetric zig-zag via CSS-only per-tile `margin-top` offsets; kept the same three `<article class="focus-tile">` markup.
+- Added premium surface and motion upgrades within the no-framework constraint: dot-grid background, fixed grain overlay (`assets/grain.svg`), true-glassmorphism inner border on project cards, `:active` scale feedback, card hover lift, and staggered `IntersectionObserver` scroll reveals (opacity/transform only, respecting `prefers-reduced-motion`).
+- Kept all test-pinned copy, structure, asset filenames, CSS-unit rules (`1.125rem`/`1rem`, no `18px`/`16px`), and the inline filter/WebMCP scripts unchanged; all 18 Playwright smoke tests pass.

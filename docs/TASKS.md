@@ -33,3 +33,4 @@
 - [x] Validated Google Search Console indexing and sitemap submission after deployment.
 - [x] Fixed the specification.website audit gaps in source: real Cloudflare Pages 404 page, HSTS, clickjacking protection, CSP, Permissions-Policy, `/.well-known/security.txt`, `/llms.txt`, and `/index.md`.
 - [x] Verified live deployment: real 404 on nonexistent path, HSTS, CSP/frame-ancestors, and Permissions-Policy headers confirmed working.
+- [x] Applied the `redesign-existing-projects` skill in a `redesign/taste-skill` worktree: neutral-premium palette, self-hosted Outfit, zig-zag focus grid, dot+grain texture, glassmorphism cards, staggered scroll reveals, active/hover states, skip-link, `100dvh`, widened shell. 18/18 tests pass.
