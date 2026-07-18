@@ -1,3 +1,23 @@
+---
+title: Project Context
+description: Stable project facts, structure, workflows, resources, and constraints.
+doc_type: context
+status: stable
+created: 2026-07-19
+updated: 2026-07-19
+tags:
+  - project-memory
+  - context
+  - durable-knowledge
+audience:
+  - agent
+  - maintainer
+related:
+  - DECISIONS.md
+  - TASKS.md
+  - CHANGELOG_WORK.md
+---
+
 # Project Context
 
 ## Overview

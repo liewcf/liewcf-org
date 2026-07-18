@@ -1,3 +1,24 @@
+---
+title: Work Changelog
+description: Dated notes on changed files, deliverables, tooling, checks, and verification.
+doc_type: work_log
+status: active
+created: 2026-07-19
+updated: 2026-07-19
+tags:
+  - project-memory
+  - changelog
+  - work-log
+  - verification
+audience:
+  - agent
+  - maintainer
+related:
+  - PROJECT_CONTEXT.md
+  - DECISIONS.md
+  - TASKS.md
+---
+
 # Work Changelog
 
 ## 2026-05-10
@@ -82,3 +103,10 @@
 - Changed `index.html`: added a font preload link, a "Skip to content" link, and an `IntersectionObserver` reveal script (before the WebMCP guard) with a no-IO fallback; existing filter logic and WebMCP registration unchanged.
 - Added `assets/fonts/outfit-latin.woff2` (Outfit variable, latin subset, 32 KB) and `assets/grain.svg` (tiled `feTurbulence` noise, 323 B).
 - Verified with `npm run check`: 18/18 Playwright tests pass. Curl-checked both new assets serve 200 (`font/woff2`, `image/svg+xml`). Audited: no inline `style=""`, no external font/style/script refs, no `font-size: 18px`/`16px` in `styles.css`. Captured desktop + mobile screenshots; note: visual self-review was limited because the executing model cannot process image input.
+
+## 2026-07-19
+
+- Refreshed the `AGENTS.md` project-memory requirement, added Project Memory Metadata v1 frontmatter to all four `docs/*.md` memory files, and normalized `docs/TASKS.md` with recommended-next-action and verification sections.
+- Verified the setup and metadata repair scripts are idempotent and `git diff --check` passes.
+- Replaced the featured homepage projects with the user-curated set `youtube-watchlist-manager`, `enjinmel-smtp`, `verified-person-research`, and `imagezoom`; synchronized the filters, Markdown profile, read-only WebMCP list, Playwright assertions, and future-agent guidance.
+- Verified the update with `npm run check` (18/18 passing), desktop and mobile previews, and a 390px overflow check (`scrollWidth` equals `clientWidth`).

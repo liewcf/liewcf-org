@@ -27,8 +27,18 @@ test('static profile page loads with key content and links', async ({ page }) =>
 	await expect(profileLinks.getByRole('link', { name: 'Facebook' })).toHaveAttribute('rel', /noopener/);
 
 	await expect(page.getByRole('heading', { name: 'A few shipped tools from my workbench.' })).toBeVisible();
-	for (const project of ['project-memory', 'QuickRes', 'enjinmel-smtp', 'public-draft-share']) {
+	const featuredProjects = [
+		['youtube-watchlist-manager', 'https://github.com/liewcf/youtube-watchlist-manager'],
+		['enjinmel-smtp', 'https://github.com/liewcf/enjinmel-smtp'],
+		['verified-person-research', 'https://github.com/liewcf/verified-person-research'],
+		['imagezoom', 'https://github.com/liewcf/imagezoom'],
+	] as const;
+	const projectCards = page.getByRole('article').filter({ has: page.locator('.project-repo') });
+	await expect(projectCards).toHaveCount(4);
+	await expect(projectCards.locator('.project-repo')).toHaveText(featuredProjects.map(([name]) => `liewcf/${name}`));
+	for (const [project, url] of featuredProjects) {
 		await expect(page.getByRole('article').filter({ hasText: project })).toBeVisible();
+		await expect(page.getByRole('link', { name: `View ${project} on GitHub` })).toHaveAttribute('href', url);
 	}
 
 	const jsonldScript = page.locator('script[type="application/ld+json"]');
@@ -66,7 +76,7 @@ test('static project filters narrow the curated project list', async ({ page }) 
 	const filters = page.getByRole('group', { name: 'Filter projects by category' });
 	const allButton = filters.getByRole('button', { name: 'All' });
 	const wordpressButton = filters.getByRole('button', { name: 'WordPress' });
-	const macosButton = filters.getByRole('button', { name: 'macOS' });
+	const chromeExtensionButton = filters.getByRole('button', { name: 'Chrome Extension' });
 	const developerToolButton = filters.getByRole('button', { name: 'Developer Tool' });
 	const status = page.getByRole('status');
 
@@ -74,27 +84,27 @@ test('static project filters narrow the curated project list', async ({ page }) 
 
 	await wordpressButton.click();
 	await expect(wordpressButton).toHaveAttribute('aria-pressed', 'true');
-	await expect(status).toHaveText('2 projects in WordPress');
+	await expect(status).toHaveText('1 project in WordPress');
 	await expect(page.getByRole('article').filter({ hasText: 'enjinmel-smtp' })).toBeVisible();
-	await expect(page.getByRole('article').filter({ hasText: 'public-draft-share' })).toBeVisible();
-	await expect(page.getByRole('article').filter({ hasText: 'QuickRes' })).toBeHidden();
+	await expect(page.getByRole('article').filter({ hasText: 'imagezoom' })).toBeHidden();
 
-	await macosButton.click();
-	await expect(macosButton).toHaveAttribute('aria-pressed', 'true');
-	await expect(status).toHaveText('1 project in macOS');
-	await expect(page.getByRole('article').filter({ hasText: 'QuickRes' })).toBeVisible();
+	await chromeExtensionButton.click();
+	await expect(chromeExtensionButton).toHaveAttribute('aria-pressed', 'true');
+	await expect(status).toHaveText('2 projects in Chrome Extension');
+	await expect(page.getByRole('article').filter({ hasText: 'youtube-watchlist-manager' })).toBeVisible();
+	await expect(page.getByRole('article').filter({ hasText: 'imagezoom' })).toBeVisible();
 	await expect(page.getByRole('article').filter({ hasText: 'enjinmel-smtp' })).toBeHidden();
 
 	await developerToolButton.click();
 	await expect(developerToolButton).toHaveAttribute('aria-pressed', 'true');
 	await expect(status).toHaveText('1 project in Developer Tool');
-	await expect(page.getByRole('article').filter({ hasText: 'project-memory' })).toBeVisible();
-	await expect(page.getByRole('article').filter({ hasText: 'QuickRes' })).toBeHidden();
+	await expect(page.getByRole('article').filter({ hasText: 'verified-person-research' })).toBeVisible();
+	await expect(page.getByRole('article').filter({ hasText: 'youtube-watchlist-manager' })).toBeHidden();
 
 	await allButton.click();
 	await expect(allButton).toHaveAttribute('aria-pressed', 'true');
 	await expect(status).toHaveText('');
-	for (const project of ['project-memory', 'QuickRes', 'enjinmel-smtp', 'public-draft-share']) {
+	for (const project of ['youtube-watchlist-manager', 'enjinmel-smtp', 'verified-person-research', 'imagezoom']) {
 		await expect(page.getByRole('article').filter({ hasText: project })).toBeVisible();
 	}
 });
@@ -192,7 +202,10 @@ test('llms.txt and markdown profile give agents a static text entry point', asyn
 	expect(llmsTxt).toContain('- [Agent Skills discovery](https://liewcf.org/.well-known/agent-skills/index.json)');
 	expect(markdownProfile).toContain('# Liew CheonFong');
 	expect(markdownProfile).toContain('mailto:liewcf@gmail.com');
-	expect(markdownProfile).toContain('https://github.com/liewcf/project-memory');
+	for (const project of ['youtube-watchlist-manager', 'enjinmel-smtp', 'verified-person-research', 'imagezoom']) {
+		expect(markdownProfile).toContain(`https://github.com/liewcf/${project}`);
+	}
+	expect(markdownProfile).not.toContain('https://github.com/liewcf/public-draft-share');
 });
 
 test('robots.txt includes sitemap URL', async ({ page }) => {
@@ -269,4 +282,8 @@ test('homepage registers read-only WebMCP tools when supported', async () => {
 	expect(html).toContain('get_profile_summary');
 	expect(html).toContain('list_featured_projects');
 	expect(html).toContain('get_contact_links');
+	for (const project of ['youtube-watchlist-manager', 'enjinmel-smtp', 'verified-person-research', 'imagezoom']) {
+		expect(html).toContain(`https://github.com/liewcf/${project}`);
+	}
+	expect(html).not.toContain('https://github.com/liewcf/public-draft-share');
 });

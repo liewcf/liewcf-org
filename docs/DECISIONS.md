@@ -1,3 +1,23 @@
+---
+title: Decisions
+description: Important project, product, technical, process, or content decisions with rationale and consequences.
+doc_type: decision_log
+status: active
+created: 2026-07-19
+updated: 2026-07-19
+tags:
+  - project-memory
+  - decisions
+  - rationale
+audience:
+  - agent
+  - maintainer
+related:
+  - PROJECT_CONTEXT.md
+  - TASKS.md
+  - CHANGELOG_WORK.md
+---
+
 # Decisions
 
 ## 2026-05-10
@@ -42,3 +62,7 @@
 - Reworked the 3-equal-column focus grid (the skill's top-flagged "most generic AI layout") into an asymmetric zig-zag via CSS-only per-tile `margin-top` offsets; kept the same three `<article class="focus-tile">` markup.
 - Added premium surface and motion upgrades within the no-framework constraint: dot-grid background, fixed grain overlay (`assets/grain.svg`), true-glassmorphism inner border on project cards, `:active` scale feedback, card hover lift, and staggered `IntersectionObserver` scroll reveals (opacity/transform only, respecting `prefers-reduced-motion`).
 - Kept all test-pinned copy, structure, asset filenames, CSS-unit rules (`1.125rem`/`1rem`, no `18px`/`16px`), and the inline filter/WebMCP scripts unchanged; all 18 Playwright smoke tests pass.
+
+## 2026-07-19
+
+- Feature the user-curated repositories `youtube-watchlist-manager`, `enjinmel-smtp`, `verified-person-research`, and `imagezoom` in that order, keeping the static homepage cards, category filters, Markdown profile, WebMCP output, and tests synchronized without adding a GitHub API dependency.

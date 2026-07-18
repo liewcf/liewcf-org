@@ -37,7 +37,7 @@ If any of the above files are added later, treat them as higher-priority and upd
 - Keep page copy concise and profile-focused.
 - Avoid adding blogs, CMS behavior, routing, contact forms, API functions, environment-variable requirements, or build pipelines.
 - Do not restore the removed Astro/Tailwind/content-collection stack or `functions/api/contact.ts` without a new explicit decision.
-- Keep the featured GitHub projects section static and curated; current project cards are placeholders until exact repository URLs and copy are chosen.
+- Keep the featured GitHub projects section static and user-curated; when the set changes, keep the homepage cards, `index.md`, WebMCP project list, and Playwright coverage aligned.
 - Keep changes small and focused.
 
 ## Contact and links
@@ -64,11 +64,13 @@ Cloudflare Pages should publish the static site directly from the repository roo
 
 ## Project Memory Requirement
 
-Keep these repo-level memory files accurate and concise when work changes project context:
+Keep these project memory files accurate and concise when work changes durable context in project folders or repositories:
 
-- `docs/PROJECT_CONTEXT.md` for stable project facts, architecture, workflows, and constraints.
-- `docs/DECISIONS.md` for dated technical or product decisions and rationale.
+- `docs/PROJECT_CONTEXT.md` for stable project facts, structure, workflows, resources, and constraints.
+- `docs/DECISIONS.md` for dated project, product, technical, process, or content decisions and rationale.
 - `docs/TASKS.md` for current tasks, blockers, and next actions.
-- `docs/CHANGELOG_WORK.md` for dated notes on changed files, behavior, docs, config, dependencies, tooling, tests, and verification.
+- `docs/CHANGELOG_WORK.md` for dated notes on changed files, docs, assets, behavior, deliverables, process, tooling, checks, and verification.
 
 Do not store secrets, credentials, API keys, private tokens, database dumps, or sensitive personal data in project memory.
+
+docs/*.md memory files use Project Memory Metadata v1 frontmatter; preserve it when editing. AGENTS.md stays plain Markdown.

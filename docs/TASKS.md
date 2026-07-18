@@ -1,8 +1,36 @@
+---
+title: Current Tasks
+description: Current tasks, blockers, verification state, and recommended next actions.
+doc_type: task_state
+status: active
+created: 2026-07-19
+updated: 2026-07-19
+tags:
+  - project-memory
+  - tasks
+  - current-state
+audience:
+  - agent
+  - maintainer
+related:
+  - PROJECT_CONTEXT.md
+  - DECISIONS.md
+  - CHANGELOG_WORK.md
+---
+
 # Tasks
+
+## Recommended Next Action
+
+- None recorded.
 
 ## Current
 
 - None.
+
+## Verification
+
+- The curated featured-project update passes all 18 Playwright smoke tests and has been inspected at 1440px and 390px widths with no horizontal overflow.
 
 ## Blockers
 
@@ -34,3 +62,4 @@
 - [x] Fixed the specification.website audit gaps in source: real Cloudflare Pages 404 page, HSTS, clickjacking protection, CSP, Permissions-Policy, `/.well-known/security.txt`, `/llms.txt`, and `/index.md`.
 - [x] Verified live deployment: real 404 on nonexistent path, HSTS, CSP/frame-ancestors, and Permissions-Policy headers confirmed working.
 - [x] Applied the `redesign-existing-projects` skill in a `redesign/taste-skill` worktree: neutral-premium palette, self-hosted Outfit, zig-zag focus grid, dot+grain texture, glassmorphism cards, staggered scroll reveals, active/hover states, skip-link, `100dvh`, widened shell. 18/18 tests pass.
+- [x] Updated the featured project set to `youtube-watchlist-manager`, `enjinmel-smtp`, `verified-person-research`, and `imagezoom`, including the category filters, Markdown profile, WebMCP output, and regression coverage.

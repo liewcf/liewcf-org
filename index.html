@@ -113,39 +113,24 @@
 					<div class="filter-bar" role="group" aria-label="Filter projects by category">
 						<button class="filter-btn active" type="button" data-filter="all" aria-pressed="true">All</button>
 						<button class="filter-btn" type="button" data-filter="WordPress" aria-pressed="false">WordPress</button>
-						<button class="filter-btn" type="button" data-filter="macOS" aria-pressed="false">macOS</button>
+						<button class="filter-btn" type="button" data-filter="Chrome Extension" aria-pressed="false">Chrome Extension</button>
 						<button class="filter-btn" type="button" data-filter="Developer Tool" aria-pressed="false">Developer Tool</button>
 					</div>
 					<p class="filter-status" role="status" aria-live="polite" aria-atomic="true"></p>
 					<div class="project-grid" id="project-grid">
-						<article class="project-card" data-tags="Codex,Developer Tool,Project Memory">
+						<article class="project-card" data-tags="Chrome Extension,JavaScript,YouTube">
 							<div class="project-card-body">
-								<p class="project-repo">liewcf/project-memory</p>
-								<h3>project-memory</h3>
-								<p>A Codex skill that gives software projects a concise memory layer for context, decisions, tasks, and work history.</p>
+								<p class="project-repo">liewcf/youtube-watchlist-manager</p>
+								<h3>youtube-watchlist-manager</h3>
+								<p>A Chrome extension that speeds up YouTube Watch Later cleanup with checkboxes, batch removal, and watched-first sorting.</p>
 							</div>
 							<ul class="project-tags" role="list" aria-label="Project categories">
-								<li>Codex</li>
-								<li>Developer Tool</li>
-								<li>Project Memory</li>
+								<li>Chrome Extension</li>
+								<li>JavaScript</li>
+								<li>YouTube</li>
 							</ul>
 							<div class="project-links">
-								<a href="https://github.com/liewcf/project-memory" rel="noopener noreferrer" target="_blank" aria-label="View project-memory on GitHub" class="project-link-primary">View on GitHub</a>
-							</div>
-						</article>
-						<article class="project-card" data-tags="macOS,Swift,Utility">
-							<div class="project-card-body">
-								<p class="project-repo">liewcf/QuickRes</p>
-								<h3>QuickRes</h3>
-								<p>A lightweight macOS menu bar app for switching display resolutions quickly, without a Dock icon or extra clutter.</p>
-							</div>
-							<ul class="project-tags" role="list" aria-label="Project categories">
-								<li>macOS</li>
-								<li>Swift</li>
-								<li>Utility</li>
-							</ul>
-							<div class="project-links">
-								<a href="https://github.com/liewcf/QuickRes" rel="noopener noreferrer" target="_blank" aria-label="View QuickRes on GitHub" class="project-link-primary">View on GitHub</a>
+								<a href="https://github.com/liewcf/youtube-watchlist-manager" rel="noopener noreferrer" target="_blank" aria-label="View youtube-watchlist-manager on GitHub" class="project-link-primary">View on GitHub</a>
 							</div>
 						</article>
 						<article class="project-card" data-tags="WordPress,Email,Plugin">
@@ -163,19 +148,34 @@
 								<a href="https://github.com/liewcf/enjinmel-smtp" rel="noopener noreferrer" target="_blank" aria-label="View enjinmel-smtp on GitHub" class="project-link-primary">View on GitHub</a>
 							</div>
 						</article>
-						<article class="project-card" data-tags="WordPress,Publishing,Plugin">
+						<article class="project-card" data-tags="Codex,Developer Tool,Research">
 							<div class="project-card-body">
-								<p class="project-repo">liewcf/public-draft-share</p>
-								<h3>public-draft-share</h3>
-								<p>A WordPress plugin that creates secure preview links for draft posts and pages without requiring a login.</p>
+								<p class="project-repo">liewcf/verified-person-research</p>
+								<h3>verified-person-research</h3>
+								<p>A Codex skill that turns a LinkedIn profile into a cited life story, timeline, confidence table, and source list without inventing missing facts.</p>
 							</div>
 							<ul class="project-tags" role="list" aria-label="Project categories">
-								<li>WordPress</li>
-								<li>Publishing</li>
-								<li>Plugin</li>
+								<li>Codex</li>
+								<li>Developer Tool</li>
+								<li>Research</li>
 							</ul>
 							<div class="project-links">
-								<a href="https://github.com/liewcf/public-draft-share" rel="noopener noreferrer" target="_blank" aria-label="View public-draft-share on GitHub" class="project-link-primary">View on GitHub</a>
+								<a href="https://github.com/liewcf/verified-person-research" rel="noopener noreferrer" target="_blank" aria-label="View verified-person-research on GitHub" class="project-link-primary">View on GitHub</a>
+							</div>
+						</article>
+						<article class="project-card" data-tags="Chrome Extension,JavaScript,Utility">
+							<div class="project-card-body">
+								<p class="project-repo">liewcf/imagezoom</p>
+								<h3>imagezoom</h3>
+								<p>A small Chrome extension for zooming images on web pages.</p>
+							</div>
+							<ul class="project-tags" role="list" aria-label="Project categories">
+								<li>Chrome Extension</li>
+								<li>JavaScript</li>
+								<li>Utility</li>
+							</ul>
+							<div class="project-links">
+								<a href="https://github.com/liewcf/imagezoom" rel="noopener noreferrer" target="_blank" aria-label="View imagezoom on GitHub" class="project-link-primary">View on GitHub</a>
 							</div>
 						</article>
 					</div>
@@ -260,14 +260,9 @@
 
 			const featuredProjects = [
 				{
-					name: 'project-memory',
-					description: 'A Codex skill that gives software projects a concise memory layer for context, decisions, tasks, and work history.',
-					url: 'https://github.com/liewcf/project-memory',
-				},
-				{
-					name: 'QuickRes',
-					description: 'A lightweight macOS menu bar app for switching display resolutions quickly, without a Dock icon or extra clutter.',
-					url: 'https://github.com/liewcf/QuickRes',
+					name: 'youtube-watchlist-manager',
+					description: 'A Chrome extension that speeds up YouTube Watch Later cleanup with checkboxes, batch removal, and watched-first sorting.',
+					url: 'https://github.com/liewcf/youtube-watchlist-manager',
 				},
 				{
 					name: 'enjinmel-smtp',
@@ -275,9 +270,14 @@
 					url: 'https://github.com/liewcf/enjinmel-smtp',
 				},
 				{
-					name: 'public-draft-share',
-					description: 'A WordPress plugin that creates secure preview links for draft posts and pages without requiring a login.',
-					url: 'https://github.com/liewcf/public-draft-share',
+					name: 'verified-person-research',
+					description: 'A Codex skill that turns a LinkedIn profile into a cited life story, timeline, confidence table, and source list without inventing missing facts.',
+					url: 'https://github.com/liewcf/verified-person-research',
+				},
+				{
+					name: 'imagezoom',
+					description: 'A small Chrome extension for zooming images on web pages.',
+					url: 'https://github.com/liewcf/imagezoom',
 				},
 			];
 

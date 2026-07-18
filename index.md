@@ -9,7 +9,7 @@ I build practical WordPress tools, macOS utilities, developer utilities, and foc
 
 ## Selected Projects
 
-- project-memory: https://github.com/liewcf/project-memory
-- QuickRes: https://github.com/liewcf/QuickRes
+- youtube-watchlist-manager: https://github.com/liewcf/youtube-watchlist-manager
 - enjinmel-smtp: https://github.com/liewcf/enjinmel-smtp
-- public-draft-share: https://github.com/liewcf/public-draft-share
+- verified-person-research: https://github.com/liewcf/verified-person-research
+- imagezoom: https://github.com/liewcf/imagezoom
