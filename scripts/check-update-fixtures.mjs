@@ -63,10 +63,11 @@ try {
 	await buildWithFixture('missing-project', false);
 	await buildWithFixture('multiple-projects', false);
 	await buildWithFixture('nonexistent-project', false);
+	await buildWithFixture('empty-draft-body', false);
 } finally {
 	if (existsSync(contentPath)) {
 		await unlink(contentPath);
 	}
 }
 
-console.log('Update fixture checks passed: published relationship/rendering and 3 invalid relationships.');
+console.log('Update fixture checks passed: published rendering plus 3 invalid relationships and 1 empty draft body.');

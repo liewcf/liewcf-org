@@ -253,7 +253,7 @@ test('project drafts are excluded from all production output', async () => {
 	}
 });
 
-test('Update content model requires one existing Project and keeps route slugs independent', async () => {
+test('Update content model requires a Markdown body and one existing Project while keeping route slugs independent', async () => {
 	const contentConfig = await readFile('src/content.config.ts', 'utf8');
 	const updateHelpers = await readFile('src/lib/updates.ts', 'utf8');
 	const detailRoute = await readFile('src/pages/updates/[slug].astro', 'utf8');
@@ -266,11 +266,17 @@ test('Update content model requires one existing Project and keeps route slugs i
 	expect(contentConfig).not.toMatch(/project:\s*z\.array/);
 	expect(updateHelpers).toContain('import.meta.env.PROD');
 	expect(updateHelpers).toContain('update.data.draft');
+	expect(updateHelpers).toContain('update.body?.trim()');
+	expect(updateHelpers.indexOf('update.body?.trim()')).toBeLessThan(updateHelpers.indexOf('import.meta.env.PROD'));
 	expect(updateHelpers).toContain('return update.id');
 	expect(detailRoute).toContain('params: { slug: getUpdateSlug(update) }');
 	expect(detailRoute).toContain('await getUpdateProject(update)');
 	expect(draft).toContain('draft: true');
 	expect(draft).toContain('project: imagezoom');
+
+	const emptyDraftBody = await readFile('tests/fixtures/updates/empty-draft-body.md', 'utf8');
+	expect(emptyDraftBody).toContain('draft: true');
+	expect(emptyDraftBody.trimEnd()).toMatch(/---$/);
 });
 
 test('Updates launch empty with canonical metadata and deliberate publication language', async ({ page }) => {

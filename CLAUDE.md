@@ -35,7 +35,7 @@ This is a single-context repository using root `CONTEXT.md` and `docs/adr/`. See
 - `src/pages/about.astro` owns the expanded factual About content.
 - `src/content/projects/` owns typed, draft-aware Project Markdown whose filenames match GitHub repository names.
 - `src/pages/projects/` owns the Project catalog and generated detail routes.
-- `src/content/updates/` owns typed, draft-aware Update Markdown with exactly one existing Project reference.
+- `src/content/updates/` owns typed, draft-aware Update Markdown with a non-empty body and exactly one existing Project reference.
 - `src/pages/updates/` owns the chronological index, repository-name-independent detail routes, and RSS.
 - `src/pages/sitemap.xml.ts` generates the production-aware sitemap for published Projects and Updates.
 - `src/layouts/SiteLayout.astro` owns shared metadata defaults, Home/About/Projects/Updates navigation, skip-link/main structure, and footer.

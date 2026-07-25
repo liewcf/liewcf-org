@@ -27,7 +27,7 @@ If any of the above files are added later, treat them as higher-priority and upd
 - `src/pages/about.astro` — the expanded factual About page.
 - `src/content/projects/` — typed, draft-aware Project Markdown; filenames match GitHub repository names.
 - `src/pages/projects/` — the Project catalog and generated Project detail pages.
-- `src/content/updates/` — typed, draft-aware Update Markdown; every Update references exactly one existing Project.
+- `src/content/updates/` — typed, draft-aware Update Markdown; every Update has a non-empty body and references exactly one existing Project.
 - `src/pages/updates/` — the chronological Update index, slug-based details, and RSS output.
 - `src/pages/sitemap.xml.ts` — production-aware sitemap generation for published Projects and Updates.
 - `src/layouts/SiteLayout.astro` — shared metadata, navigation, skip-link/main structure, and footer.

@@ -16,6 +16,13 @@ export function sortUpdates(updates: Update[]): Update[] {
 
 export async function getVisibleUpdates(): Promise<Update[]> {
 	const updates = await getCollection('updates');
+
+	for (const update of updates) {
+		if (!update.body?.trim()) {
+			throw new Error(`Update "${update.id}" must include a non-empty Markdown body.`);
+		}
+	}
+
 	const visibleUpdates = import.meta.env.PROD
 		? updates.filter((update) => !update.data.draft)
 		: updates;

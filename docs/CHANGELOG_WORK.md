@@ -150,6 +150,7 @@ related:
 - Added the canonical zero-entry `/updates/` index, repository-name-independent Update detail routes, chronological Project timelines, final Home/About/Projects/Updates navigation, and focused Update styling.
 - Replaced the static sitemap with production-aware generation, added zero-item Project-ready RSS with a Cloudflare content-type override, removed the Blog redirect, and preserved the `/contact/` redirect.
 - Added production filtering for draft Updates across routes, indexes, Project timelines, RSS, sitemap, and existing agent/WebMCP surfaces; verified `/updates/draft-preview/` returns HTTP 200 locally and relates to `imagezoom`.
-- Added temporary acceptance builds that prove a valid published Update renders and relates across detail/Project/RSS/sitemap surfaces, while missing, multiple, and nonexistent Project references fail before deployment.
+- Added temporary acceptance builds that prove a valid published Update renders and relates across detail/Project/RSS/sitemap surfaces, while missing, multiple, and nonexistent Project references and an empty draft body fail before deployment.
 - Isolated Playwright preview on port 4332 to prevent linked worktrees from reusing an unrelated stale server.
-- Verified ticket 05 with `npm run check`: Astro diagnostics reported 0 errors, 0 warnings, and 0 hints; the fixture harness passed; nine static pages built with zero public Update details; all 35 Playwright checks passed.
+- Closed the Ticket 05 review gap by enforcing non-empty Markdown bodies for every Update before production draft filtering and adding an invalid empty draft-body fixture.
+- Verified ticket 05 with `npm run check`: Astro diagnostics reported 0 errors, 0 warnings, and 0 hints; one valid and four invalid fixture builds passed their expectations; nine static pages built with zero public Update details; all 35 Playwright checks passed.

@@ -45,7 +45,7 @@ related:
 - `npm run check` reports clean Astro diagnostics, builds eight static pages, and passes 31 Playwright checks including the four-card homepage contract, manual feature order, all metadata-derived filter counts, internal/GitHub links, draft exclusion, and visible/WebMCP equality.
 - Browser QA at 1440×900 and 390×844 confirms the derived filters wrap without horizontal overflow, pressed state/live counts work, Project actions remain distinct, and no relevant console warnings or errors occur.
 - Ticket 05 adds a typed Project-linked Update collection, zero-entry `/updates/`, Project timelines, slug-based details, production-aware sitemap/RSS generation, final navigation, production draft exclusion, and real 404 handling for former Blog routes.
-- `npm run check` reports clean Astro diagnostics, validates one published fixture plus three invalid relationship fixtures, builds nine static pages with zero Update details, and passes 35 Playwright checks including desktop/mobile overflow coverage.
+- `npm run check` reports clean Astro diagnostics, validates one published fixture plus three invalid relationship fixtures and one empty draft-body fixture, builds nine static pages with zero Update details, and passes 35 Playwright checks including desktop/mobile overflow coverage.
 - `astro dev` locally serves `/updates/draft-preview/` with HTTP 200 and its `imagezoom` relationship, while the production build excludes that draft from routes and discovery surfaces.
 
 ## Blockers
