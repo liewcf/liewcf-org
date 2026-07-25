@@ -27,17 +27,36 @@ const publicUploadUrl = z
 
 const projects = defineCollection({
 	loader: glob({ base: './src/content/projects', pattern: '**/*.md' }),
-	schema: z.object({
-		title: z.string().min(1),
-		summary: z.string().min(1),
-		repositoryUrl: githubRepositoryUrl,
-		categories: z.array(z.string().min(1)).min(1),
-		featured: z.boolean(),
-		draft: z.boolean(),
-		status: z.string().min(1).optional(),
-		liveUrl: projectLiveUrl.optional(),
-		coverImage: publicUploadUrl.optional(),
-	}),
+	schema: z
+		.object({
+			title: z.string().min(1),
+			summary: z.string().min(1),
+			repositoryUrl: githubRepositoryUrl,
+			categories: z.array(z.string().min(1)).min(1),
+			featured: z.boolean(),
+			featuredOrder: z.number().int().positive().optional(),
+			draft: z.boolean(),
+			status: z.string().min(1).optional(),
+			liveUrl: projectLiveUrl.optional(),
+			coverImage: publicUploadUrl.optional(),
+		})
+		.superRefine((project, context) => {
+			if (project.featured && project.featuredOrder === undefined) {
+				context.addIssue({
+					code: 'custom',
+					message: 'Featured Projects require an explicit featuredOrder.',
+					path: ['featuredOrder'],
+				});
+			}
+
+			if (!project.featured && project.featuredOrder !== undefined) {
+				context.addIssue({
+					code: 'custom',
+					message: 'Non-featured Projects must not define featuredOrder.',
+					path: ['featuredOrder'],
+				});
+			}
+		}),
 });
 
 export const collections = { projects };

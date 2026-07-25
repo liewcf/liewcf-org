@@ -14,7 +14,7 @@ const slug = getProjectSlug(project);
 	<div class="project-card-body">
 		<p class="project-repo">liewcf/{slug}</p>
 		<h3><a href={`/projects/${slug}/`}>{project.data.title}</a></h3>
-		<p>{project.data.summary}</p>
+		<p class="project-summary">{project.data.summary}</p>
 	</div>
 	<ul class="project-tags" role="list" aria-label={`${project.data.title} categories`}>
 		{project.data.categories.map((category) => <li>{category}</li>)}

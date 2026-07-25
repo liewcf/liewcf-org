@@ -139,12 +139,14 @@ test('project content model is typed, draft-aware, and uses repository-name slug
 	for (const requiredField of ['title', 'summary', 'repositoryUrl', 'categories', 'featured', 'draft']) {
 		expect(contentConfig).toContain(`${requiredField}:`);
 	}
-	for (const optionalField of ['status', 'liveUrl', 'coverImage']) {
+	for (const optionalField of ['featuredOrder', 'status', 'liveUrl', 'coverImage']) {
 		expect(contentConfig).toMatch(new RegExp(`${optionalField}:.*optional\\(\\)`));
 	}
 	expect(contentConfig).toContain("value.startsWith('/uploads/')");
 	expect(projectHelpers).toContain('import.meta.env.PROD');
 	expect(projectHelpers).toContain('project.data.draft');
+	expect(projectHelpers).toContain('project.data.featured');
+	expect(projectHelpers).toContain('project.data.featuredOrder');
 	expect(projectHelpers).toContain('getRepositoryName(project.data.repositoryUrl)');
 	expect(draft).toContain('draft: true');
 });
@@ -376,6 +378,115 @@ test('static project filters narrow the curated project list', async ({ page }) 
 	for (const project of ['youtube-watchlist-manager', 'enjinmel-smtp', 'verified-person-research', 'imagezoom']) {
 		await expect(page.getByRole('article').filter({ hasText: project })).toBeVisible();
 	}
+});
+
+test('homepage Project cards, filters, and WebMCP share published featured content', async ({ page }) => {
+	const expectedProjects = [
+		{
+			name: 'youtube-watchlist-manager',
+			description: 'A Chrome extension that speeds up YouTube Watch Later cleanup with checkboxes, batch removal, and watched-first sorting.',
+			categories: ['Chrome Extension', 'JavaScript', 'YouTube'],
+			url: 'https://github.com/liewcf/youtube-watchlist-manager',
+			detailUrl: 'https://liewcf.org/projects/youtube-watchlist-manager/',
+		},
+		{
+			name: 'enjinmel-smtp',
+			description: 'A WordPress plugin that routes site email through the Enginemailer REST API for more reliable delivery.',
+			categories: ['WordPress', 'Email', 'Plugin'],
+			url: 'https://github.com/liewcf/enjinmel-smtp',
+			detailUrl: 'https://liewcf.org/projects/enjinmel-smtp/',
+		},
+		{
+			name: 'verified-person-research',
+			description: 'A Codex skill that produces cited, evidence-bounded professional background research without inventing missing facts.',
+			categories: ['Codex', 'Developer Tool', 'Research'],
+			url: 'https://github.com/liewcf/verified-person-research',
+			detailUrl: 'https://liewcf.org/projects/verified-person-research/',
+		},
+		{
+			name: 'imagezoom',
+			description: 'A small Chrome extension for zooming images on web pages.',
+			categories: ['Chrome Extension', 'JavaScript', 'Utility'],
+			url: 'https://github.com/liewcf/imagezoom',
+			detailUrl: 'https://liewcf.org/projects/imagezoom/',
+		},
+	];
+
+	for (const [index, project] of expectedProjects.entries()) {
+		const content = await readFile(`src/content/projects/${project.name}.md`, 'utf8');
+		expect(content).toContain('featured: true');
+		expect(content).toContain(`featuredOrder: ${index + 1}`);
+		expect(content).toContain('draft: false');
+	}
+
+	const draft = await readFile('src/content/projects/draft-preview.md', 'utf8');
+	expect(draft).toContain('featured: false');
+	expect(draft).toContain('draft: true');
+	expect(draft).not.toContain('featuredOrder:');
+
+	await page.addInitScript(() => {
+		Object.defineProperty(navigator, 'modelContext', {
+			configurable: true,
+			value: {
+				provideContext(context: unknown) {
+					(window as typeof window & { __webMcpContext?: unknown }).__webMcpContext = context;
+				},
+			},
+		});
+	});
+	await page.goto('/');
+
+	const visibleProjects = await page.locator('#project-grid .project-card').evaluateAll((cards) => (
+		cards.map((card) => {
+			const detailLink = card.querySelector('.project-link-primary');
+
+			return {
+				name: card.querySelector('h3')?.textContent?.trim(),
+				description: card.querySelector('.project-summary')?.textContent?.trim(),
+				categories: [...card.querySelectorAll('.project-tags li')].map((tag) => tag.textContent?.trim()),
+				url: (card.querySelector('[aria-label$="on GitHub"]') as HTMLAnchorElement | null)?.href,
+				detailUrl: new URL(detailLink?.getAttribute('href') ?? '', 'https://liewcf.org').href,
+			};
+		})
+	));
+	expect(visibleProjects).toEqual(expectedProjects);
+
+	const webMcpProjects = await page.evaluate(async () => {
+		const context = (window as typeof window & {
+			__webMcpContext?: {
+				tools: Array<{ name: string; execute: () => Promise<unknown> }>;
+			};
+		}).__webMcpContext;
+		const tool = context?.tools.find(({ name }) => name === 'list_featured_projects');
+
+		if (!tool) {
+			throw new Error('Featured Project WebMCP tool was not registered');
+		}
+
+		return (await tool.execute() as { projects: unknown[] }).projects;
+	});
+	expect(webMcpProjects).toEqual(visibleProjects);
+
+	const categories = [...new Set(expectedProjects.flatMap((project) => project.categories))];
+	const filters = page.getByRole('group', { name: 'Filter projects by category' });
+	await expect(filters.getByRole('button')).toHaveText(['All', ...categories]);
+
+	for (const category of categories) {
+		const expectedCount = expectedProjects.filter((project) => project.categories.includes(category)).length;
+		const button = filters.getByRole('button', { name: category, exact: true });
+		await button.click();
+		await expect(button).toHaveAttribute('aria-pressed', 'true');
+		await expect(page.getByRole('status')).toHaveText(
+			`${expectedCount} project${expectedCount === 1 ? '' : 's'} in ${category}`,
+		);
+		await expect(page.locator('#project-grid .project-card:visible')).toHaveCount(expectedCount);
+	}
+
+	const homepageSource = await readFile('src/pages/index.astro', 'utf8');
+	expect(homepageSource).toContain('getPublishedFeaturedProjects');
+	expect(homepageSource).toContain('getProjectCategories');
+	expect(homepageSource).toContain('featuredProjectData');
+	expect(homepageSource).not.toMatch(/\bfetch\s*\(/);
 });
 
 test('styled lists keep explicit list semantics', async ({ page }) => {

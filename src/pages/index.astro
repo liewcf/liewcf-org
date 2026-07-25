@@ -2,7 +2,11 @@
 import SiteLayout from '../layouts/SiteLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import ProjectFilter from '../components/ProjectFilter.astro';
-import { getVisibleProjects } from '../lib/projects';
+import {
+	getProjectCategories,
+	getProjectSlug,
+	getPublishedFeaturedProjects,
+} from '../lib/projects';
 
 const structuredData = {
 	'@context': 'https://schema.org',
@@ -30,7 +34,19 @@ const structuredData = {
 		},
 	],
 };
-const featuredProjects = (await getVisibleProjects()).filter((project) => project.data.featured);
+const featuredProjects = await getPublishedFeaturedProjects();
+const featuredCategories = getProjectCategories(featuredProjects);
+const featuredProjectData = featuredProjects.map((project) => {
+	const slug = getProjectSlug(project);
+
+	return {
+		name: project.data.title,
+		description: project.data.summary,
+		categories: project.data.categories,
+		url: project.data.repositoryUrl,
+		detailUrl: new URL(`/projects/${slug}/`, Astro.site).href,
+	};
+});
 ---
 
 <SiteLayout
@@ -97,7 +113,7 @@ const featuredProjects = (await getVisibleProjects()).filter((project) => projec
 					<p class="section-lede">Four repositories I keep coming back to. Each solves a problem I ran into more than once.</p>
 				</div>
 				<div class="projects-column">
-					<ProjectFilter categories={['WordPress', 'Chrome Extension', 'Developer Tool']} />
+					<ProjectFilter categories={featuredCategories} />
 					<div class="project-grid" id="project-grid">
 						{featuredProjects.map((project) => <ProjectCard project={project} />)}
 					</div>
@@ -114,7 +130,7 @@ const featuredProjects = (await getVisibleProjects()).filter((project) => projec
 					<li>Websites and landing pages built for longevity — fast to load, easy to hand off, and still working correctly two years later.</li>
 				</ul>
 			</section>
-			<script is:inline>
+			<script is:inline define:vars={{ featuredProjects: featuredProjectData }}>
 		(() => {
 			const revealTargets = document.querySelectorAll(
 				'.hero-copy, .hero-image, .focus-tile, .proof-list li',
@@ -140,29 +156,6 @@ const featuredProjects = (await getVisibleProjects()).filter((project) => projec
 			if (!('modelContext' in navigator) || !navigator.modelContext?.provideContext) {
 				return;
 			}
-
-			const featuredProjects = [
-				{
-					name: 'youtube-watchlist-manager',
-					description: 'A Chrome extension that speeds up YouTube Watch Later cleanup with checkboxes, batch removal, and watched-first sorting.',
-					url: 'https://github.com/liewcf/youtube-watchlist-manager',
-				},
-				{
-					name: 'enjinmel-smtp',
-					description: 'A WordPress plugin that routes site email through the Enginemailer REST API for more reliable delivery.',
-					url: 'https://github.com/liewcf/enjinmel-smtp',
-				},
-				{
-					name: 'verified-person-research',
-					description: 'A Codex skill that turns a LinkedIn profile into a cited life story, timeline, confidence table, and source list without inventing missing facts.',
-					url: 'https://github.com/liewcf/verified-person-research',
-				},
-				{
-					name: 'imagezoom',
-					description: 'A small Chrome extension for zooming images on web pages.',
-					url: 'https://github.com/liewcf/imagezoom',
-				},
-			];
 
 			navigator.modelContext.provideContext({
 				tools: [

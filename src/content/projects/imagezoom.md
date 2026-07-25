@@ -7,6 +7,7 @@ categories:
   - JavaScript
   - Utility
 featured: true
+featuredOrder: 4
 draft: false
 ---
 

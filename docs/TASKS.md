@@ -22,11 +22,11 @@ related:
 
 ## Recommended Next Action
 
-- Have the coordinating task review and integrate ticket 03, then select the next unblocked ticket from the existing private frontier.
+- Have the coordinating task review and integrate ticket 04, then select the next unblocked ticket from the existing private frontier.
 
 ## Current
 
-- Ticket 03 is implemented in its separate worktree, pending coordinating-task review and integration. Private ticket status remains unchanged.
+- Ticket 04 is implemented in its separate worktree, pending coordinating-task review and integration. Private ticket status remains unchanged.
 
 ## Verification
 
@@ -41,6 +41,9 @@ related:
 - Ticket 03 adds a typed, repository-slugged, production-draft-aware Project collection; `/projects/`; four canonical detail routes; shared accessible filtering/cards; Projects navigation; sitemap entries; `/uploads/` cover-image support; and the current no-Updates state without introducing Update routes.
 - `npm run check` reports clean Astro diagnostics, builds eight static pages, and passes 30 Playwright checks covering catalog order, four details, metadata, credential-free HTTP(S) live-URL validation, filtering, optional-section rendering, GitHub/detail links, production draft exclusion, and 1440px/390px overflow behavior.
 - `astro dev` locally serves the draft fixture at `/projects/draft-preview/` with HTTP 200, while the production build contains no draft route or listing.
+- Ticket 04 makes published featured Project Markdown the source for homepage cards, ordering, category filters, and WebMCP Project results; the four launch entries carry explicit order metadata and draft/non-featured entries stay excluded.
+- `npm run check` reports clean Astro diagnostics, builds eight static pages, and passes 31 Playwright checks including the four-card homepage contract, manual feature order, all metadata-derived filter counts, internal/GitHub links, draft exclusion, and visible/WebMCP equality.
+- Browser QA at 1440×900 and 390×844 confirms the derived filters wrap without horizontal overflow, pressed state/live counts work, Project actions remain distinct, and no relevant console warnings or errors occur.
 
 ## Blockers
 

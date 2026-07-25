@@ -38,10 +38,10 @@ related:
 
 - Framework: Astro in fully static output mode; no adapter or browser framework runtime.
 - Styling: Plain CSS in `public/styles.css`. Neutral-premium palette (zinc off-white/near-black base with a single terracotta accent); self-hosted Outfit variable sans (latin woff2 in `public/assets/fonts/`) for all text with hierarchy via size/weight/tracking; dot-grid background with a fixed grain overlay (`public/assets/grain.svg`); asymmetric zig-zag focus grid; glassmorphism project cards with hover lift; staggered `IntersectionObserver` scroll reveals respecting `prefers-reduced-motion`; `:active` scale feedback; visible focus rings; `100dvh` viewport units; ~1200px max-width shell.
-- Content: Hand-authored homepage/About markup plus the typed `projects` collection under `src/content/projects/`. Project filenames must match the repository name in their canonical GitHub URL; production excludes drafts while local development can preview them.
+- Content: Hand-authored homepage/About markup plus the typed `projects` collection under `src/content/projects/`. Project filenames must match the repository name in their canonical GitHub URL; production excludes drafts while local development can preview them. Published featured entries use validated `featured` and `featuredOrder` metadata as the source for homepage cards, categories, order, and WebMCP Project results.
 - Site shell: `src/layouts/SiteLayout.astro` owns shared metadata defaults, Home/About/Projects navigation and accessible current-page state, skip-link/main focus behavior, page structure, and outbound-only footer contact. Updates remains absent from navigation until its routes are live.
 - SEO: The shared layout owns canonical and Open Graph/Twitter metadata; the homepage supplies its static `Person`/`WebSite` JSON-LD. `public/sitemap.xml` contains Home, About, the Project index, and all four published Project detail canonicals, and `public/robots.txt` references it.
-- UI behavior: homepage and catalog Project cards share a small client-side category filter; filtering must not introduce API calls, routing, or hidden build/runtime dependencies.
+- UI behavior: homepage and catalog Project cards share a small client-side category filter. Homepage filter options and result counts derive from published featured Project categories; filtering must not introduce API calls, routing, or hidden build/runtime dependencies.
 - Redirects: `public/_redirects` sends unavailable legacy routes (`/blog/` and `/contact/`) to `/` with 301 status for Cloudflare Pages. `/about/` and `/projects/` are live static pages.
 - Error handling: `src/pages/404.astro` generates `dist/404.html` so unknown routes receive a real branded 404 response instead of an SPA fallback.
 - Security headers: `public/_headers` applies HSTS, CSP with `frame-ancestors 'none'`, `X-Frame-Options: DENY`, `X-Content-Type-Options`, `Referrer-Policy`, and `Permissions-Policy` to static responses.
@@ -51,7 +51,7 @@ related:
 - Contact: Outbound links only; email uses `mailto:`.
 - API: None; `/.well-known/api-catalog` intentionally returns an empty Linkset instead of inventing a public API.
 - Auth discovery: None; do not add OAuth/OIDC or OAuth protected-resource metadata unless the site gains protected APIs.
-- MCP: Browser-only WebMCP tools are exposed on the homepage; there is no remote MCP server card unless an actual MCP server is introduced.
+- MCP: Browser-only WebMCP tools are exposed on the homepage. Its featured-Project result is serialized from the same published featured entries as the visible cards, including synchronized names, summaries, categories, repository URLs, and canonical detail URLs; there is no remote MCP server card unless an actual MCP server is introduced.
 - Runtime environment variables: None.
 
 ## Development Workflow

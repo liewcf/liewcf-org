@@ -7,6 +7,7 @@ categories:
   - Email
   - Plugin
 featured: true
+featuredOrder: 2
 draft: false
 status: Maintained
 ---

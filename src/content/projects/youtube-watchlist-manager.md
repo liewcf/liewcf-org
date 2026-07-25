@@ -7,6 +7,7 @@ categories:
   - JavaScript
   - YouTube
 featured: true
+featuredOrder: 1
 draft: false
 ---
 

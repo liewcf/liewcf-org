@@ -41,7 +41,7 @@ If any of the above files are added later, treat them as higher-priority and upd
 - Keep page copy concise and profile-focused.
 - Avoid adding blogs, CMS behavior, routing, contact forms, API functions, environment-variable requirements, or build pipelines.
 - Do not add Tailwind, a client-side UI framework, server rendering, a database, runtime APIs, runtime environment variables, or `functions/api/contact.ts`.
-- Keep the featured GitHub projects user-curated; when the set changes, keep Project Markdown, homepage cards, `index.md`, WebMCP project list, and Playwright coverage aligned.
+- Keep featured GitHub Projects user-curated in Project Markdown with explicit `featured` and `featuredOrder` metadata. Homepage cards, filters, and WebMCP data derive from published featured entries; keep `index.md` and Playwright coverage aligned when the set changes.
 - Keep changes small and focused.
 
 ## Contact and links
