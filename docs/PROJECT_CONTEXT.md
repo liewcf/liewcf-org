@@ -24,7 +24,7 @@ related:
 
 - Project purpose: Personal profile and credibility page for `liewcf.org`.
 - Primary users: Visitors who want to understand who Liew CheonFong is, what he builds, and how to contact or follow him.
-- Current status: Astro-generated static site with a homepage, About page, four-Project catalog/detail surface, and live zero-entry Updates index/RSS; typed draft-aware Project and Update Markdown, a shared Home/About/Projects/Updates shell, plain semantic HTML, CSS, vanilla browser behavior, unique canonical/social metadata, a published-content sitemap and generated Markdown profile, a real 404 page, static security and agent discovery files, completed `www` redirect/Search Console validation, only live referenced image/icon assets, and Playwright public-contract checks against production output.
+- Current status: Release-ready Astro-generated static site with a homepage, About page, four-Project catalog/detail surface, and live zero-entry Updates index/RSS; typed draft-aware Project and Update Markdown, a shared Home/About/Projects/Updates shell, plain semantic HTML, CSS, vanilla browser behavior, unique canonical/social metadata, a published-content sitemap and generated Markdown profile, a real 404 page, static security and agent discovery files, completed `www` redirect/Search Console validation from the earlier site, only live referenced image/icon assets, and 38 Playwright public-contract checks against production output. The Astro migration has not been deployed or live-verified.
 
 ## Approved Direction
 
@@ -60,10 +60,11 @@ related:
 - Node: `>=22.13.0 <23`.
 - Package manager: npm with `package-lock.json`.
 - Dev server: `npm run dev`.
-- Smoke checks: `npm run check` validates Astro diagnostics, Update fixtures, the production build, metadata/crawler/discovery contracts, generated Markdown synchronization, Agent Skill digest integrity, and human/WebMCP Project consistency through Playwright.
+- Smoke checks: `npm run check` is the single release gate. It validates Astro diagnostics, Update fixtures, a clean production build, homepage/About/Projects/Updates/RSS contracts, routing and 404 behavior, Cloudflare redirects/headers, stable assets and discovery URLs, generated Markdown synchronization, Agent Skill digest integrity, draft exclusion, responsive keyboard/focus behavior, and human/WebMCP Project consistency through 38 Playwright checks.
 - Update acceptance fixtures: `npm run check` temporarily builds one valid published fixture and confirms missing, multiple, and nonexistent Project relationships plus an empty draft body fail before generating the final zero-Update production output.
 - E2E tests: `npm run test:e2e`.
 - Cloudflare Pages: build with `npm run build` and publish `dist/`. Custom domain `liewcf.org` with fallback `liewcf-org.pages.dev`; `www.liewcf.org` redirects to `https://liewcf.org/`. Run `npm run check` locally or in CI before deployment.
+- Release handoff: repository validation is complete, but publishing `dist/`, changing Cloudflare Pages settings or DNS, and validating the migrated live site require separate authorization and remain unperformed.
 - Cloudflare Markdown for Agents product feature: not enabled while the site is on the current Cloudflare Free account because the feature is not available there. The repo still provides static `llms.txt` and `index.md`.
 - Matt engineering skills use private local Markdown under gitignored `.scratch/` for specs and issues, the default triage status vocabulary, and a single-context domain-doc layout described in `docs/agents/`. Root `CONTEXT.md` and `docs/adr/` are created lazily when domain terms or decisions are resolved.
 

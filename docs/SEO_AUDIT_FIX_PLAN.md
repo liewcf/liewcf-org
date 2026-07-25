@@ -2,6 +2,7 @@
 
 Date: 2026-05-11
 Site: https://liewcf.org/
+Status: Historical plan; its one-page baseline was superseded by the verified static Astro migration recorded in `docs/HANDOFF.md`.
 
 ## Scope and Verification
 
@@ -12,10 +13,10 @@ Site: https://liewcf.org/
 ## Current Strengths
 
 - The homepage has a clear single H1, concise page title, meta description, self-referencing canonical URL, Open Graph tags, Twitter card tags, and descriptive image alt text.
-- The site is framework-free, has no client-side JavaScript, and uses small image assets, which is a strong performance baseline.
+- The original one-page implementation used small image assets and a minimal static delivery model. The current implementation preserves that static production boundary through Astro-generated HTML, plain CSS, and small vanilla browser scripts.
 - The page has crawlable static HTML content, direct outbound profile links, and direct GitHub project links.
 - `robots.txt` allows crawling and does not accidentally block the homepage.
-- Removed legacy routes are covered by Playwright so `/about/`, `/blog/`, `/projects/`, and `/contact/` do not behave like active pages.
+- Current route behavior is covered by Playwright: About and Projects are live, `/contact/` redirects permanently to the homepage, and old Blog routes receive the branded real 404.
 
 ## Findings
 
