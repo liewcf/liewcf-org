@@ -51,11 +51,14 @@ export async function getVisibleProjects(): Promise<Project[]> {
 	return sortProjects(visibleProjects);
 }
 
-export async function getPublishedFeaturedProjects(): Promise<Project[]> {
+export async function getPublishedProjects(): Promise<Project[]> {
 	const projects = await getCollection('projects');
-	const featuredProjects = projects.filter(
-		(project) => !project.data.draft && project.data.featured,
-	);
+	return sortProjects(projects.filter((project) => !project.data.draft));
+}
+
+export async function getPublishedFeaturedProjects(): Promise<Project[]> {
+	const projects = await getPublishedProjects();
+	const featuredProjects = projects.filter((project) => project.data.featured);
 
 	validateFeaturedOrder(featuredProjects);
 	return sortProjects(featuredProjects);

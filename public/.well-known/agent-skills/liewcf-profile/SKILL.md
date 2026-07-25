@@ -1,27 +1,32 @@
 ---
 name: liewcf-profile
-description: Use liewcf.org as a static profile source for Liew CheonFong, featured projects, and contact links.
+description: Use liewcf.org as a static source for Liew CheonFong's profile, published Projects, Updates, and contact links.
 ---
 
-# Liew CheonFong Static Profile
+# Liew CheonFong Static Site
 
 Use this skill when you need a concise, source-grounded summary of Liew CheonFong from liewcf.org.
 
 ## Source
 
 - Homepage: https://liewcf.org/
+- About: https://liewcf.org/about/
+- Projects: https://liewcf.org/projects/
+- Updates: https://liewcf.org/updates/
+- Generated Markdown profile: https://liewcf.org/index.md
 - Sitemap: https://liewcf.org/sitemap.xml
 - Robots and content signals: https://liewcf.org/robots.txt
 
 ## How to Use
 
-1. Fetch the homepage as HTML, or request Markdown with `Accept: text/markdown` when Cloudflare Markdown for Agents is enabled.
-2. Use the homepage copy, JSON-LD, and featured project links as the source of truth.
-3. Treat profile links as outbound contact/profile destinations only.
+1. Fetch the generated Markdown profile for the current published Project list and Update state.
+2. Use the matching human-facing page for detail and the sitemap to verify published canonical URLs.
+3. Do not claim an Update exists unless it is present in the current Updates index or generated Markdown profile.
+4. Treat profile links as outbound contact/profile destinations only.
 
 ## Current Site Shape
 
-- Static one-page profile site.
+- Static multi-page profile, Project catalog, and Updates publication surface.
 - No protected APIs.
 - No OAuth/OIDC login flow.
 - No remote MCP server.

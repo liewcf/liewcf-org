@@ -86,3 +86,5 @@ related:
 - Launch `/updates/` and `/updates/rss.xml` with zero public entries, add Updates to the shared navigation, and source detail pages, Project timelines, RSS, and the generated sitemap from the same production-aware Update helper.
 - Keep a committed draft Update for local preview and use temporary non-public acceptance fixtures during `npm run check` to prove published rendering/relationships and build failures for missing, multiple, or nonexistent Project references and an empty draft body.
 - Remove the former `/blog/` redirect so the Blog index and entry URLs receive the branded real 404; retain the outbound-only `/contact/` redirect.
+- Generate `/index.md` from the published Project and Update collections instead of maintaining a duplicate Project list under `public/`; keep `llms.txt` and the Agent Skill as stable discovery pointers that do not claim nonexistent Update content.
+- Keep additional structured data off non-homepage pages until an appropriate schema type can be populated entirely with factual values; retain the established factual homepage `Person` and `WebSite` graph.

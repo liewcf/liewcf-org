@@ -1,12 +1,12 @@
 import type { APIRoute } from 'astro';
-import { getProjectSlug, getVisibleProjects } from '../lib/projects';
-import { getUpdateSlug, getVisibleUpdates } from '../lib/updates';
+import { getProjectSlug, getPublishedProjects } from '../lib/projects';
+import { getPublishedUpdates, getUpdateSlug } from '../lib/updates';
 
 const siteUrl = 'https://liewcf.org';
 
 export const GET: APIRoute = async () => {
-	const projects = await getVisibleProjects();
-	const updates = await getVisibleUpdates();
+	const projects = await getPublishedProjects();
+	const updates = await getPublishedUpdates();
 	const paths = [
 		'/',
 		'/about/',

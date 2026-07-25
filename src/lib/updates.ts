@@ -30,6 +30,11 @@ export async function getVisibleUpdates(): Promise<Update[]> {
 	return sortUpdates(visibleUpdates);
 }
 
+export async function getPublishedUpdates(): Promise<Update[]> {
+	const updates = await getVisibleUpdates();
+	return sortUpdates(updates.filter((update) => !update.data.draft));
+}
+
 export async function getVisibleUpdatesForProject(project: Project): Promise<Update[]> {
 	const updates = await getVisibleUpdates();
 	return updates.filter((update) => update.data.project.id === project.id);

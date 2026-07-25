@@ -24,7 +24,7 @@ related:
 
 - Project purpose: Personal profile and credibility page for `liewcf.org`.
 - Primary users: Visitors who want to understand who Liew CheonFong is, what he builds, and how to contact or follow him.
-- Current status: Astro-generated static site with a homepage, About page, four-Project catalog/detail surface, and live zero-entry Updates index/RSS; typed draft-aware Project and Update Markdown, a shared Home/About/Projects/Updates shell, plain semantic HTML, CSS, vanilla browser behavior, static SEO metadata/dynamic sitemap/redirects, a real 404 page, static security and agent discovery files, completed `www` redirect/Search Console validation, only live referenced image/icon assets, and Playwright public-contract checks against production output.
+- Current status: Astro-generated static site with a homepage, About page, four-Project catalog/detail surface, and live zero-entry Updates index/RSS; typed draft-aware Project and Update Markdown, a shared Home/About/Projects/Updates shell, plain semantic HTML, CSS, vanilla browser behavior, unique canonical/social metadata, a published-content sitemap and generated Markdown profile, a real 404 page, static security and agent discovery files, completed `www` redirect/Search Console validation, only live referenced image/icon assets, and Playwright public-contract checks against production output.
 
 ## Approved Direction
 
@@ -46,7 +46,7 @@ related:
 - Redirects: `public/_redirects` sends only `/contact/` to `/` with 301 status. `/about/`, `/projects/`, and `/updates/` are live static pages; `/blog/` and former Blog-entry URLs intentionally receive the branded real 404 with no redirect.
 - Error handling: `src/pages/404.astro` generates `dist/404.html` so unknown routes receive a real branded 404 response instead of an SPA fallback.
 - Security headers: `public/_headers` applies HSTS, CSP with `frame-ancestors 'none'`, `X-Frame-Options: DENY`, `X-Content-Type-Options`, `Referrer-Policy`, and `Permissions-Policy` to static responses.
-- Agent discovery: `public/_headers` advertises `/.well-known/api-catalog` and `/.well-known/agent-skills/index.json`; `public/robots.txt` declares `Content-Signal: ai-train=yes, search=yes, ai-input=yes`; `public/llms.txt` and `public/index.md` provide simple agent-facing text; the homepage registers read-only WebMCP tools when `navigator.modelContext` is available.
+- Agent discovery: `public/_headers` advertises `/.well-known/api-catalog` and `/.well-known/agent-skills/index.json`; `public/robots.txt` declares `Content-Signal: ai-train=yes, search=yes, ai-input=yes`; `public/llms.txt` links the human and machine entry points; `src/pages/index.md.ts` generates `/index.md` from published Projects and Updates; the homepage registers read-only WebMCP tools when `navigator.modelContext` is available.
 - Security contact: `/.well-known/security.txt` publishes the public email contact for security reports.
 - Assets: `public/assets/` contains the unchanged portrait, AVIF/WebP/JPG hero image fallback, Open Graph image, SVG favicon, touch icon, self-hosted Outfit variable woff2, and grain overlay; `public/favicon.ico` preserves conventional browser and bot compatibility. Project media may use stable files placed under `public/uploads/` and referenced as `/uploads/…`.
 - Contact: Outbound links only; email uses `mailto:`.
@@ -60,7 +60,7 @@ related:
 - Node: `>=22.13.0 <23`.
 - Package manager: npm with `package-lock.json`.
 - Dev server: `npm run dev`.
-- Smoke checks: `npm run check`.
+- Smoke checks: `npm run check` validates Astro diagnostics, Update fixtures, the production build, metadata/crawler/discovery contracts, generated Markdown synchronization, Agent Skill digest integrity, and human/WebMCP Project consistency through Playwright.
 - Update acceptance fixtures: `npm run check` temporarily builds one valid published fixture and confirms missing, multiple, and nonexistent Project relationships plus an empty draft body fail before generating the final zero-Update production output.
 - E2E tests: `npm run test:e2e`.
 - Cloudflare Pages: build with `npm run build` and publish `dist/`. Custom domain `liewcf.org` with fallback `liewcf-org.pages.dev`; `www.liewcf.org` redirects to `https://liewcf.org/`. Run `npm run check` locally or in CI before deployment.

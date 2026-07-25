@@ -22,11 +22,11 @@ related:
 
 ## Recommended Next Action
 
-- Have the coordinating task review and integrate ticket 05, then select the next unblocked ticket from the existing private frontier.
+- Have the coordinating task review and integrate ticket 06, then select the next unblocked ticket from the existing private frontier.
 
 ## Current
 
-- Ticket 05 is implemented in its separate worktree, pending coordinating-task review and integration. Private ticket status remains unchanged.
+- Ticket 06 is implemented in its separate worktree, pending coordinating-task review and integration. Private ticket status remains unchanged.
 
 ## Verification
 
@@ -47,6 +47,8 @@ related:
 - Ticket 05 adds a typed Project-linked Update collection, zero-entry `/updates/`, Project timelines, slug-based details, production-aware sitemap/RSS generation, final navigation, production draft exclusion, and real 404 handling for former Blog routes.
 - `npm run check` reports clean Astro diagnostics, validates one published fixture plus three invalid relationship fixtures and one empty draft-body fixture, builds nine static pages with zero Update details, and passes 35 Playwright checks including desktop/mobile overflow coverage.
 - `astro dev` locally serves `/updates/draft-preview/` with HTTP 200 and its `imagezoom` relationship, while the production build excludes that draft from routes and discovery surfaces.
+- Ticket 06 generates `/index.md` from published Project and Update content, links the expanded human-facing site from stable agent discovery entry points, updates the public Agent Skill and digest, and makes sitemap/agent helpers explicitly published-only.
+- `npm run check` reports clean Astro diagnostics, passes all Update fixture expectations, builds eight published human-facing pages plus the branded 404 and generated crawler/agent routes, and passes 37 Playwright checks for unique metadata, factual structured data, exact sitemap membership, stable discovery URLs, Markdown synchronization, digest integrity, crawler policy, draft exclusion, and human/WebMCP Project consistency.
 
 ## Blockers
 

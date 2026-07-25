@@ -79,6 +79,59 @@ test('shared navigation exposes only live destinations and identifies the curren
 	}
 });
 
+test('every published human page has unique truthful metadata and only the homepage emits structured data', async ({ page }) => {
+	const publishedPages = [
+		['/', 'Liew CheonFong | WordPress Tools, Developer Utilities, and Practical Websites'],
+		['/about/', 'About Liew CheonFong | Practical Tools and Durable Websites'],
+		['/projects/', 'Projects | Liew CheonFong'],
+		['/projects/youtube-watchlist-manager/', 'youtube-watchlist-manager | Projects | Liew CheonFong'],
+		['/projects/enjinmel-smtp/', 'enjinmel-smtp | Projects | Liew CheonFong'],
+		['/projects/verified-person-research/', 'verified-person-research | Projects | Liew CheonFong'],
+		['/projects/imagezoom/', 'imagezoom | Projects | Liew CheonFong'],
+		['/updates/', 'Updates | Liew CheonFong'],
+	] as const;
+	const metadata: Array<Record<string, string>> = [];
+
+	for (const [path, title] of publishedPages) {
+		const response = await page.goto(path);
+		expect(response?.status()).toBe(200);
+		await expect(page).toHaveTitle(title);
+
+		const values = await page.evaluate(() => ({
+			canonical: document.querySelector<HTMLLinkElement>('link[rel="canonical"]')?.href ?? '',
+			description: document.querySelector<HTMLMetaElement>('meta[name="description"]')?.content ?? '',
+			ogDescription: document.querySelector<HTMLMetaElement>('meta[property="og:description"]')?.content ?? '',
+			ogTitle: document.querySelector<HTMLMetaElement>('meta[property="og:title"]')?.content ?? '',
+			ogUrl: document.querySelector<HTMLMetaElement>('meta[property="og:url"]')?.content ?? '',
+			title: document.title,
+			twitterDescription: document.querySelector<HTMLMetaElement>('meta[name="twitter:description"]')?.content ?? '',
+			twitterTitle: document.querySelector<HTMLMetaElement>('meta[name="twitter:title"]')?.content ?? '',
+		}));
+		const canonical = new URL(path, 'https://liewcf.org').href;
+
+		expect(values.canonical).toBe(canonical);
+		expect(values.ogUrl).toBe(canonical);
+		for (const value of Object.values(values)) {
+			expect(value).not.toBe('');
+		}
+		await expect(page.locator('script[type="application/ld+json"]')).toHaveCount(path === '/' ? 1 : 0);
+		metadata.push(values);
+	}
+
+	for (const key of [
+		'canonical',
+		'description',
+		'ogDescription',
+		'ogTitle',
+		'ogUrl',
+		'title',
+		'twitterDescription',
+		'twitterTitle',
+	]) {
+		expect(new Set(metadata.map((entry) => entry[key])).size, `${key} should be unique`).toBe(publishedPages.length);
+	}
+});
+
 test('about page has unique canonical metadata, factual scope, and outbound-only contact', async ({ page }) => {
 	const response = await page.goto('/about/');
 
@@ -303,6 +356,8 @@ test('Update drafts are excluded from production routes and public discovery sur
 		'dist/index.md',
 		'dist/llms.txt',
 		'dist/index.html',
+		'dist/.well-known/agent-skills/index.json',
+		'dist/.well-known/agent-skills/liewcf-profile/SKILL.md',
 	]) {
 		const output = await readFile(path, 'utf8');
 		expect(output).not.toContain('draft-preview');
@@ -679,19 +734,59 @@ test('security.txt is a real well-known security contact file', async () => {
 	expect(securityTxt).toContain('Canonical: https://liewcf.org/.well-known/security.txt');
 });
 
-test('llms.txt and markdown profile give agents a static text entry point', async () => {
+test('llms.txt and the generated Markdown profile expose the expanded site without stale Project data', async () => {
 	const llmsTxt = await readFile('dist/llms.txt', 'utf8');
 	const markdownProfile = await readFile('dist/index.md', 'utf8');
+	const markdownRoute = await readFile('src/pages/index.md.ts', 'utf8');
+	const projects = [
+		{
+			name: 'youtube-watchlist-manager',
+			summary: 'A Chrome extension that speeds up YouTube Watch Later cleanup with checkboxes, batch removal, and watched-first sorting.',
+		},
+		{
+			name: 'enjinmel-smtp',
+			summary: 'A WordPress plugin that routes site email through the Enginemailer REST API for more reliable delivery.',
+		},
+		{
+			name: 'verified-person-research',
+			summary: 'A Codex skill that produces cited, evidence-bounded professional background research without inventing missing facts.',
+		},
+		{
+			name: 'imagezoom',
+			summary: 'A small Chrome extension for zooming images on web pages.',
+		},
+	];
 
 	expect(llmsTxt).toContain('# Liew CheonFong');
-	expect(llmsTxt).toContain('- [Markdown profile](https://liewcf.org/index.md)');
+	expect(llmsTxt).toContain('- [About](https://liewcf.org/about/)');
+	expect(llmsTxt).toContain('- [Projects](https://liewcf.org/projects/)');
+	expect(llmsTxt).toContain('- [Updates](https://liewcf.org/updates/)');
+	expect(llmsTxt).toContain('- [Generated Markdown profile](https://liewcf.org/index.md)');
 	expect(llmsTxt).toContain('- [Agent Skills discovery](https://liewcf.org/.well-known/agent-skills/index.json)');
 	expect(markdownProfile).toContain('# Liew CheonFong');
 	expect(markdownProfile).toContain('mailto:liewcf@gmail.com');
-	for (const project of ['youtube-watchlist-manager', 'enjinmel-smtp', 'verified-person-research', 'imagezoom']) {
-		expect(markdownProfile).toContain(`https://github.com/liewcf/${project}`);
+	for (const [label, url] of [
+		['Home', 'https://liewcf.org/'],
+		['About', 'https://liewcf.org/about/'],
+		['Projects', 'https://liewcf.org/projects/'],
+		['Updates', 'https://liewcf.org/updates/'],
+	]) {
+		expect(markdownProfile).toContain(`- [${label}](${url})`);
 	}
+	for (const project of projects) {
+		expect(markdownProfile).toContain(`### [${project.name}](https://liewcf.org/projects/${project.name}/)`);
+		expect(markdownProfile).toContain(project.summary);
+		expect(markdownProfile).toContain(`- Repository: https://github.com/liewcf/${project.name}`);
+		expect(markdownProfile.match(new RegExp(`https://github\\.com/liewcf/${project.name}`, 'g'))).toHaveLength(1);
+	}
+	expect(markdownProfile.match(/^### \[/gm)).toHaveLength(4);
+	expect(markdownProfile).toContain('No Updates have been published yet.');
 	expect(markdownProfile).not.toContain('https://github.com/liewcf/public-draft-share');
+	expect(markdownProfile).not.toContain('draft-preview');
+	expect(markdownProfile).not.toContain('Draft Update preview');
+	expect(markdownRoute).toContain('getPublishedProjects');
+	expect(markdownRoute).toContain('getPublishedUpdates');
+	await expect(readFile('public/index.md', 'utf8')).rejects.toThrow();
 });
 
 test('robots.txt includes sitemap URL', async ({ page }) => {
@@ -721,8 +816,23 @@ test('sitemap.xml exists and contains only live canonical URLs', async ({ page }
 		'<loc>https://liewcf.org/updates/</loc>',
 	]);
 	expect(body).toContain('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">');
-	expect(body).not.toContain('/blog/');
-	expect(body).not.toContain('/contact/');
+	for (const excludedPath of [
+		'/admin/',
+		'/blog/',
+		'/contact/',
+		'/index.md',
+		'/llms.txt',
+		'/robots.txt',
+		'/sitemap.xml',
+		'/updates/rss.xml',
+		'/404.html',
+		'/.well-known/',
+	]) {
+		expect(body).not.toContain(excludedPath);
+	}
+	const sitemapSource = await readFile('src/pages/sitemap.xml.ts', 'utf8');
+	expect(sitemapSource).toContain('getPublishedProjects');
+	expect(sitemapSource).toContain('getPublishedUpdates');
 });
 
 test('Update publication stays static and excludes general Blog and CMS features', async () => {
@@ -766,8 +876,10 @@ test('api catalog publishes a truthful empty linkset for this static site', asyn
 
 test('agent skills index advertises a verifiable static profile skill', async () => {
 	const index = JSON.parse(await readFile('dist/.well-known/agent-skills/index.json', 'utf8'));
-	const skill = await readFile('dist/.well-known/agent-skills/liewcf-profile/SKILL.md');
-	const digest = `sha256:${createHash('sha256').update(skill).digest('hex')}`;
+	const skillBytes = await readFile('dist/.well-known/agent-skills/liewcf-profile/SKILL.md');
+	const skill = skillBytes.toString('utf8');
+	const digest = `sha256:${createHash('sha256').update(skillBytes).digest('hex')}`;
+	const description = "Use liewcf.org as a static source for Liew CheonFong's profile, published Projects, Updates, and contact links.";
 
 	expect(index).toEqual({
 		$schema: 'https://schemas.agentskills.io/discovery/0.2.0/schema.json',
@@ -775,12 +887,23 @@ test('agent skills index advertises a verifiable static profile skill', async ()
 			{
 				name: 'liewcf-profile',
 				type: 'skill-md',
-				description: 'Use liewcf.org as a static profile source for Liew CheonFong, featured projects, and contact links.',
+				description,
 				url: '/.well-known/agent-skills/liewcf-profile/SKILL.md',
 				digest,
 			},
 		],
 	});
+	expect(skill).toContain(`description: ${description}`);
+	for (const url of [
+		'https://liewcf.org/about/',
+		'https://liewcf.org/projects/',
+		'https://liewcf.org/updates/',
+		'https://liewcf.org/index.md',
+	]) {
+		expect(skill).toContain(url);
+	}
+	expect(skill).toContain('Do not claim an Update exists unless');
+	expect(skill).not.toContain('Static one-page profile site.');
 });
 
 test('homepage registers externally callable read-only WebMCP tools when supported', async ({ page }) => {

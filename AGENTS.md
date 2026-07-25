@@ -29,6 +29,7 @@ If any of the above files are added later, treat them as higher-priority and upd
 - `src/pages/projects/` — the Project catalog and generated Project detail pages.
 - `src/content/updates/` — typed, draft-aware Update Markdown; every Update has a non-empty body and references exactly one existing Project.
 - `src/pages/updates/` — the chronological Update index, slug-based details, and RSS output.
+- `src/pages/index.md.ts` — generated agent-facing Markdown synchronized with published Projects and Updates.
 - `src/pages/sitemap.xml.ts` — production-aware sitemap generation for published Projects and Updates.
 - `src/layouts/SiteLayout.astro` — shared metadata, navigation, skip-link/main structure, and footer.
 - `src/pages/404.astro` — the branded noindex 404 page.
@@ -44,7 +45,7 @@ If any of the above files are added later, treat them as higher-priority and upd
 - Keep page copy concise and profile-focused.
 - Avoid adding blogs, CMS behavior, routing, contact forms, API functions, environment-variable requirements, or build pipelines.
 - Do not add Tailwind, a client-side UI framework, server rendering, a database, runtime APIs, runtime environment variables, or `functions/api/contact.ts`.
-- Keep featured GitHub Projects user-curated in Project Markdown with explicit `featured` and `featuredOrder` metadata. Homepage cards, filters, and WebMCP data derive from published featured entries; keep `index.md` and Playwright coverage aligned when the set changes.
+- Keep featured GitHub Projects user-curated in Project Markdown with explicit `featured` and `featuredOrder` metadata. Homepage cards, filters, WebMCP data, and generated `index.md` derive from published content; keep Playwright coverage aligned when the set changes.
 - Keep Update filenames independent from Project repository names. Production must exclude Update drafts from routes, indexes, Project timelines, RSS, sitemap, agent-facing content, and WebMCP inputs.
 - Keep changes small and focused.
 

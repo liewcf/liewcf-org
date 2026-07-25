@@ -4,9 +4,9 @@
 		{
 			"name": "liewcf-profile",
 			"type": "skill-md",
-			"description": "Use liewcf.org as a static profile source for Liew CheonFong, featured projects, and contact links.",
+			"description": "Use liewcf.org as a static source for Liew CheonFong's profile, published Projects, Updates, and contact links.",
 			"url": "/.well-known/agent-skills/liewcf-profile/SKILL.md",
-			"digest": "sha256:bb2fdae0c08d733669a012ec59f440fb9b534e0688157ad82e5c46adeb8d8a52"
+			"digest": "sha256:88f9aef8a15f03954a3a86c30f680ac4784f58aed9444563b6c0f9b1d6a0c89a"
 		}
 	]
 }

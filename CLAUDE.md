@@ -37,6 +37,7 @@ This is a single-context repository using root `CONTEXT.md` and `docs/adr/`. See
 - `src/pages/projects/` owns the Project catalog and generated detail routes.
 - `src/content/updates/` owns typed, draft-aware Update Markdown with a non-empty body and exactly one existing Project reference.
 - `src/pages/updates/` owns the chronological index, repository-name-independent detail routes, and RSS.
+- `src/pages/index.md.ts` generates the agent-facing Markdown profile from published Projects and Updates.
 - `src/pages/sitemap.xml.ts` generates the production-aware sitemap for published Projects and Updates.
 - `src/layouts/SiteLayout.astro` owns shared metadata defaults, Home/About/Projects/Updates navigation, skip-link/main structure, and footer.
 - `src/pages/404.astro` owns the branded noindex 404 page.

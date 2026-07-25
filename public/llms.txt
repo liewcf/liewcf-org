@@ -1,11 +1,14 @@
 # Liew CheonFong
 
-Public profile and project notes for Liew CheonFong.
+Public profile, Project catalog, and Updates index for Liew CheonFong.
 
 ## Links
 
-- [Website](https://liewcf.org/)
-- [Markdown profile](https://liewcf.org/index.md)
+- [Home](https://liewcf.org/)
+- [About](https://liewcf.org/about/)
+- [Projects](https://liewcf.org/projects/)
+- [Updates](https://liewcf.org/updates/)
+- [Generated Markdown profile](https://liewcf.org/index.md)
 - [Agent Skills discovery](https://liewcf.org/.well-known/agent-skills/index.json)
 
 ## Focus
