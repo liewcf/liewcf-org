@@ -141,3 +141,4 @@ related:
 - Added the Project canonicals to the sitemap, kept `/assets/` URLs unchanged, documented `/uploads/` media support, and added the missing explicit Node type dependency needed for clean-install Astro diagnostics.
 - Verified ticket 03 with `npm run check`: Astro diagnostics reported 0 errors, 0 warnings, and 0 hints; eight static pages built; all 29 Playwright checks passed, including desktop/mobile overflow coverage.
 - Verified draft preview separately with `astro dev`: `/projects/draft-preview/` returned HTTP 200 locally, then the development server was stopped.
+- Hardened optional Project live URLs after review so only credential-free HTTP(S) destinations validate before being rendered as external links; added focused acceptance coverage for allowed web URLs and rejected JavaScript, FTP, username-only, and username/password URLs.

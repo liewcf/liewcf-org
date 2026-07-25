@@ -39,7 +39,7 @@ related:
 - Ticket 02 now publishes a canonical factual About page through a shared Home/About site shell, removes the obsolete About redirect, adds About to the sitemap, and keeps unfinished Projects/Updates destinations out of navigation.
 - `npm run check` reports clean Astro diagnostics, builds three static pages, and passes 25 Playwright checks, including shared navigation/current-page state, About metadata/content/contact boundaries, skip-link focus, homepage regressions, and 1440px/390px overflow coverage.
 - Ticket 03 adds a typed, repository-slugged, production-draft-aware Project collection; `/projects/`; four canonical detail routes; shared accessible filtering/cards; Projects navigation; sitemap entries; `/uploads/` cover-image support; and the current no-Updates state without introducing Update routes.
-- `npm run check` reports clean Astro diagnostics, builds eight static pages, and passes 29 Playwright checks covering catalog order, four details, metadata, filtering, optional-section rendering, GitHub/detail links, production draft exclusion, and 1440px/390px overflow behavior.
+- `npm run check` reports clean Astro diagnostics, builds eight static pages, and passes 30 Playwright checks covering catalog order, four details, metadata, credential-free HTTP(S) live-URL validation, filtering, optional-section rendering, GitHub/detail links, production draft exclusion, and 1440px/390px overflow behavior.
 - `astro dev` locally serves the draft fixture at `/projects/draft-preview/` with HTTP 200, while the production build contains no draft route or listing.
 
 ## Blockers

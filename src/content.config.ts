@@ -1,6 +1,7 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
+import { projectLiveUrl } from './lib/project-schema';
 
 const githubRepositoryUrl = z
 	.url()
@@ -34,7 +35,7 @@ const projects = defineCollection({
 		featured: z.boolean(),
 		draft: z.boolean(),
 		status: z.string().min(1).optional(),
-		liveUrl: z.url().optional(),
+		liveUrl: projectLiveUrl.optional(),
 		coverImage: publicUploadUrl.optional(),
 	}),
 });
