@@ -4,7 +4,7 @@ description: Dated notes on changed files, deliverables, tooling, checks, and ve
 doc_type: work_log
 status: active
 created: 2026-07-19
-updated: 2026-07-19
+updated: 2026-07-26
 tags:
   - project-memory
   - changelog
@@ -110,3 +110,23 @@ related:
 - Verified the setup and metadata repair scripts are idempotent and `git diff --check` passes.
 - Replaced the featured homepage projects with the user-curated set `youtube-watchlist-manager`, `enjinmel-smtp`, `verified-person-research`, and `imagezoom`; synchronized the filters, Markdown profile, read-only WebMCP list, Playwright assertions, and future-agent guidance.
 - Verified the update with `npm run check` (18/18 passing), desktop and mobile previews, and a 390px overflow check (`scrollWidth` equals `clientWidth`).
+
+## 2026-07-26
+
+- Configured Matt engineering skills in `CLAUDE.md` and `docs/agents/` with a private local Markdown issue tracker, default triage statuses, and single-context domain-doc conventions.
+- Added `.scratch/` to `.gitignore` so private specs and issues stay out of the public repository.
+- Recorded `/grill-with-docs` as the next step for defining the requested Astro migration; `CONTEXT.md` and ADRs remain lazy outputs of that flow rather than empty setup files.
+- Verified nested `.scratch/` spec and issue paths resolve to the ignore rule, the `CLAUDE.md` setup block is unique, `git diff --check` passes, and all 18 Playwright checks pass.
+- Completed `/grill-with-docs` for the Astro migration and created `CONTEXT.md` with the canonical Project and Update language.
+- Added accepted ADR 0001 for reintroducing Astro as a fully static multi-page site while preserving the current design and deferring Decap CMS.
+- Recorded `/to-spec` as the next flow; no site implementation changed during the interview.
+- Published the Astro migration specification to the gitignored private local tracker with `ready-for-agent` status.
+- Defined `npm run check` as the single production-output acceptance seam and recorded `/to-tickets` as the next flow.
+- Published seven gitignored `ready-for-agent` Astro migration tickets as separate tracer-bullet files with explicit blocking edges.
+- Recorded ticket 01 as the initial implementation frontier; tickets 04 and 05 form the only parallel branch after ticket 03.
+- Implemented ticket 01 by moving the unchanged visitor-facing homepage and branded 404 onto Astro 7 fully static production output without an adapter or browser framework runtime.
+- Moved stable public CSS, images, fonts, crawler/security/agent resources, redirects, and headers under `public/` so their generated URLs remain unchanged.
+- Replaced Vite/no-op build commands with Astro development, type-check, build, and production-preview commands bound to `0.0.0.0:4321`.
+- Adapted Playwright coverage to the generated `dist/` seam and added production-output, reveal fallback, reduced-motion, keyboard-focus, real-404, and externally callable WebMCP assertions.
+- Upgraded the new Astro toolchain to the audit-recommended patched major and applied non-breaking transitive updates; `npm audit` reports 0 vulnerabilities.
+- Verified `npm run check`: Astro reported 0 errors, 0 warnings, and 0 hints; the static build generated two pages; all 21 Playwright tests passed.

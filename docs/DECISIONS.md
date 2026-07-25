@@ -4,7 +4,7 @@ description: Important project, product, technical, process, or content decision
 doc_type: decision_log
 status: active
 created: 2026-07-19
-updated: 2026-07-19
+updated: 2026-07-26
 tags:
   - project-memory
   - decisions
@@ -66,3 +66,12 @@ related:
 ## 2026-07-19
 
 - Feature the user-curated repositories `youtube-watchlist-manager`, `enjinmel-smtp`, `verified-person-research`, and `imagezoom` in that order, keeping the static homepage cards, category filters, Markdown profile, WebMCP output, and tests synchronized without adding a GitHub API dependency.
+
+## 2026-07-26
+
+- Configure the Matt engineering skills with a private local Markdown issue tracker under gitignored `.scratch/` because the repository is public and its planning issues must remain private.
+- Use the default triage status vocabulary and a single-context domain-doc layout. Let `/domain-modeling`, normally reached through `/grill-with-docs`, create root `CONTEXT.md` and `docs/adr/` lazily when the Astro migration resolves domain language or architectural decisions.
+- Reintroduce Astro as a static generator for an expanded multi-page site while retaining the current neutral-premium design, plain CSS, vanilla browser scripts, Cloudflare Pages hosting, and existing public contracts.
+- Add About, Projects, Project details, Updates, and Update details. Use Updates instead of Blog, require each Update to belong to one Project, and return 404 for old Blog URLs.
+- Publish Projects and Updates manually from local Markdown content collections with draft support. Launch with the current four Projects and no Updates; defer Decap CMS administration and authentication to a future phase.
+- Keep contact outbound-only and exclude Tailwind, client-side UI frameworks, SSR, databases, runtime APIs, and environment variables from the initial migration. See `docs/adr/0001-reintroduce-astro-as-static-multipage-site.md`.

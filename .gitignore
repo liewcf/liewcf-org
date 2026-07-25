@@ -40,3 +40,6 @@ test-results/
 
 # Superpowers brainstorming scratchpad
 .superpowers/
+
+# Private local issue tracker
+.scratch/

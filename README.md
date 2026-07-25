@@ -1,8 +1,8 @@
 # liewcf.org
 
-Static one-page profile site for `liewcf.org`.
+Astro-generated static profile site for `liewcf.org`.
 
-The site is plain HTML and CSS. It is intentionally not a blog, CMS, Astro app, or multi-page portfolio.
+The current visitor-facing site remains a one-page profile built from semantic HTML, plain CSS, and vanilla browser JavaScript. Astro provides static generation and local preview only; there is no server runtime, Tailwind, client-side UI framework, CMS, or API backend.
 
 ## Development
 
@@ -11,7 +11,7 @@ npm install
 npm run dev
 ```
 
-Open `http://127.0.0.1:4321`.
+Open `http://localhost:4321`. The development server also binds to the local network on port `4321`.
 
 ## Checks
 
@@ -19,24 +19,24 @@ Open `http://127.0.0.1:4321`.
 npm run check
 ```
 
-This runs the Playwright smoke tests for the static profile page.
+This checks Astro types, builds `dist/`, serves that production output, and runs the Playwright public-contract suite.
 
 ## Files
 
-- `index.html` — page content, metadata, and outbound links.
-- `styles.css` — all visual styling and responsive layout.
-- `assets/` — profile, Open Graph, favicon, and touch-icon assets.
-- `robots.txt` — crawler access rules.
-- `tests/e2e/navigation.spec.ts` — static page smoke tests.
+- `src/pages/index.astro` — homepage content, metadata, outbound links, and vanilla browser behavior.
+- `src/pages/404.astro` — branded noindex 404 page.
+- `public/` — stable CSS, assets, crawler/security/agent files, redirects, and headers.
+- `dist/` — generated static production output.
+- `tests/e2e/navigation.spec.ts` — production-output public-contract tests.
 
 ## Deployment
 
-Cloudflare Pages should publish the static site directly.
+Cloudflare Pages should publish the generated static output.
 
 Recommended settings:
 
-- Build command: `exit 0`
-- Output directory: `/`
+- Build command: `npm run build`
+- Output directory: `dist`
 - Runtime environment variables: none
 
-Run `npm run check` locally or in CI before deploying. Cloudflare Pages should only upload the static files from the repository root.
+Run `npm run check` locally or in CI before deploying. Cloudflare Pages should upload only `dist/`.

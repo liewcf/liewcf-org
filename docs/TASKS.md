@@ -4,7 +4,7 @@ description: Current tasks, blockers, verification state, and recommended next a
 doc_type: task_state
 status: active
 created: 2026-07-19
-updated: 2026-07-19
+updated: 2026-07-26
 tags:
   - project-memory
   - tasks
@@ -22,15 +22,20 @@ related:
 
 ## Recommended Next Action
 
-- None recorded.
+- Have the coordinating task review and integrate ticket 01, then select the next unblocked ticket from the existing private frontier.
 
 ## Current
 
-- None.
+- Ticket 01 is implemented in its separate worktree, pending coordinating-task review and integration. Private ticket status remains unchanged.
 
 ## Verification
 
 - The curated featured-project update passes all 18 Playwright smoke tests and has been inspected at 1440px and 390px widths with no horizontal overflow.
+- Matt engineering-skill setup uses gitignored `.scratch/` for private local issues, default triage statuses, and single-context domain docs under the conventions in `docs/agents/`.
+- `/grill-with-docs` reached shared understanding for the Astro scope, recorded the Project and Update language in `CONTEXT.md`, and accepted ADR 0001.
+- `/to-spec` published the Astro migration specification to the private local tracker with `ready-for-agent` status and the existing `npm run check` command as its single acceptance seam.
+- `/to-tickets` published seven private `ready-for-agent` tracer-bullet tickets. Ticket 01 is the initial frontier; tickets 04 and 05 can proceed independently after ticket 03.
+- Ticket 01 now generates the preserved homepage and branded 404 through fully static Astro output; `npm run check` covers Astro diagnostics, a clean production build, and 21 Playwright public-contract checks against Astro preview.
 
 ## Blockers
 
@@ -63,3 +68,7 @@ related:
 - [x] Verified live deployment: real 404 on nonexistent path, HSTS, CSP/frame-ancestors, and Permissions-Policy headers confirmed working.
 - [x] Applied the `redesign-existing-projects` skill in a `redesign/taste-skill` worktree: neutral-premium palette, self-hosted Outfit, zig-zag focus grid, dot+grain texture, glassmorphism cards, staggered scroll reveals, active/hover states, skip-link, `100dvh`, widened shell. 18/18 tests pass.
 - [x] Updated the featured project set to `youtube-watchlist-manager`, `enjinmel-smtp`, `verified-person-research`, and `imagezoom`, including the category filters, Markdown profile, WebMCP output, and regression coverage.
+- [x] Configured the Matt engineering skills with a private local Markdown issue tracker, default triage statuses, and single-context domain-doc conventions.
+- [x] Defined the Astro migration scope through `/grill-with-docs`, including pages, content relationships, publishing boundaries, design preservation, static deployment, and future Decap compatibility.
+- [x] Synthesized and privately published the implementation-ready Astro migration specification with exhaustive user stories, implementation decisions, testing decisions, and exclusions.
+- [x] Split the Astro migration into seven dependency-aware private tickets, one file per vertical slice.
