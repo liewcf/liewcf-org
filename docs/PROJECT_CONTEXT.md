@@ -24,7 +24,7 @@ related:
 
 - Project purpose: Personal profile and credibility page for `liewcf.org`.
 - Primary users: Visitors who want to understand who Liew CheonFong is, what he builds, and how to contact or follow him.
-- Current status: Astro-generated static site with a homepage, About page, and four-Project catalog/detail surface; typed draft-aware Markdown, a shared Home/About/Projects shell, plain semantic HTML, CSS, vanilla browser behavior, static SEO metadata/sitemap/redirects, a real 404 page, static security and agent discovery files, completed `www` redirect/Search Console validation, only live referenced image/icon assets, and Playwright public-contract checks against production output.
+- Current status: Astro-generated static site with a homepage, About page, four-Project catalog/detail surface, and live zero-entry Updates index/RSS; typed draft-aware Project and Update Markdown, a shared Home/About/Projects/Updates shell, plain semantic HTML, CSS, vanilla browser behavior, static SEO metadata/dynamic sitemap/redirects, a real 404 page, static security and agent discovery files, completed `www` redirect/Search Console validation, only live referenced image/icon assets, and Playwright public-contract checks against production output.
 
 ## Approved Direction
 
@@ -38,11 +38,12 @@ related:
 
 - Framework: Astro in fully static output mode; no adapter or browser framework runtime.
 - Styling: Plain CSS in `public/styles.css`. Neutral-premium palette (zinc off-white/near-black base with a single terracotta accent); self-hosted Outfit variable sans (latin woff2 in `public/assets/fonts/`) for all text with hierarchy via size/weight/tracking; dot-grid background with a fixed grain overlay (`public/assets/grain.svg`); asymmetric zig-zag focus grid; glassmorphism project cards with hover lift; staggered `IntersectionObserver` scroll reveals respecting `prefers-reduced-motion`; `:active` scale feedback; visible focus rings; `100dvh` viewport units; ~1200px max-width shell.
-- Content: Hand-authored homepage/About markup plus the typed `projects` collection under `src/content/projects/`. Project filenames must match the repository name in their canonical GitHub URL; production excludes drafts while local development can preview them. Published featured entries use validated `featured` and `featuredOrder` metadata as the source for homepage cards, categories, order, and WebMCP Project results.
-- Site shell: `src/layouts/SiteLayout.astro` owns shared metadata defaults, Home/About/Projects navigation and accessible current-page state, skip-link/main focus behavior, page structure, and outbound-only footer contact. Updates remains absent from navigation until its routes are live.
-- SEO: The shared layout owns canonical and Open Graph/Twitter metadata; the homepage supplies its static `Person`/`WebSite` JSON-LD. `public/sitemap.xml` contains Home, About, the Project index, and all four published Project detail canonicals, and `public/robots.txt` references it.
+- Content: Hand-authored homepage/About markup plus typed `projects` and `updates` collections. Project filenames must match their canonical GitHub repository names; published featured entries use validated `featured` and `featuredOrder` metadata as the source for homepage cards, categories, order, and WebMCP Project results. Update filenames provide independent publication slugs, and every Update contains one validated existing Project reference. Production excludes drafts while local development can preview them.
+- Site shell: `src/layouts/SiteLayout.astro` owns shared metadata defaults, Home/About/Projects/Updates navigation and accessible current-page state, skip-link/main focus behavior, page structure, and outbound-only footer contact.
+- Updates: `/updates/` launches with a deliberate no-publications state; slug-based detail routes and Project timelines use the same chronological production-aware helper. `/updates/rss.xml` emits production URLs, zero items at launch, and Project-linked items when published content exists.
+- SEO: The shared layout owns canonical and Open Graph/Twitter metadata; the homepage supplies its static `Person`/`WebSite` JSON-LD. `src/pages/sitemap.xml.ts` includes live fixed routes plus published Project and Update details, and `public/robots.txt` references the generated sitemap.
 - UI behavior: homepage and catalog Project cards share a small client-side category filter. Homepage filter options and result counts derive from published featured Project categories; filtering must not introduce API calls, routing, or hidden build/runtime dependencies.
-- Redirects: `public/_redirects` sends unavailable legacy routes (`/blog/` and `/contact/`) to `/` with 301 status for Cloudflare Pages. `/about/` and `/projects/` are live static pages.
+- Redirects: `public/_redirects` sends only `/contact/` to `/` with 301 status. `/about/`, `/projects/`, and `/updates/` are live static pages; `/blog/` and former Blog-entry URLs intentionally receive the branded real 404 with no redirect.
 - Error handling: `src/pages/404.astro` generates `dist/404.html` so unknown routes receive a real branded 404 response instead of an SPA fallback.
 - Security headers: `public/_headers` applies HSTS, CSP with `frame-ancestors 'none'`, `X-Frame-Options: DENY`, `X-Content-Type-Options`, `Referrer-Policy`, and `Permissions-Policy` to static responses.
 - Agent discovery: `public/_headers` advertises `/.well-known/api-catalog` and `/.well-known/agent-skills/index.json`; `public/robots.txt` declares `Content-Signal: ai-train=yes, search=yes, ai-input=yes`; `public/llms.txt` and `public/index.md` provide simple agent-facing text; the homepage registers read-only WebMCP tools when `navigator.modelContext` is available.
@@ -60,6 +61,7 @@ related:
 - Package manager: npm with `package-lock.json`.
 - Dev server: `npm run dev`.
 - Smoke checks: `npm run check`.
+- Update acceptance fixtures: `npm run check` temporarily builds one valid published fixture and confirms missing, multiple, and nonexistent Project relationships fail before generating the final zero-Update production output.
 - E2E tests: `npm run test:e2e`.
 - Cloudflare Pages: build with `npm run build` and publish `dist/`. Custom domain `liewcf.org` with fallback `liewcf-org.pages.dev`; `www.liewcf.org` redirects to `https://liewcf.org/`. Run `npm run check` locally or in CI before deployment.
 - Cloudflare Markdown for Agents product feature: not enabled while the site is on the current Cloudflare Free account because the feature is not available there. The repo still provides static `llms.txt` and `index.md`.

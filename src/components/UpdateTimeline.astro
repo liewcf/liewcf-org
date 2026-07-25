@@ -1,0 +1,27 @@
+---
+import type { Update } from '../lib/updates';
+import { formatUpdateDate, getUpdateSlug } from '../lib/updates';
+
+interface Props {
+	updates: Update[];
+	emptyMessage: string;
+}
+
+const { updates, emptyMessage } = Astro.props;
+---
+
+{updates.length === 0 ? (
+	<p>{emptyMessage}</p>
+) : (
+	<ol class="update-timeline">
+		{updates.map((update) => (
+			<li>
+				<time datetime={update.data.publishedAt.toISOString()}>
+					{formatUpdateDate(update.data.publishedAt)}
+				</time>
+				<h3><a href={`/updates/${getUpdateSlug(update)}/`}>{update.data.title}</a></h3>
+				<p>{update.data.summary}</p>
+			</li>
+		))}
+	</ol>
+)}

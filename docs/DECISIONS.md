@@ -82,3 +82,7 @@ related:
 - Keep Project drafts available through `astro dev` while filtering them from production indexes, homepage featuring, generated detail routes, sitemap, and navigation-linked published surfaces.
 - Publish the initial Projects catalog and four concise case studies from established copy and public repository documentation. Each detail page states that it has no published Updates without adding Update routes or implying that publishing is live.
 - Derive homepage category filters from all categories on the published featured entries, preserving accessible pressed state and live result counts without adding GitHub requests or runtime content dependencies.
+- Model each Update as Markdown with required title, summary, publication date, draft state, and a scalar Astro reference to exactly one existing Project. Derive Update detail slugs from their own filenames rather than Project repository names.
+- Launch `/updates/` and `/updates/rss.xml` with zero public entries, add Updates to the shared navigation, and source detail pages, Project timelines, RSS, and the generated sitemap from the same production-aware Update helper.
+- Keep a committed draft Update for local preview and use temporary non-public acceptance fixtures during `npm run check` to prove published rendering/relationships and build failures for missing, multiple, or nonexistent Project references.
+- Remove the former `/blog/` redirect so the Blog index and entry URLs receive the branded real 404; retain the outbound-only `/contact/` redirect.

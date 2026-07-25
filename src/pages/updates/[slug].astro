@@ -1,0 +1,70 @@
+---
+import { render } from 'astro:content';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import {
+	formatUpdateDate,
+	getUpdateProject,
+	getUpdateSlug,
+	getVisibleUpdates,
+	type Update,
+} from '../../lib/updates';
+import { getProjectSlug, type Project } from '../../lib/projects';
+
+export async function getStaticPaths() {
+	const updates = await getVisibleUpdates();
+
+	return Promise.all(updates.map(async (update) => ({
+		params: { slug: getUpdateSlug(update) },
+		props: {
+			project: await getUpdateProject(update),
+			update,
+		},
+	})));
+}
+
+interface Props {
+	project: Project;
+	update: Update;
+}
+
+const { project, update } = Astro.props;
+const slug = getUpdateSlug(update);
+const { Content } = await render(update);
+const description = update.data.summary;
+---
+
+<SiteLayout
+	title={`${update.data.title} | Updates | Liew CheonFong`}
+	description={description}
+	canonicalPath={`/updates/${slug}/`}
+	ogTitle={update.data.title}
+	socialDescription={description}
+>
+	<article class="update-entry">
+		<header class="update-header">
+			<p class="eyebrow">Update</p>
+			<h1>{update.data.title}</h1>
+			<p class="lede">{update.data.summary}</p>
+			<dl class="project-meta">
+				<div>
+					<dt>Published</dt>
+					<dd>
+						<time datetime={update.data.publishedAt.toISOString()}>
+							{formatUpdateDate(update.data.publishedAt)}
+						</time>
+					</dd>
+				</div>
+				<div>
+					<dt>Project</dt>
+					<dd><a href={`/projects/${getProjectSlug(project)}/`}>{project.data.title}</a></dd>
+				</div>
+			</dl>
+		</header>
+
+		<div class="update-content">
+			<Content />
+		</div>
+
+		<p class="case-study-back"><a href="/updates/">Back to all Updates</a></p>
+	</article>
+</SiteLayout>

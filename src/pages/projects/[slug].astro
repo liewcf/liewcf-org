@@ -1,7 +1,9 @@
 ---
 import { render } from 'astro:content';
 import SiteLayout from '../../layouts/SiteLayout.astro';
+import UpdateTimeline from '../../components/UpdateTimeline.astro';
 import { getProjectSlug, getVisibleProjects, type Project } from '../../lib/projects';
+import { getVisibleUpdatesForProject } from '../../lib/updates';
 
 export async function getStaticPaths() {
 	const projects = await getVisibleProjects();
@@ -19,6 +21,7 @@ interface Props {
 const { project } = Astro.props;
 const slug = getProjectSlug(project);
 const { Content } = await render(project);
+const updates = await getVisibleUpdatesForProject(project);
 const description = project.data.summary;
 ---
 
@@ -70,7 +73,10 @@ const description = project.data.summary;
 
 		<section class="case-study-updates" aria-labelledby="project-updates-title">
 			<h2 id="project-updates-title">Updates</h2>
-			<p>No Updates have been published for this Project yet.</p>
+			<UpdateTimeline
+				updates={updates}
+				emptyMessage="No Updates have been published for this Project yet."
+			/>
 		</section>
 
 		<p class="case-study-back"><a href="/projects/">Back to all Projects</a></p>

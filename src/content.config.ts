@@ -1,4 +1,4 @@
-import { defineCollection } from 'astro:content';
+import { defineCollection, reference } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 import { projectLiveUrl } from './lib/project-schema';
@@ -59,4 +59,15 @@ const projects = defineCollection({
 		}),
 });
 
-export const collections = { projects };
+const updates = defineCollection({
+	loader: glob({ base: './src/content/updates', pattern: '**/*.md' }),
+	schema: z.object({
+		title: z.string().min(1),
+		summary: z.string().min(1),
+		publishedAt: z.coerce.date(),
+		draft: z.boolean(),
+		project: reference('projects'),
+	}),
+});
+
+export const collections = { projects, updates };

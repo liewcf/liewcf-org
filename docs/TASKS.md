@@ -22,11 +22,11 @@ related:
 
 ## Recommended Next Action
 
-- Have the coordinating task review and integrate ticket 04, then select the next unblocked ticket from the existing private frontier.
+- Have the coordinating task review and integrate ticket 05, then select the next unblocked ticket from the existing private frontier.
 
 ## Current
 
-- Ticket 04 is implemented in its separate worktree, pending coordinating-task review and integration. Private ticket status remains unchanged.
+- Ticket 05 is implemented in its separate worktree, pending coordinating-task review and integration. Private ticket status remains unchanged.
 
 ## Verification
 
@@ -44,6 +44,9 @@ related:
 - Ticket 04 makes published featured Project Markdown the source for homepage cards, ordering, category filters, and WebMCP Project results; the four launch entries carry explicit order metadata and draft/non-featured entries stay excluded.
 - `npm run check` reports clean Astro diagnostics, builds eight static pages, and passes 31 Playwright checks including the four-card homepage contract, manual feature order, all metadata-derived filter counts, internal/GitHub links, draft exclusion, and visible/WebMCP equality.
 - Browser QA at 1440×900 and 390×844 confirms the derived filters wrap without horizontal overflow, pressed state/live counts work, Project actions remain distinct, and no relevant console warnings or errors occur.
+- Ticket 05 adds a typed Project-linked Update collection, zero-entry `/updates/`, Project timelines, slug-based details, production-aware sitemap/RSS generation, final navigation, production draft exclusion, and real 404 handling for former Blog routes.
+- `npm run check` reports clean Astro diagnostics, validates one published fixture plus three invalid relationship fixtures, builds nine static pages with zero Update details, and passes 35 Playwright checks including desktop/mobile overflow coverage.
+- `astro dev` locally serves `/updates/draft-preview/` with HTTP 200 and its `imagezoom` relationship, while the production build excludes that draft from routes and discovery surfaces.
 
 ## Blockers
 

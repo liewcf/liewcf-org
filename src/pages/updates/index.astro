@@ -1,0 +1,30 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import UpdateTimeline from '../../components/UpdateTimeline.astro';
+import { getVisibleUpdates } from '../../lib/updates';
+
+const updates = await getVisibleUpdates();
+const description = 'Chronological progress notes connected to the projects Liew CheonFong builds and maintains.';
+---
+
+<SiteLayout
+	title="Updates | Liew CheonFong"
+	description={description}
+	canonicalPath="/updates/"
+	ogTitle="Updates from Liew CheonFong"
+	socialDescription={description}
+>
+	<section class="catalog-hero" aria-labelledby="updates-title">
+		<p class="eyebrow">Updates</p>
+		<h1 id="updates-title">Progress, connected to the work.</h1>
+		<p class="lede">Focused notes about changes, decisions, and milestones across published Projects.</p>
+	</section>
+
+	<section class="updates-section" aria-labelledby="updates-list-title">
+		<h2 id="updates-list-title">Latest Updates</h2>
+		<UpdateTimeline
+			updates={updates}
+			emptyMessage="No Updates have been published yet. Project progress will appear here when there is something useful to share."
+		/>
+	</section>
+</SiteLayout>

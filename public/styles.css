@@ -681,24 +681,31 @@ h1 {
 }
 
 .case-study-content,
-.case-study-updates {
+.case-study-updates,
+.update-content,
+.updates-section {
 	padding: clamp(40px, 7vw, 72px) 0;
 	border-top: 1px solid var(--line);
 }
 
 .case-study-content h2,
-.case-study-updates h2 {
+.case-study-updates h2,
+.update-content h2,
+.updates-section h2 {
 	margin-bottom: 18px;
 	font-size: clamp(1.8rem, 4vw, 3rem);
 	line-height: 1.05;
 }
 
-.case-study-content h2:not(:first-child) {
+.case-study-content h2:not(:first-child),
+.update-content h2:not(:first-child) {
 	margin-top: 56px;
 }
 
 .case-study-content p,
-.case-study-updates p {
+.case-study-updates p,
+.update-content p,
+.updates-section > p {
 	max-width: 760px;
 	color: var(--muted);
 	font-size: clamp(1.08rem, 2vw, 1.28rem);
@@ -706,8 +713,66 @@ h1 {
 }
 
 .case-study-content p:last-child,
-.case-study-updates p:last-child {
+.case-study-updates p:last-child,
+.update-content p:last-child,
+.updates-section > p:last-child {
 	margin-bottom: 0;
+}
+
+.update-entry {
+	max-width: 920px;
+	margin: 0 auto;
+}
+
+.update-header {
+	max-width: 920px;
+	padding: clamp(64px, 11vw, 132px) 0 clamp(56px, 9vw, 104px);
+}
+
+.update-header h1 {
+	font-size: clamp(3rem, 8vw, 6.6rem);
+}
+
+.update-timeline {
+	display: grid;
+	gap: 0;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.update-timeline li {
+	padding: 28px 0;
+	border-top: 1px solid var(--line);
+}
+
+.update-timeline li:last-child {
+	border-bottom: 1px solid var(--line);
+}
+
+.update-timeline time {
+	display: block;
+	margin-bottom: 8px;
+	color: var(--muted);
+	font-size: 0.85rem;
+	font-weight: 650;
+	letter-spacing: 0.04em;
+}
+
+.update-timeline h3 {
+	margin-bottom: 8px;
+	font-size: clamp(1.3rem, 3vw, 2rem);
+	line-height: 1.15;
+}
+
+.update-timeline h3 a {
+	text-decoration: none;
+}
+
+.update-timeline p {
+	max-width: 760px;
+	margin-bottom: 0;
+	color: var(--muted);
 }
 
 .case-study-back {
