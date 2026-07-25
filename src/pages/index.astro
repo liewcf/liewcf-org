@@ -1,58 +1,41 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<script type="application/ld+json" is:inline>
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+
+const structuredData = {
+	'@context': 'https://schema.org',
+	'@graph': [
 		{
-			"@context": "https://schema.org",
-			"@graph": [
-				{
-					"@type": "Person",
-					"@id": "https://liewcf.org/#person",
-					"name": "Liew CheonFong",
-					"url": "https://liewcf.org/",
-					"image": "https://liewcf.org/assets/liewcf-profile.jpg",
-					"email": "mailto:liewcf@gmail.com",
-					"sameAs": [
-						"https://github.com/liewcf",
-						"https://www.facebook.com/LiewCheonFong"
-					],
-					"knowsAbout": ["WordPress","Developer utilities","Practical websites","SEO","Web development"]
-				},
-				{
-					"@type": "WebSite",
-					"@id": "https://liewcf.org/#website",
-					"url": "https://liewcf.org/",
-					"name": "Liew CheonFong",
-					"publisher": { "@id": "https://liewcf.org/#person" },
-					"inLanguage": "en"
-				}
-			]
-		}
-		</script>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Liew CheonFong | WordPress Tools, Developer Utilities, and Practical Websites</title>
-		<meta name="description" content="Liew CheonFong builds practical WordPress tools, developer utilities, and focused websites that make repeated work easier.">
-		<link rel="canonical" href="https://liewcf.org/">
-		<meta property="og:type" content="website">
-		<meta property="og:title" content="Liew CheonFong">
-		<meta property="og:description" content="Practical WordPress tools, developer utilities, and focused websites that make repeated work easier.">
-		<meta property="og:url" content="https://liewcf.org/">
-		<meta property="og:image" content="https://liewcf.org/assets/og-image.jpg">
-		<meta property="og:site_name" content="Liew CheonFong">
-		<meta name="twitter:card" content="summary_large_image">
-		<meta name="twitter:title" content="Liew CheonFong">
-		<meta name="twitter:description" content="Practical WordPress tools, developer utilities, and focused websites that make repeated work easier.">
-		<meta name="twitter:image" content="https://liewcf.org/assets/og-image.jpg">
-		<link rel="icon" href="/favicon.ico" sizes="any">
-		<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-		<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-		<link rel="preload" href="/assets/fonts/outfit-latin.woff2" as="font" type="font/woff2" crossorigin>
-		<link rel="stylesheet" href="/styles.css">
-	</head>
-	<body>
-		<a href="#intro-title" class="skip-link">Skip to content</a>
-		<main class="page-shell">
+			'@type': 'Person',
+			'@id': 'https://liewcf.org/#person',
+			name: 'Liew CheonFong',
+			url: 'https://liewcf.org/',
+			image: 'https://liewcf.org/assets/liewcf-profile.jpg',
+			email: 'mailto:liewcf@gmail.com',
+			sameAs: [
+				'https://github.com/liewcf',
+				'https://www.facebook.com/LiewCheonFong',
+			],
+			knowsAbout: ['WordPress', 'Developer utilities', 'Practical websites', 'SEO', 'Web development'],
+		},
+		{
+			'@type': 'WebSite',
+			'@id': 'https://liewcf.org/#website',
+			url: 'https://liewcf.org/',
+			name: 'Liew CheonFong',
+			publisher: { '@id': 'https://liewcf.org/#person' },
+			inLanguage: 'en',
+		},
+	],
+};
+---
+
+<SiteLayout
+	title="Liew CheonFong | WordPress Tools, Developer Utilities, and Practical Websites"
+	description="Liew CheonFong builds practical WordPress tools, developer utilities, and focused websites that make repeated work easier."
+	ogTitle="Liew CheonFong"
+	socialDescription="Practical WordPress tools, developer utilities, and focused websites that make repeated work easier."
+	structuredData={structuredData}
+>
 			<section class="hero" aria-labelledby="intro-title">
 				<div class="hero-copy">
 					<h1 id="intro-title">Hello, I'm Liew CheonFong</h1>
@@ -192,13 +175,7 @@
 					<li>Websites and landing pages built for longevity — fast to load, easy to hand off, and still working correctly two years later.</li>
 				</ul>
 			</section>
-		</main>
-
-		<footer class="site-footer">
-			<p>Got a WordPress, macOS, or web tooling idea? I’d be happy to chat.</p>
-			<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#105;&#101;&#119;&#99;&#102;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#108;&#105;&#101;&#119;&#99;&#102;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a>
-		</footer>
-		<script is:inline>
+			<script is:inline>
 		(() => {
 			const filterButtons = document.querySelectorAll('.filter-btn');
 			const projectCards = document.querySelectorAll('.project-card');
@@ -326,7 +303,6 @@
 					},
 				],
 			});
-		})();
-		</script>
-	</body>
-</html>
+			})();
+			</script>
+</SiteLayout>

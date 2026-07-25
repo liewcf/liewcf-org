@@ -130,3 +130,7 @@ related:
 - Adapted Playwright coverage to the generated `dist/` seam and added production-output, reveal fallback, reduced-motion, keyboard-focus, real-404, and externally callable WebMCP assertions.
 - Upgraded the new Astro toolchain to the audit-recommended patched major and applied non-breaking transitive updates; `npm audit` reports 0 vulnerabilities.
 - Verified `npm run check`: Astro reported 0 errors, 0 warnings, and 0 hints; the static build generated two pages; all 21 Playwright tests passed.
+- Implemented ticket 02 with a reusable Astro site shell for shared metadata, Home/About navigation, accessible current-page state, skip-link/main focus behavior, structure, footer, and responsive layout.
+- Added the factual canonical `/about/` page covering the established WordPress, macOS utility, browser-extension, developer-tool, practical problem-solving, and durable-website themes with outbound-only email contact.
+- Migrated the homepage into the shared shell without changing its content, project filtering, reveal motion, structured data, or WebMCP behavior; removed only the obsolete About redirect and added the live About canonical to the sitemap.
+- Extended production-output Playwright coverage for About, shared navigation, metadata/content boundaries, outbound contact, keyboard focus, preserved homepage contracts, and no horizontal overflow at 1440px and 390px.

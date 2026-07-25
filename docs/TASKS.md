@@ -22,11 +22,11 @@ related:
 
 ## Recommended Next Action
 
-- Have the coordinating task review and integrate ticket 01, then select the next unblocked ticket from the existing private frontier.
+- Have the coordinating task review and integrate ticket 02, then select the next unblocked ticket from the existing private frontier.
 
 ## Current
 
-- Ticket 01 is implemented in its separate worktree, pending coordinating-task review and integration. Private ticket status remains unchanged.
+- Ticket 02 is implemented in its separate worktree, pending coordinating-task review and integration. Private ticket status remains unchanged.
 
 ## Verification
 
@@ -36,6 +36,8 @@ related:
 - `/to-spec` published the Astro migration specification to the private local tracker with `ready-for-agent` status and the existing `npm run check` command as its single acceptance seam.
 - `/to-tickets` published seven private `ready-for-agent` tracer-bullet tickets. Ticket 01 is the initial frontier; tickets 04 and 05 can proceed independently after ticket 03.
 - Ticket 01 now generates the preserved homepage and branded 404 through fully static Astro output; `npm run check` covers Astro diagnostics, a clean production build, and 21 Playwright public-contract checks against Astro preview.
+- Ticket 02 now publishes a canonical factual About page through a shared Home/About site shell, removes the obsolete About redirect, adds About to the sitemap, and keeps unfinished Projects/Updates destinations out of navigation.
+- `npm run check` reports clean Astro diagnostics, builds three static pages, and passes 25 Playwright checks, including shared navigation/current-page state, About metadata/content/contact boundaries, skip-link focus, homepage regressions, and 1440px/390px overflow coverage.
 
 ## Blockers
 

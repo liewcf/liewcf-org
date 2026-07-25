@@ -1,0 +1,65 @@
+---
+interface Props {
+	title?: string;
+	description?: string;
+	canonicalPath?: string;
+	ogTitle?: string;
+	socialDescription?: string;
+	structuredData?: Record<string, unknown>;
+}
+
+const {
+	title = 'Liew CheonFong',
+	description = 'Liew CheonFong builds practical WordPress tools, developer utilities, and focused websites.',
+	canonicalPath = '/',
+	ogTitle = title,
+	socialDescription = description,
+	structuredData,
+} = Astro.props;
+const canonicalUrl = new URL(canonicalPath, Astro.site ?? 'https://liewcf.org').toString();
+const currentPath = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>{title}</title>
+		<meta name="description" content={description}>
+		<link rel="canonical" href={canonicalUrl}>
+		<meta property="og:type" content="website">
+		<meta property="og:title" content={ogTitle}>
+		<meta property="og:description" content={socialDescription}>
+		<meta property="og:url" content={canonicalUrl}>
+		<meta property="og:image" content="https://liewcf.org/assets/og-image.jpg">
+		<meta property="og:site_name" content="Liew CheonFong">
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:title" content={ogTitle}>
+		<meta name="twitter:description" content={socialDescription}>
+		<meta name="twitter:image" content="https://liewcf.org/assets/og-image.jpg">
+		<link rel="icon" href="/favicon.ico" sizes="any">
+		<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+		<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+		<link rel="preload" href="/assets/fonts/outfit-latin.woff2" as="font" type="font/woff2" crossorigin>
+		<link rel="stylesheet" href="/styles.css">
+		{structuredData && <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />}
+	</head>
+	<body>
+		<a href="#main-content" class="skip-link">Skip to content</a>
+		<header class="site-header">
+			<a class="site-name" href="/" aria-label="Liew CheonFong home">Liew CheonFong</a>
+			<nav class="site-navigation" aria-label="Primary navigation">
+				<a href="/" aria-current={currentPath === '/' ? 'page' : undefined}>Home</a>
+				<a href="/about/" aria-current={currentPath === '/about/' ? 'page' : undefined}>About</a>
+			</nav>
+		</header>
+		<main id="main-content" class="page-shell" tabindex="-1">
+			<slot />
+		</main>
+		<footer class="site-footer">
+			<p>Got a WordPress, macOS, or web tooling idea? I’d be happy to chat.</p>
+			<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#105;&#101;&#119;&#99;&#102;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#108;&#105;&#101;&#119;&#99;&#102;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a>
+		</footer>
+	</body>
+</html>

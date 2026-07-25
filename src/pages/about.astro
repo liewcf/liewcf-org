@@ -1,0 +1,64 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+
+const title = 'About Liew CheonFong | Practical Tools and Durable Websites';
+const description = 'About Liew CheonFong and his work across WordPress, macOS utilities, browser extensions, developer tools, and durable websites.';
+---
+
+<SiteLayout
+	title={title}
+	description={description}
+	canonicalPath="/about/"
+	ogTitle="About Liew CheonFong"
+	socialDescription={description}
+>
+	<section class="about-hero" aria-labelledby="about-title">
+		<p class="eyebrow">About</p>
+		<h1 id="about-title">Practical work, built to stay useful.</h1>
+		<p class="lede">
+			I’m Liew CheonFong. I build focused tools and websites around problems that come up in everyday work.
+		</p>
+	</section>
+
+	<div class="about-sections">
+		<section class="about-section" aria-labelledby="about-work-title">
+			<div class="section-heading">
+				<h2 id="about-work-title">The work</h2>
+			</div>
+			<div class="about-copy">
+				<p>
+					My work spans WordPress plugins, macOS menu bar utilities, browser extensions, developer tools, and focused websites. The format changes, but the aim is consistent: understand a repeated problem and make the next encounter with it simpler.
+				</p>
+				<p>
+					That can mean routing WordPress email through a reliable API, making a browser task less repetitive, building a small utility that stays out of the way, or publishing a website that explains its useful thing clearly.
+				</p>
+			</div>
+		</section>
+
+		<section class="about-section" aria-labelledby="about-approach-title">
+			<div class="section-heading">
+				<h2 id="about-approach-title">The approach</h2>
+			</div>
+			<div class="about-copy">
+				<p>
+					I favour practical problem-solving over unnecessary complexity. A useful tool should be focused enough to understand, dependable enough to return to, and straightforward enough to hand off.
+				</p>
+				<p>
+					For websites, that means fast loading, clear reading, and durable foundations. For software, it means solving one real job without turning the solution into a larger burden.
+				</p>
+			</div>
+		</section>
+
+		<section class="about-section about-contact" aria-labelledby="about-contact-title">
+			<div class="section-heading">
+				<h2 id="about-contact-title">Get in touch</h2>
+			</div>
+			<div class="about-copy">
+				<p>If you have a WordPress, macOS, browser-extension, developer-tool, or website idea, email is the simplest way to reach me.</p>
+				<p class="profile-links">
+					<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#105;&#101;&#119;&#99;&#102;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;" class="profile-link-primary">Email Liew CheonFong</a>
+				</p>
+			</div>
+		</section>
+	</div>
+</SiteLayout>

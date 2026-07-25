@@ -75,3 +75,5 @@ related:
 - Add About, Projects, Project details, Updates, and Update details. Use Updates instead of Blog, require each Update to belong to one Project, and return 404 for old Blog URLs.
 - Publish Projects and Updates manually from local Markdown content collections with draft support. Launch with the current four Projects and no Updates; defer Decap CMS administration and authentication to a future phase.
 - Keep contact outbound-only and exclude Tailwind, client-side UI frameworks, SSR, databases, runtime APIs, and environment variables from the initial migration. See `docs/adr/0001-reintroduce-astro-as-static-multipage-site.md`.
+- Use one Astro site shell for shared metadata defaults, skip-link/main focus behavior, page structure, footer, and responsive Home/About navigation. Expose only routes that are live and use `aria-current="page"` for the active destination.
+- Keep the About narrative limited to professional themes already supported by the homepage and curated projects; do not add chronology, employers, adoption claims, awards, or personal-history claims without verified source material.
