@@ -1,0 +1,67 @@
+---
+interface Props {
+	categories: string[];
+}
+
+const { categories } = Astro.props;
+---
+
+<div class="filter-bar" role="group" aria-label="Filter projects by category">
+	<button class="filter-btn active" type="button" data-filter="all" aria-pressed="true">All</button>
+	{categories.map((category) => (
+		<button class="filter-btn" type="button" data-filter={category} aria-pressed="false">{category}</button>
+	))}
+</div>
+<p class="filter-status" role="status" aria-live="polite" aria-atomic="true"></p>
+
+<script>
+	const filterButtons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+	const projectCards = document.querySelectorAll<HTMLElement>('.project-card');
+	const filterStatus = document.querySelector<HTMLElement>('.filter-status');
+
+	const setProjectFilter = (filter: string) => {
+		let visible = 0;
+
+		filterButtons.forEach((button) => {
+			const isActive = button.dataset.filter === filter;
+			button.classList.toggle('active', isActive);
+			button.setAttribute('aria-pressed', String(isActive));
+		});
+
+		projectCards.forEach((card) => {
+			const tags = (card.dataset.tags || '').split(',').map((tag) => tag.trim());
+			const shouldShow = filter === 'all' || tags.includes(filter);
+			card.hidden = !shouldShow;
+			if (shouldShow) {
+				visible += 1;
+			}
+		});
+
+		if (filterStatus) {
+			filterStatus.textContent = filter === 'all'
+				? ''
+				: `${visible} project${visible === 1 ? '' : 's'} in ${filter}`;
+		}
+	};
+
+	filterButtons.forEach((button) => {
+		button.addEventListener('click', () => setProjectFilter(button.dataset.filter || 'all'));
+	});
+
+	if (!('IntersectionObserver' in window)) {
+		projectCards.forEach((card) => card.classList.add('is-revealed'));
+	} else {
+		const revealObserver = new IntersectionObserver(
+			(entries, observer) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('is-revealed');
+						observer.unobserve(entry.target);
+					}
+				});
+			},
+			{ threshold: 0.08, rootMargin: '0px 0px -40px 0px' },
+		);
+		projectCards.forEach((card) => revealObserver.observe(card));
+	}
+</script>

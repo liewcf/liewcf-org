@@ -1,0 +1,33 @@
+---
+import type { Project } from '../lib/projects';
+import { getProjectSlug } from '../lib/projects';
+
+interface Props {
+	project: Project;
+}
+
+const { project } = Astro.props;
+const slug = getProjectSlug(project);
+---
+
+<article class="project-card" data-tags={project.data.categories.join(',')}>
+	<div class="project-card-body">
+		<p class="project-repo">liewcf/{slug}</p>
+		<h3><a href={`/projects/${slug}/`}>{project.data.title}</a></h3>
+		<p>{project.data.summary}</p>
+	</div>
+	<ul class="project-tags" role="list" aria-label={`${project.data.title} categories`}>
+		{project.data.categories.map((category) => <li>{category}</li>)}
+	</ul>
+	<div class="project-links">
+		<a href={`/projects/${slug}/`} class="project-link-primary">View project</a>
+		<a
+			href={project.data.repositoryUrl}
+			rel="noopener noreferrer"
+			target="_blank"
+			aria-label={`View ${project.data.title} on GitHub`}
+		>
+			GitHub
+		</a>
+	</div>
+</article>

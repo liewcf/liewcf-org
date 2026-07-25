@@ -1,5 +1,8 @@
 ---
 import SiteLayout from '../layouts/SiteLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import ProjectFilter from '../components/ProjectFilter.astro';
+import { getVisibleProjects } from '../lib/projects';
 
 const structuredData = {
 	'@context': 'https://schema.org',
@@ -27,6 +30,7 @@ const structuredData = {
 		},
 	],
 };
+const featuredProjects = (await getVisibleProjects()).filter((project) => project.data.featured);
 ---
 
 <SiteLayout
@@ -93,74 +97,9 @@ const structuredData = {
 					<p class="section-lede">Four repositories I keep coming back to. Each solves a problem I ran into more than once.</p>
 				</div>
 				<div class="projects-column">
-					<div class="filter-bar" role="group" aria-label="Filter projects by category">
-						<button class="filter-btn active" type="button" data-filter="all" aria-pressed="true">All</button>
-						<button class="filter-btn" type="button" data-filter="WordPress" aria-pressed="false">WordPress</button>
-						<button class="filter-btn" type="button" data-filter="Chrome Extension" aria-pressed="false">Chrome Extension</button>
-						<button class="filter-btn" type="button" data-filter="Developer Tool" aria-pressed="false">Developer Tool</button>
-					</div>
-					<p class="filter-status" role="status" aria-live="polite" aria-atomic="true"></p>
+					<ProjectFilter categories={['WordPress', 'Chrome Extension', 'Developer Tool']} />
 					<div class="project-grid" id="project-grid">
-						<article class="project-card" data-tags="Chrome Extension,JavaScript,YouTube">
-							<div class="project-card-body">
-								<p class="project-repo">liewcf/youtube-watchlist-manager</p>
-								<h3>youtube-watchlist-manager</h3>
-								<p>A Chrome extension that speeds up YouTube Watch Later cleanup with checkboxes, batch removal, and watched-first sorting.</p>
-							</div>
-							<ul class="project-tags" role="list" aria-label="Project categories">
-								<li>Chrome Extension</li>
-								<li>JavaScript</li>
-								<li>YouTube</li>
-							</ul>
-							<div class="project-links">
-								<a href="https://github.com/liewcf/youtube-watchlist-manager" rel="noopener noreferrer" target="_blank" aria-label="View youtube-watchlist-manager on GitHub" class="project-link-primary">View on GitHub</a>
-							</div>
-						</article>
-						<article class="project-card" data-tags="WordPress,Email,Plugin">
-							<div class="project-card-body">
-								<p class="project-repo">liewcf/enjinmel-smtp</p>
-								<h3>enjinmel-smtp</h3>
-								<p>A WordPress plugin that routes site email through the Enginemailer REST API for more reliable delivery.</p>
-							</div>
-							<ul class="project-tags" role="list" aria-label="Project categories">
-								<li>WordPress</li>
-								<li>Email</li>
-								<li>Plugin</li>
-							</ul>
-							<div class="project-links">
-								<a href="https://github.com/liewcf/enjinmel-smtp" rel="noopener noreferrer" target="_blank" aria-label="View enjinmel-smtp on GitHub" class="project-link-primary">View on GitHub</a>
-							</div>
-						</article>
-						<article class="project-card" data-tags="Codex,Developer Tool,Research">
-							<div class="project-card-body">
-								<p class="project-repo">liewcf/verified-person-research</p>
-								<h3>verified-person-research</h3>
-								<p>A Codex skill that turns a LinkedIn profile into a cited life story, timeline, confidence table, and source list without inventing missing facts.</p>
-							</div>
-							<ul class="project-tags" role="list" aria-label="Project categories">
-								<li>Codex</li>
-								<li>Developer Tool</li>
-								<li>Research</li>
-							</ul>
-							<div class="project-links">
-								<a href="https://github.com/liewcf/verified-person-research" rel="noopener noreferrer" target="_blank" aria-label="View verified-person-research on GitHub" class="project-link-primary">View on GitHub</a>
-							</div>
-						</article>
-						<article class="project-card" data-tags="Chrome Extension,JavaScript,Utility">
-							<div class="project-card-body">
-								<p class="project-repo">liewcf/imagezoom</p>
-								<h3>imagezoom</h3>
-								<p>A small Chrome extension for zooming images on web pages.</p>
-							</div>
-							<ul class="project-tags" role="list" aria-label="Project categories">
-								<li>Chrome Extension</li>
-								<li>JavaScript</li>
-								<li>Utility</li>
-							</ul>
-							<div class="project-links">
-								<a href="https://github.com/liewcf/imagezoom" rel="noopener noreferrer" target="_blank" aria-label="View imagezoom on GitHub" class="project-link-primary">View on GitHub</a>
-							</div>
-						</article>
+						{featuredProjects.map((project) => <ProjectCard project={project} />)}
 					</div>
 				</div>
 			</section>
@@ -177,41 +116,8 @@ const structuredData = {
 			</section>
 			<script is:inline>
 		(() => {
-			const filterButtons = document.querySelectorAll('.filter-btn');
-			const projectCards = document.querySelectorAll('.project-card');
-			const filterStatus = document.querySelector('.filter-status');
-
-			const setProjectFilter = (filter) => {
-				let visible = 0;
-
-				filterButtons.forEach((button) => {
-					const isActive = button.dataset.filter === filter;
-					button.classList.toggle('active', isActive);
-					button.setAttribute('aria-pressed', String(isActive));
-				});
-
-				projectCards.forEach((card) => {
-					const tags = (card.dataset.tags || '').split(',').map((tag) => tag.trim());
-					const shouldShow = filter === 'all' || tags.includes(filter);
-					card.hidden = !shouldShow;
-					if (shouldShow) {
-						visible += 1;
-					}
-				});
-
-				if (filterStatus) {
-					filterStatus.textContent = filter === 'all'
-						? ''
-						: `${visible} project${visible === 1 ? '' : 's'} in ${filter}`;
-				}
-			};
-
-			filterButtons.forEach((button) => {
-				button.addEventListener('click', () => setProjectFilter(button.dataset.filter || 'all'));
-			});
-
 			const revealTargets = document.querySelectorAll(
-				'.hero-copy, .hero-image, .focus-tile, .project-card, .proof-list li',
+				'.hero-copy, .hero-image, .focus-tile, .proof-list li',
 			);
 
 			if (!('IntersectionObserver' in window)) {

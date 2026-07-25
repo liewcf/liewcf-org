@@ -24,7 +24,7 @@ related:
 
 - Project purpose: Personal profile and credibility page for `liewcf.org`.
 - Primary users: Visitors who want to understand who Liew CheonFong is, what he builds, and how to contact or follow him.
-- Current status: Astro-generated static site with a homepage and expanded About page, a shared Home/About shell, plain semantic HTML, CSS, vanilla browser behavior, static SEO metadata/sitemap/redirects, a real 404 page, static security and agent discovery files, static featured-project filtering, completed `www` redirect/Search Console validation, only live referenced image/icon assets, and Playwright public-contract checks against production output.
+- Current status: Astro-generated static site with a homepage, About page, and four-Project catalog/detail surface; typed draft-aware Markdown, a shared Home/About/Projects shell, plain semantic HTML, CSS, vanilla browser behavior, static SEO metadata/sitemap/redirects, a real 404 page, static security and agent discovery files, completed `www` redirect/Search Console validation, only live referenced image/icon assets, and Playwright public-contract checks against production output.
 
 ## Approved Direction
 
@@ -38,16 +38,16 @@ related:
 
 - Framework: Astro in fully static output mode; no adapter or browser framework runtime.
 - Styling: Plain CSS in `public/styles.css`. Neutral-premium palette (zinc off-white/near-black base with a single terracotta accent); self-hosted Outfit variable sans (latin woff2 in `public/assets/fonts/`) for all text with hierarchy via size/weight/tracking; dot-grid background with a fixed grain overlay (`public/assets/grain.svg`); asymmetric zig-zag focus grid; glassmorphism project cards with hover lift; staggered `IntersectionObserver` scroll reveals respecting `prefers-reduced-motion`; `:active` scale feedback; visible focus rings; `100dvh` viewport units; ~1200px max-width shell.
-- Content: Hand-authored homepage markup in `src/pages/index.astro` and factual About copy in `src/pages/about.astro`, both rendered through `src/layouts/SiteLayout.astro`.
-- Site shell: `src/layouts/SiteLayout.astro` owns shared metadata defaults, Home/About navigation and accessible current-page state, skip-link/main focus behavior, page structure, and outbound-only footer contact. Projects and Updates remain absent from navigation until those routes are live.
-- SEO: The shared layout owns canonical and Open Graph/Twitter metadata; the homepage supplies its static `Person`/`WebSite` JSON-LD. `public/sitemap.xml` contains `https://liewcf.org/` and `https://liewcf.org/about/`, and `public/robots.txt` references it.
-- UI behavior: featured projects are static cards with a small client-side category filter; filtering must not introduce API calls, routing, or hidden build/runtime dependencies.
-- Redirects: `public/_redirects` sends unavailable legacy routes (`/blog/`, `/projects/`, `/contact/`) to `/` with 301 status for Cloudflare Pages. `/about/` is a live static page.
+- Content: Hand-authored homepage/About markup plus the typed `projects` collection under `src/content/projects/`. Project filenames must match the repository name in their canonical GitHub URL; production excludes drafts while local development can preview them.
+- Site shell: `src/layouts/SiteLayout.astro` owns shared metadata defaults, Home/About/Projects navigation and accessible current-page state, skip-link/main focus behavior, page structure, and outbound-only footer contact. Updates remains absent from navigation until its routes are live.
+- SEO: The shared layout owns canonical and Open Graph/Twitter metadata; the homepage supplies its static `Person`/`WebSite` JSON-LD. `public/sitemap.xml` contains Home, About, the Project index, and all four published Project detail canonicals, and `public/robots.txt` references it.
+- UI behavior: homepage and catalog Project cards share a small client-side category filter; filtering must not introduce API calls, routing, or hidden build/runtime dependencies.
+- Redirects: `public/_redirects` sends unavailable legacy routes (`/blog/` and `/contact/`) to `/` with 301 status for Cloudflare Pages. `/about/` and `/projects/` are live static pages.
 - Error handling: `src/pages/404.astro` generates `dist/404.html` so unknown routes receive a real branded 404 response instead of an SPA fallback.
 - Security headers: `public/_headers` applies HSTS, CSP with `frame-ancestors 'none'`, `X-Frame-Options: DENY`, `X-Content-Type-Options`, `Referrer-Policy`, and `Permissions-Policy` to static responses.
 - Agent discovery: `public/_headers` advertises `/.well-known/api-catalog` and `/.well-known/agent-skills/index.json`; `public/robots.txt` declares `Content-Signal: ai-train=yes, search=yes, ai-input=yes`; `public/llms.txt` and `public/index.md` provide simple agent-facing text; the homepage registers read-only WebMCP tools when `navigator.modelContext` is available.
 - Security contact: `/.well-known/security.txt` publishes the public email contact for security reports.
-- Assets: `public/assets/` contains the portrait, AVIF/WebP/JPG hero image fallback, Open Graph image, SVG favicon, touch icon, self-hosted Outfit variable woff2, and grain overlay; `public/favicon.ico` preserves conventional browser and bot compatibility.
+- Assets: `public/assets/` contains the unchanged portrait, AVIF/WebP/JPG hero image fallback, Open Graph image, SVG favicon, touch icon, self-hosted Outfit variable woff2, and grain overlay; `public/favicon.ico` preserves conventional browser and bot compatibility. Project media may use stable files placed under `public/uploads/` and referenced as `/uploads/…`.
 - Contact: Outbound links only; email uses `mailto:`.
 - API: None; `/.well-known/api-catalog` intentionally returns an empty Linkset instead of inventing a public API.
 - Auth discovery: None; do not add OAuth/OIDC or OAuth protected-resource metadata unless the site gains protected APIs.

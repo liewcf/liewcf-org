@@ -1,0 +1,42 @@
+import { defineCollection } from 'astro:content';
+import { glob } from 'astro/loaders';
+import { z } from 'astro/zod';
+
+const githubRepositoryUrl = z
+	.url()
+	.refine((value) => {
+		const url = new URL(value);
+		const pathParts = url.pathname.split('/').filter(Boolean);
+
+		return (
+			url.protocol === 'https:'
+			&& url.hostname === 'github.com'
+			&& url.port === ''
+			&& url.search === ''
+			&& url.hash === ''
+			&& !url.pathname.endsWith('/')
+			&& pathParts.length === 2
+			&& pathParts.every((part) => /^[A-Za-z0-9_.-]+$/.test(part))
+		);
+	}, 'Use a canonical HTTPS GitHub repository URL.');
+
+const publicUploadUrl = z
+	.string()
+	.refine((value) => value.startsWith('/uploads/') && !value.includes('..'), 'Use a stable public /uploads/ URL.');
+
+const projects = defineCollection({
+	loader: glob({ base: './src/content/projects', pattern: '**/*.md' }),
+	schema: z.object({
+		title: z.string().min(1),
+		summary: z.string().min(1),
+		repositoryUrl: githubRepositoryUrl,
+		categories: z.array(z.string().min(1)).min(1),
+		featured: z.boolean(),
+		draft: z.boolean(),
+		status: z.string().min(1).optional(),
+		liveUrl: z.url().optional(),
+		coverImage: publicUploadUrl.optional(),
+	}),
+});
+
+export const collections = { projects };

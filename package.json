@@ -14,7 +14,8 @@
 		"test:e2e": "playwright test"
 	},
 	"devDependencies": {
-		"@playwright/test": "^1.57.0"
+		"@playwright/test": "^1.57.0",
+		"@types/node": "^22.13.0"
 	},
 	"dependencies": {
 		"@astrojs/check": "^0.9.9",

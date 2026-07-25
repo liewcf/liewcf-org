@@ -473,6 +473,10 @@ h1 {
 	line-height: 1.18;
 }
 
+.project-card h3 a {
+	text-decoration: none;
+}
+
 .project-card p {
 	margin-bottom: 0;
 	color: var(--muted);
@@ -616,6 +620,100 @@ h1 {
 
 .about-copy .profile-links {
 	margin-top: 32px;
+}
+
+.catalog-hero,
+.case-study-header {
+	max-width: 920px;
+	padding: clamp(64px, 11vw, 132px) 0 clamp(56px, 9vw, 104px);
+}
+
+.catalog-hero h1,
+.case-study-header h1 {
+	font-size: clamp(3rem, 8vw, 6.6rem);
+}
+
+.catalog-section {
+	padding: clamp(48px, 8vw, 88px) 0;
+	border-top: 1px solid var(--line);
+}
+
+.case-study {
+	max-width: 920px;
+	margin: 0 auto;
+}
+
+.case-study-header .project-tags {
+	margin-top: 28px;
+}
+
+.project-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 28px;
+	margin: 32px 0 0;
+	padding-top: 28px;
+	border-top: 1px solid var(--line);
+}
+
+.project-meta div {
+	display: grid;
+	gap: 2px;
+}
+
+.project-meta dt {
+	color: var(--muted);
+	font-size: 0.78rem;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+.project-meta dd {
+	margin: 0;
+}
+
+.case-study-cover {
+	width: 100%;
+	margin-top: 40px;
+	border: 1px solid var(--line);
+	border-radius: 14px;
+}
+
+.case-study-content,
+.case-study-updates {
+	padding: clamp(40px, 7vw, 72px) 0;
+	border-top: 1px solid var(--line);
+}
+
+.case-study-content h2,
+.case-study-updates h2 {
+	margin-bottom: 18px;
+	font-size: clamp(1.8rem, 4vw, 3rem);
+	line-height: 1.05;
+}
+
+.case-study-content h2:not(:first-child) {
+	margin-top: 56px;
+}
+
+.case-study-content p,
+.case-study-updates p {
+	max-width: 760px;
+	color: var(--muted);
+	font-size: clamp(1.08rem, 2vw, 1.28rem);
+	line-height: 1.7;
+}
+
+.case-study-content p:last-child,
+.case-study-updates p:last-child {
+	margin-bottom: 0;
+}
+
+.case-study-back {
+	margin: 0;
+	padding: 32px 0 64px;
+	border-top: 1px solid var(--line);
 }
 
 .site-footer {

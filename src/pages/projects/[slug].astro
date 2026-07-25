@@ -1,0 +1,78 @@
+---
+import { render } from 'astro:content';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { getProjectSlug, getVisibleProjects, type Project } from '../../lib/projects';
+
+export async function getStaticPaths() {
+	const projects = await getVisibleProjects();
+
+	return projects.map((project) => ({
+		params: { slug: getProjectSlug(project) },
+		props: { project },
+	}));
+}
+
+interface Props {
+	project: Project;
+}
+
+const { project } = Astro.props;
+const slug = getProjectSlug(project);
+const { Content } = await render(project);
+const description = project.data.summary;
+---
+
+<SiteLayout
+	title={`${project.data.title} | Projects | Liew CheonFong`}
+	description={description}
+	canonicalPath={`/projects/${slug}/`}
+	ogTitle={project.data.title}
+	socialDescription={description}
+>
+	<article class="case-study">
+		<header class="case-study-header">
+			<p class="eyebrow">Project</p>
+			<h1>{project.data.title}</h1>
+			<p class="lede">{project.data.summary}</p>
+			<ul class="project-tags" role="list" aria-label={`${project.data.title} categories`}>
+				{project.data.categories.map((category) => <li>{category}</li>)}
+			</ul>
+			<dl class="project-meta">
+				{project.data.status && (
+					<div>
+						<dt>Status</dt>
+						<dd>{project.data.status}</dd>
+					</div>
+				)}
+				<div>
+					<dt>Source</dt>
+					<dd>
+						<a href={project.data.repositoryUrl} rel="noopener noreferrer" target="_blank">View on GitHub</a>
+					</dd>
+				</div>
+				{project.data.liveUrl && (
+					<div>
+						<dt>Live</dt>
+						<dd>
+							<a href={project.data.liveUrl} rel="noopener noreferrer" target="_blank">Visit project</a>
+						</dd>
+					</div>
+				)}
+			</dl>
+			{project.data.coverImage && (
+				<img class="case-study-cover" src={project.data.coverImage} alt="" loading="eager">
+			)}
+		</header>
+
+		<div class="case-study-content">
+			<Content />
+		</div>
+
+		<section class="case-study-updates" aria-labelledby="project-updates-title">
+			<h2 id="project-updates-title">Updates</h2>
+			<p>No Updates have been published for this Project yet.</p>
+		</section>
+
+		<p class="case-study-back"><a href="/projects/">Back to all Projects</a></p>
+	</article>
+</SiteLayout>

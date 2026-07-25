@@ -1,0 +1,31 @@
+---
+import ProjectCard from '../../components/ProjectCard.astro';
+import ProjectFilter from '../../components/ProjectFilter.astro';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { getVisibleProjects } from '../../lib/projects';
+
+const projects = await getVisibleProjects();
+const categories = [...new Set(projects.flatMap((project) => project.data.categories))];
+const description = 'Browse selected open-source projects by Liew CheonFong, with concise case studies and direct GitHub repository links.';
+---
+
+<SiteLayout
+	title="Projects | Liew CheonFong"
+	description={description}
+	canonicalPath="/projects/"
+	ogTitle="Projects by Liew CheonFong"
+	socialDescription={description}
+>
+	<section class="catalog-hero" aria-labelledby="projects-title">
+		<p class="eyebrow">Projects</p>
+		<h1 id="projects-title">Tools built around real, repeated problems.</h1>
+		<p class="lede">Selected repositories, documented as concise case studies.</p>
+	</section>
+
+	<section class="catalog-section" aria-label="Project catalog">
+		<ProjectFilter categories={categories} />
+		<div class="project-grid" id="project-grid">
+			{projects.map((project) => <ProjectCard project={project} />)}
+		</div>
+	</section>
+</SiteLayout>
