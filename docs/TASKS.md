@@ -22,11 +22,11 @@ related:
 
 ## Recommended Next Action
 
-- Have the coordinating task review and integrate Ticket 07, then separately authorize the existing Cloudflare Pages project to build with `npm run build` and publish `dist/`; verify the migrated live site only after deployment.
+- Separately authorize the existing Cloudflare Pages project to build with `npm run build` and publish `dist/`; verify the migrated live site only after deployment.
 
 ## Current
 
-- Ticket 07 is implemented in its separate worktree, pending coordinating-task review and integration. The private ticket status remains unchanged, and no production, Cloudflare dashboard, or DNS change was performed.
+- All seven Astro migration tickets have been reviewed and integrated into `main`. The private migration tracker is resolved. No production deployment, Cloudflare dashboard change, DNS change, or migrated live-site verification was performed.
 
 ## Verification
 
@@ -89,3 +89,4 @@ related:
 - [x] Defined the Astro migration scope through `/grill-with-docs`, including pages, content relationships, publishing boundaries, design preservation, static deployment, and future Decap compatibility.
 - [x] Synthesized and privately published the implementation-ready Astro migration specification with exhaustive user stories, implementation decisions, testing decisions, and exclusions.
 - [x] Split the Astro migration into seven dependency-aware private tickets, one file per vertical slice.
+- [x] Reviewed and integrated all seven private Astro migration tickets into `main`, closing the local tracker after the 38-check release gate passed.
