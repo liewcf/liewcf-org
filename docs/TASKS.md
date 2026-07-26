@@ -22,13 +22,13 @@ related:
 
 ## Recommended Next Action
 
-- Separately authorize deploying `dist/` through the existing Cloudflare Pages project, then verify the migrated live site.
+- Repair or confirm the Cloudflare Pages Git build configuration before relying on automatic deployments; keep direct upload of a locally verified `dist/` as the release fallback.
 
 ## Current
 
 - All seven Astro migration tickets have been reviewed and integrated into `main`, and the private migration tracker is resolved.
 - Verified post-integration fixes keep branded 404 content visible and reject published Updates linked to draft Projects.
-- Local production-preview acceptance is complete. No production deployment, Cloudflare dashboard change, DNS change, or migrated live-site verification was performed.
+- Commit `2353fbd` is deployed to the existing `liewcf-org` Cloudflare Pages project and live at `liewcf.org`. No DNS change was needed.
 
 ## Verification
 
@@ -56,11 +56,12 @@ related:
 - Visual inspection used the production preview at 1440×900 for the homepage and 390×844 for Updates. Layout, navigation wrapping, typography, imagery, and empty-state presentation were intact with no visible horizontal overflow. The desktop pass exposed a subpixel edge of the hidden skip link; moving its hidden position from `-48px` to `-56px` removed it, and the final desktop screenshot plus automated hidden/focused-state checks verified the correction.
 - Post-integration review fixes keep branded 404 content visibly revealed without JavaScript and fail production builds when a published Update references a draft Project; both regressions are covered by the release gate.
 - Local production-preview smoke checks returned 200 for the homepage, About, Projects, a Project detail, Updates, and RSS; the draft Project and an unknown route returned 404. Astro preview does not apply Cloudflare-specific redirects or headers.
-- No specification deviation was accepted. Deployment, Cloudflare dashboard/DNS changes, and migrated live-site verification remain the only production handoff work.
+- Direct-upload production deployment `1f5b11e8` was built from clean commit `2353fbd`. Live checks returned 200 for the deployment URL, Home, About, Projects, Updates, RSS, generated Markdown, and the API catalog; returned branded 404 responses for the draft Project and an unknown route; and redirected `www` to the apex domain with 301 status.
+- No specification deviation was accepted. The Astro migration is deployed and live-verified.
 
 ## Blockers
 
-- None recorded.
+- The Git-triggered Cloudflare Pages deployment for commit `2353fbd` served 404 at its deployment URL. Direct upload succeeded, but the automatic build configuration should be corrected or reconfirmed before the next release.
 
 ## Not Doing
 
