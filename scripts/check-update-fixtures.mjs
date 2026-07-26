@@ -12,7 +12,7 @@ if (existsSync(contentPath)) {
 	throw new Error(`Refusing to overwrite existing fixture path: ${contentPath}`);
 }
 
-async function buildWithFixture(name, shouldPass) {
+async function buildWithFixture(name, shouldPass, expectedError) {
 	await copyFile(resolve(root, `tests/fixtures/updates/${name}.md`), contentPath);
 	const result = spawnSync(astroBinary, ['build'], {
 		cwd: root,
@@ -20,13 +20,18 @@ async function buildWithFixture(name, shouldPass) {
 		env: process.env,
 	});
 	await unlink(contentPath);
+	const output = `${result.stdout}\n${result.stderr}`;
 
 	if (shouldPass && result.status !== 0) {
-		throw new Error(`Valid Update fixture failed to build:\n${result.stdout}\n${result.stderr}`);
+		throw new Error(`Valid Update fixture failed to build:\n${output}`);
 	}
 
 	if (!shouldPass && result.status === 0) {
 		throw new Error(`Invalid Update fixture "${name}" unexpectedly built successfully.`);
+	}
+
+	if (!shouldPass && expectedError && !output.includes(expectedError)) {
+		throw new Error(`Invalid Update fixture "${name}" failed for an unexpected reason:\n${output}`);
 	}
 }
 
@@ -63,6 +68,11 @@ try {
 	await buildWithFixture('missing-project', false);
 	await buildWithFixture('multiple-projects', false);
 	await buildWithFixture('nonexistent-project', false);
+	await buildWithFixture(
+		'published-draft-project',
+		false,
+		'Published Update "acceptance-fixture" must reference a published Project.',
+	);
 	await buildWithFixture('empty-draft-body', false);
 } finally {
 	if (existsSync(contentPath)) {
@@ -70,4 +80,4 @@ try {
 	}
 }
 
-console.log('Update fixture checks passed: published rendering plus 3 invalid relationships and 1 empty draft body.');
+console.log('Update fixture checks passed: published rendering plus 4 invalid relationships and 1 empty draft body.');

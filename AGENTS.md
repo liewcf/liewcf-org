@@ -46,7 +46,7 @@ If any of the above files are added later, treat them as higher-priority and upd
 - Avoid adding blogs, CMS behavior, routing, contact forms, API functions, environment-variable requirements, or build pipelines.
 - Do not add Tailwind, a client-side UI framework, server rendering, a database, runtime APIs, runtime environment variables, or `functions/api/contact.ts`.
 - Keep featured GitHub Projects user-curated in Project Markdown with explicit `featured` and `featuredOrder` metadata. Homepage cards, filters, WebMCP data, and generated `index.md` derive from published content; keep Playwright coverage aligned when the set changes.
-- Keep Update filenames independent from Project repository names. Production must exclude Update drafts from routes, indexes, Project timelines, RSS, sitemap, agent-facing content, and WebMCP inputs.
+- Keep Update filenames independent from Project repository names. Production must exclude Update drafts from routes, indexes, Project timelines, RSS, sitemap, agent-facing content, and WebMCP inputs, and a published Update must never reference a draft Project.
 - Keep changes small and focused.
 
 ## Contact and links
@@ -60,7 +60,9 @@ If any of the above files are added later, treat them as higher-priority and upd
 
 - Run `npm run check` when feasible after page, link, or asset changes.
 - Keep Playwright coverage aligned with the static page, including outbound profile links, featured projects, and removed routes not returning successful pages.
-- For visual changes, preview with `npm run dev` and inspect desktop and mobile widths.
+- Use `npm run dev` when draft content must be previewed locally. For deployment-equivalent local testing, run `npm run build` followed by `npm run preview`; the production preview excludes drafts.
+- Astro preview does not apply Cloudflare Pages `_headers` or `_redirects`. Keep their generated-file assertions in `npm run check` and verify their actual behavior after deployment.
+- For visual changes, inspect representative desktop and mobile widths.
 
 ## Deployment
 

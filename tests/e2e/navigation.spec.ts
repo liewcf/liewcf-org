@@ -748,6 +748,8 @@ test('unknown and former Blog routes receive the branded real 404 response', asy
 		expect(response?.status()).toBe(404);
 		await expect(page).toHaveTitle('Page not found | Liew CheonFong');
 		await expect(page.getByRole('heading', { name: 'Page not found' })).toBeVisible();
+		await expect(page.locator('.hero-copy')).toHaveCSS('opacity', '1');
+		await expect(page.locator('.hero-copy')).toHaveCSS('transform', 'none');
 		await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex');
 		await expect(page.getByRole('link', { name: 'Go home' })).toHaveAttribute('href', '/');
 	}

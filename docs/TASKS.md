@@ -22,11 +22,13 @@ related:
 
 ## Recommended Next Action
 
-- Separately authorize the existing Cloudflare Pages project to build with `npm run build` and publish `dist/`; verify the migrated live site only after deployment.
+- Separately authorize deploying `dist/` through the existing Cloudflare Pages project, then verify the migrated live site.
 
 ## Current
 
-- All seven Astro migration tickets have been reviewed and integrated into `main`. The private migration tracker is resolved. No production deployment, Cloudflare dashboard change, DNS change, or migrated live-site verification was performed.
+- All seven Astro migration tickets have been reviewed and integrated into `main`, and the private migration tracker is resolved.
+- Verified post-integration fixes keep branded 404 content visible and reject published Updates linked to draft Projects.
+- Local production-preview acceptance is complete. No production deployment, Cloudflare dashboard change, DNS change, or migrated live-site verification was performed.
 
 ## Verification
 
@@ -50,8 +52,10 @@ related:
 - Ticket 06 generates `/index.md` from published Project and Update content, links the expanded human-facing site from stable agent discovery entry points, updates the public Agent Skill and digest, and makes sitemap/agent helpers explicitly published-only.
 - `npm run check` reports clean Astro diagnostics, passes all Update fixture expectations, builds eight published human-facing pages plus the branded 404 and generated crawler/agent routes, and passes 37 Playwright checks for unique metadata, factual structured data, exact sitemap membership, stable discovery URLs, Markdown synchronization, digest integrity, crawler policy, draft exclusion, and human/WebMCP Project consistency.
 - Ticket 07 locks the generated Cloudflare redirect/header contracts, verifies every established asset and discovery URL, proves the branded real 404 and absence of `/admin/`/Decap/runtime configuration, expands responsive keyboard/focus/overflow coverage to every rendered page type, and replaces stale pre-Astro handoff documentation.
-- Final `npm run check` under Node 22.13.0 reports 0 Astro errors, warnings, or hints; passes one valid Update fixture plus three invalid relationships and one empty draft-body expectation; builds nine static pages; and passes all 38 Playwright checks.
+- Final `npm run check` under Node 22.13.0 reports 0 Astro errors, warnings, or hints; passes one valid Update fixture plus four invalid relationships and one empty draft-body expectation; builds nine static pages; and passes all 38 Playwright checks.
 - Visual inspection used the production preview at 1440×900 for the homepage and 390×844 for Updates. Layout, navigation wrapping, typography, imagery, and empty-state presentation were intact with no visible horizontal overflow. The desktop pass exposed a subpixel edge of the hidden skip link; moving its hidden position from `-48px` to `-56px` removed it, and the final desktop screenshot plus automated hidden/focused-state checks verified the correction.
+- Post-integration review fixes keep branded 404 content visibly revealed without JavaScript and fail production builds when a published Update references a draft Project; both regressions are covered by the release gate.
+- Local production-preview smoke checks returned 200 for the homepage, About, Projects, a Project detail, Updates, and RSS; the draft Project and an unknown route returned 404. Astro preview does not apply Cloudflare-specific redirects or headers.
 - No specification deviation was accepted. Deployment, Cloudflare dashboard/DNS changes, and migrated live-site verification remain the only production handoff work.
 
 ## Blockers

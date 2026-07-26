@@ -21,6 +21,10 @@ export async function getVisibleUpdates(): Promise<Update[]> {
 		if (!update.body?.trim()) {
 			throw new Error(`Update "${update.id}" must include a non-empty Markdown body.`);
 		}
+
+		if (!update.data.draft) {
+			await getUpdateProject(update);
+		}
 	}
 
 	const visibleUpdates = import.meta.env.PROD
@@ -45,6 +49,10 @@ export async function getUpdateProject(update: Update): Promise<Project> {
 
 	if (!project) {
 		throw new Error(`Update "${update.id}" references a Project that does not exist.`);
+	}
+
+	if (!update.data.draft && project.data.draft) {
+		throw new Error(`Published Update "${update.id}" must reference a published Project.`);
 	}
 
 	return project;
