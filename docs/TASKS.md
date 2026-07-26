@@ -22,13 +22,13 @@ related:
 
 ## Recommended Next Action
 
-- Repair or confirm the Cloudflare Pages Git build configuration before relying on automatic deployments; keep direct upload of a locally verified `dist/` as the release fallback.
+- Use the verified Cloudflare Pages Git integration for normal releases: push a release-gated commit to `main`, monitor the resulting build, and live-check the production contracts.
 
 ## Current
 
 - All seven Astro migration tickets have been reviewed and integrated into `main`, and the private migration tracker is resolved.
 - Verified post-integration fixes keep branded 404 content visible and reject published Updates linked to draft Projects.
-- Commit `2353fbd` is deployed to the existing `liewcf-org` Cloudflare Pages project and live at `liewcf.org`. No DNS change was needed.
+- The `liewcf-org` Pages project now builds from Git with `npm ci && npm run build`, publishes `dist/`, and deploys production branch `main`. Git-triggered commit `5f4a651` is live at `liewcf.org`. No DNS change was needed.
 
 ## Verification
 
@@ -57,11 +57,13 @@ related:
 - Post-integration review fixes keep branded 404 content visibly revealed without JavaScript and fail production builds when a published Update references a draft Project; both regressions are covered by the release gate.
 - Local production-preview smoke checks returned 200 for the homepage, About, Projects, a Project detail, Updates, and RSS; the draft Project and an unknown route returned 404. Astro preview does not apply Cloudflare-specific redirects or headers.
 - Direct-upload production deployment `1f5b11e8` was built from clean commit `2353fbd`. Live checks returned 200 for the deployment URL, Home, About, Projects, Updates, RSS, generated Markdown, and the API catalog; returned branded 404 responses for the draft Project and an unknown route; and redirected `www` to the apex domain with 301 status.
+- Cloudflare project inspection identified the Git-build failure as a blank output directory despite a successful build stage. Setting the output directory to `dist` and retrying commit `5f4a651` produced Git-triggered deployment `5fa3c773`; queue, initialize, clone, build, and deploy all succeeded.
+- The corrected Git deployment returned 200 for Home, About, Projects, Updates, generated Markdown, and the API-catalog rewrite; returned a branded 404 for an unknown route; and applied the expected HSTS, CSP, clickjacking, content-type, and discovery headers.
 - No specification deviation was accepted. The Astro migration is deployed and live-verified.
 
 ## Blockers
 
-- The Git-triggered Cloudflare Pages deployment for commit `2353fbd` served 404 at its deployment URL. Direct upload succeeded, but the automatic build configuration should be corrected or reconfirmed before the next release.
+- None recorded.
 
 ## Not Doing
 

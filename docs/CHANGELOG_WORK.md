@@ -173,3 +173,6 @@ related:
 - Found that the Git-triggered production deployment for `2353fbd` served 404 at its Pages deployment URL. Rebuilt the clean static output locally and deployed `dist/` directly to the existing production branch as deployment `1f5b11e8`.
 - Live-verified 200 responses for the deployment URL, Home, About, Projects, Updates, RSS, generated Markdown, and the API catalog; verified branded 404 responses for a draft Project and an unknown route; and verified the permanent `www`-to-apex 301 redirect.
 - Recorded the Git build configuration as follow-up work because direct upload is currently the verified release path; no DNS change was required.
+- Diagnosed the Pages Git integration through the Cloudflare API: cloning and `npm ci && npm run build` succeeded, but the configured output directory was blank, so successful Git deployments published no site files and returned 404.
+- Changed only the existing `liewcf-org` Pages output directory to `dist`, preserving the GitHub repository, production branch `main`, build command, domains, and automatic-deployment settings.
+- Retried Git-triggered commit `5f4a651` as deployment `5fa3c773`; all Cloudflare stages passed. Verified the unique deployment and custom domain routes, generated Markdown, API-catalog rewrite, branded 404, and production security/discovery headers.
