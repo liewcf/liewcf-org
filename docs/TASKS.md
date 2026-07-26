@@ -28,7 +28,7 @@ related:
 
 - All seven Astro migration tickets have been reviewed and integrated into `main`, and the private migration tracker is resolved.
 - Verified post-integration fixes keep branded 404 content visible and reject published Updates linked to draft Projects.
-- The `liewcf-org` Pages project now builds from Git with `npm ci && npm run build`, publishes `dist/`, and deploys production branch `main`. Git-triggered commit `5f4a651` is live at `liewcf.org`. No DNS change was needed.
+- The `liewcf-org` Pages project now builds from Git with `npm ci && npm run build`, publishes `dist/`, and automatically deploys production branch `main` to `liewcf.org`. No DNS change was needed.
 
 ## Verification
 
@@ -59,6 +59,7 @@ related:
 - Direct-upload production deployment `1f5b11e8` was built from clean commit `2353fbd`. Live checks returned 200 for the deployment URL, Home, About, Projects, Updates, RSS, generated Markdown, and the API catalog; returned branded 404 responses for the draft Project and an unknown route; and redirected `www` to the apex domain with 301 status.
 - Cloudflare project inspection identified the Git-build failure as a blank output directory despite a successful build stage. Setting the output directory to `dist` and retrying commit `5f4a651` produced Git-triggered deployment `5fa3c773`; queue, initialize, clone, build, and deploy all succeeded.
 - The corrected Git deployment returned 200 for Home, About, Projects, Updates, generated Markdown, and the API-catalog rewrite; returned a branded 404 for an unknown route; and applied the expected HSTS, CSP, clickjacking, content-type, and discovery headers.
+- A subsequent normal `main` push independently triggered deployment `98aba6ea`; every Cloudflare stage passed, its published routes and 404 contract were live, and no direct upload was used.
 - No specification deviation was accepted. The Astro migration is deployed and live-verified.
 
 ## Blockers

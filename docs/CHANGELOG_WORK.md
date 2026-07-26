@@ -176,3 +176,4 @@ related:
 - Diagnosed the Pages Git integration through the Cloudflare API: cloning and `npm ci && npm run build` succeeded, but the configured output directory was blank, so successful Git deployments published no site files and returned 404.
 - Changed only the existing `liewcf-org` Pages output directory to `dist`, preserving the GitHub repository, production branch `main`, build command, domains, and automatic-deployment settings.
 - Retried Git-triggered commit `5f4a651` as deployment `5fa3c773`; all Cloudflare stages passed. Verified the unique deployment and custom domain routes, generated Markdown, API-catalog rewrite, branded 404, and production security/discovery headers.
+- Confirmed the repair with a subsequent normal `main` push: Cloudflare independently created deployment `98aba6ea`, all stages passed, and public route/rewrite/404 checks succeeded without direct upload.
