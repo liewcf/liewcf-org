@@ -4,7 +4,7 @@ description: Current tasks, blockers, verification state, and recommended next a
 doc_type: task_state
 status: active
 created: 2026-07-19
-updated: 2026-07-26
+updated: 2026-07-31
 tags:
   - project-memory
   - tasks
@@ -22,16 +22,22 @@ related:
 
 ## Recommended Next Action
 
-- Use the verified Cloudflare Pages Git integration for normal releases: push a release-gated commit to `main`, monitor the resulting build, and live-check the production contracts.
+- Review the uncommitted Auto-Tomato and Verified Person Research content. Commit, push, and live-verify through the existing Cloudflare Pages Git integration only after explicit authorization.
 
 ## Current
 
+- The working tree adds Auto-Tomato as a non-featured fifth Project, expands the Verified Person Research case study, and publishes one source-backed Update for each Project.
+- Generated production output now contains five Project details and two Update details. The Updates index, Project timelines, RSS, sitemap, and `/index.md` derive the new content automatically; the homepage/WebMCP featured set remains the same four curated Projects.
+- These 2026-07-31 content changes are uncommitted and not deployed.
 - All seven Astro migration tickets have been reviewed and integrated into `main`, and the private migration tracker is resolved.
 - Verified post-integration fixes keep branded 404 content visible and reject published Updates linked to draft Projects.
 - The `liewcf-org` Pages project now builds from Git with `npm ci && npm run build`, publishes `dist/`, and automatically deploys production branch `main` to `liewcf.org`. No DNS change was needed.
 
 ## Verification
 
+- `npm run check` passes on 2026-07-31: Astro reports 0 errors, warnings, or hints; the valid Update fixture and four invalid relationships plus one empty-body expectation behave correctly; the static build emits 12 pages into `dist/`; and all 38 Playwright checks pass.
+- Production-preview QA covered `/projects/`, both affected Project details, `/updates/`, and both Update details at 1440×900 and 390×844. Every route measured `scrollWidth === clientWidth`; the Auto-Tomato card revealed to opacity 1 after scrolling; and the first Tab exposed the skip link at `(16, 16)` with a solid focus outline. Console inspection reported 0 errors and one non-blocking existing Outfit font-preload timing warning.
+- `python3 scripts/validate.py` passed in Verified Person Research, and Auto-Tomato source evidence was inspected read-only. Final status checks found unrelated uncommitted work in both source repositories; none was altered by this task.
 - The curated featured-project update passes all 18 Playwright smoke tests and has been inspected at 1440px and 390px widths with no horizontal overflow.
 - Matt engineering-skill setup uses gitignored `.scratch/` for private local issues, default triage statuses, and single-context domain docs under the conventions in `docs/agents/`.
 - `/grill-with-docs` reached shared understanding for the Astro scope, recorded the Project and Update language in `CONTEXT.md`, and accepted ADR 0001.
@@ -71,6 +77,8 @@ related:
 - Cloudflare Markdown for Agents is not currently being enabled because the site is on a Cloudflare Free account, where that feature is not available. Do not keep this as an open launch task unless the account plan or Cloudflare feature availability changes.
 
 ## Done
+
+- [x] Add substantial, factual Auto-Tomato and Verified Person Research case studies plus one publishable, Project-linked Update each; synchronize tests and generated discovery output without changing the curated homepage feature set, static architecture, or Cloudflare configuration.
 
 - [x] Decided to replace the Astro site with a static one-page profile.
 - [x] Removed the contact form/API direction in favor of outbound contact links.

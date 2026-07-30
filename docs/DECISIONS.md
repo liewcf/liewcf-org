@@ -4,7 +4,7 @@ description: Important project, product, technical, process, or content decision
 doc_type: decision_log
 status: active
 created: 2026-07-19
-updated: 2026-07-26
+updated: 2026-07-31
 tags:
   - project-memory
   - decisions
@@ -19,6 +19,13 @@ related:
 ---
 
 # Decisions
+
+## 2026-07-31
+
+- Add Auto-Tomato as a published, non-featured fifth Project and keep the existing four-item homepage/WebMCP feature set unchanged because homepage featuring remains explicitly curated through `featured` metadata.
+- Expand Verified Person Research and add one published Update for each of the two named Projects using only repository files, tests, release documentation, and Git history. Keep verification numbers attributed to their source records and publish limitations beside the evidence.
+- Use independent Update slugs and source-backed milestone dates: 2026-07-31 for the Auto-Tomato 1.1.1 manual-package verification and 2026-07-15 for the Verified Person Research Codex-first verification.
+- Let the existing collection helpers propagate the new published content into human routes, Project timelines, RSS, sitemap, and generated Markdown. Do not add homepage structured data, change the empty API catalog, or alter Cloudflare configuration because the new content introduces neither a new API nor enough factual fields for additional structured-data types.
 
 ## 2026-05-10
 

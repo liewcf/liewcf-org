@@ -125,7 +125,10 @@ test('every published human page has unique truthful metadata and only the homep
 		['/projects/enjinmel-smtp/', 'enjinmel-smtp | Projects | Liew CheonFong'],
 		['/projects/verified-person-research/', 'verified-person-research | Projects | Liew CheonFong'],
 		['/projects/imagezoom/', 'imagezoom | Projects | Liew CheonFong'],
+		['/projects/auto-tomato/', 'Auto-Tomato | Projects | Liew CheonFong'],
 		['/updates/', 'Updates | Liew CheonFong'],
+		['/updates/auto-tomato-1-1-1-manual-package/', 'Auto-Tomato 1.1.1 manual package verified | Updates | Liew CheonFong'],
+		['/updates/verified-person-research-codex-first-release/', 'Verified Person Research completed its Codex-first verification | Updates | Liew CheonFong'],
 	] as const;
 	const metadata: Array<Record<string, string>> = [];
 
@@ -213,7 +216,10 @@ test('representative page types remain keyboard-usable and readable without hori
 		['/projects/enjinmel-smtp/', true],
 		['/projects/verified-person-research/', true],
 		['/projects/imagezoom/', true],
+		['/projects/auto-tomato/', true],
 		['/updates/', true],
+		['/updates/auto-tomato-1-1-1-manual-package/', true],
+		['/updates/verified-person-research-codex-first-release/', true],
 		['/this-route-does-not-exist/', false],
 	] as const;
 
@@ -281,7 +287,7 @@ test('Project live URLs accept only credential-free HTTP and HTTPS destinations'
 	}
 });
 
-test('project catalog lists the four published projects in order with accessible filtering and links', async ({ page }) => {
+test('project catalog lists five published projects in order with accessible filtering and links', async ({ page }) => {
 	const response = await page.goto('/projects/');
 	expect(response?.status()).toBe(200);
 	await expect(page).toHaveTitle('Projects | Liew CheonFong');
@@ -292,18 +298,19 @@ test('project catalog lists the four published projects in order with accessible
 		'enjinmel-smtp',
 		'verified-person-research',
 		'imagezoom',
+		'auto-tomato',
 	];
 	const cards = page.locator('.catalog-section .project-card');
-	await expect(cards).toHaveCount(4);
+	await expect(cards).toHaveCount(5);
 	await expect(cards.locator('.project-repo')).toHaveText(projectNames.map((name) => `liewcf/${name}`));
 	await cards.first().scrollIntoViewIfNeeded();
 	await expect(cards.first()).toHaveCSS('opacity', '1');
 
-	for (const project of projectNames) {
-		await expect(page.getByRole('link', { name: project, exact: true })).toHaveAttribute('href', `/projects/${project}/`);
-		await expect(page.getByRole('link', { name: `View ${project} on GitHub` })).toHaveAttribute(
+	for (const [slug, title] of projectNames.map((project) => [project, project === 'auto-tomato' ? 'Auto-Tomato' : project])) {
+		await expect(page.getByRole('link', { name: title, exact: true })).toHaveAttribute('href', `/projects/${slug}/`);
+		await expect(page.getByRole('link', { name: `View ${title} on GitHub` })).toHaveAttribute(
 			'href',
-			`https://github.com/liewcf/${project}`,
+			`https://github.com/liewcf/${slug}`,
 		);
 	}
 
@@ -318,34 +325,66 @@ test('project catalog lists the four published projects in order with accessible
 	await expect(status).toHaveText('2 projects in Chrome Extension');
 	await expect(cards.filter({ hasText: 'youtube-watchlist-manager' })).toBeVisible();
 	await expect(cards.filter({ hasText: 'imagezoom' })).toBeVisible();
+
+	await filters.getByRole('button', { name: 'macOS' }).click();
+	await expect(status).toHaveText('1 project in macOS');
+	await expect(cards.filter({ hasText: 'Auto-Tomato' })).toBeVisible();
+	await expect(cards.filter({ hasText: 'verified-person-research' })).toBeHidden();
 });
 
-test('published project details are canonical case studies with conditional metadata and no published Updates', async ({ page }) => {
+test('published project details are canonical case studies with factual Updates and conditional metadata', async ({ page }) => {
 	const projects = [
-		'youtube-watchlist-manager',
-		'enjinmel-smtp',
-		'verified-person-research',
-		'imagezoom',
+		{ slug: 'youtube-watchlist-manager', title: 'youtube-watchlist-manager' },
+		{ slug: 'enjinmel-smtp', title: 'enjinmel-smtp' },
+		{
+			slug: 'verified-person-research',
+			title: 'verified-person-research',
+			update: 'Verified Person Research completed its Codex-first verification',
+		},
+		{ slug: 'imagezoom', title: 'imagezoom' },
+		{
+			slug: 'auto-tomato',
+			title: 'Auto-Tomato',
+			update: 'Auto-Tomato 1.1.1 manual package verified',
+		},
 	];
 
 	for (const project of projects) {
-		const response = await page.goto(`/projects/${project}/`);
+		const response = await page.goto(`/projects/${project.slug}/`);
 		expect(response?.status()).toBe(200);
-		await expect(page).toHaveTitle(`${project} | Projects | Liew CheonFong`);
+		await expect(page).toHaveTitle(`${project.title} | Projects | Liew CheonFong`);
 		await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
 			'href',
-			`https://liewcf.org/projects/${project}/`,
+			`https://liewcf.org/projects/${project.slug}/`,
 		);
 		await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /.+/);
-		await expect(page.getByRole('heading', { level: 1, name: project })).toBeVisible();
+		await expect(page.getByRole('heading', { level: 1, name: project.title })).toBeVisible();
 		await expect(page.getByRole('link', { name: 'View on GitHub' })).toHaveAttribute(
 			'href',
-			`https://github.com/liewcf/${project}`,
+			`https://github.com/liewcf/${project.slug}`,
 		);
 		await expect(page.getByRole('heading', { level: 2, name: 'Updates' })).toBeVisible();
-		await expect(page.getByText('No Updates have been published for this Project yet.')).toBeVisible();
-		await expect(page.getByRole('link', { name: /Read|View Updates|All Updates/ })).toHaveCount(0);
+		if (project.update) {
+			await expect(page.getByRole('link', { name: project.update })).toBeVisible();
+			await expect(page.getByText('No Updates have been published for this Project yet.')).toHaveCount(0);
+		} else {
+			await expect(page.getByText('No Updates have been published for this Project yet.')).toBeVisible();
+		}
 	}
+
+	for (const slug of ['verified-person-research', 'auto-tomato']) {
+		await page.goto(`/projects/${slug}/`);
+		for (const heading of ['The problem', 'Important decisions', 'Implementation', 'Verification evidence', 'Limitations and status']) {
+			await expect(page.getByRole('heading', { level: 2, name: heading })).toBeVisible();
+		}
+	}
+
+	await page.goto('/projects/auto-tomato/');
+	await expect(page.locator('main')).toContainText('156 XCTest tests');
+	await expect(page.locator('main')).toContainText('not notarized');
+	await page.goto('/projects/verified-person-research/');
+	await expect(page.locator('main')).toContainText('227 requirements');
+	await expect(page.locator('main')).toContainText('49 evaluation cases');
 
 	await page.goto('/projects/enjinmel-smtp/');
 	await expect(page.locator('.project-meta')).toContainText('Maintained');
@@ -392,7 +431,7 @@ test('Update content model requires a Markdown body and one existing Project whi
 	expect(emptyDraftBody.trimEnd()).toMatch(/---$/);
 });
 
-test('Updates launch empty with canonical metadata and deliberate publication language', async ({ page }) => {
+test('Updates index publishes the two factual Project-linked entries in reverse chronology', async ({ page }) => {
 	const response = await page.goto('/updates/');
 
 	expect(response?.status()).toBe(200);
@@ -400,9 +439,26 @@ test('Updates launch empty with canonical metadata and deliberate publication la
 	await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://liewcf.org/updates/');
 	await expect(page.getByRole('heading', { level: 1, name: 'Progress, connected to the work.' })).toBeVisible();
 	await expect(page.getByRole('heading', { level: 2, name: 'Latest Updates' })).toBeVisible();
-	await expect(page.getByText(/No Updates have been published yet/)).toBeVisible();
-	await expect(page.locator('.update-timeline li')).toHaveCount(0);
+	await expect(page.getByText(/No Updates have been published yet/)).toHaveCount(0);
+	const updates = page.locator('.update-timeline li');
+	await expect(updates).toHaveCount(2);
+	await expect(updates.getByRole('link')).toHaveText([
+		'Auto-Tomato 1.1.1 manual package verified',
+		'Verified Person Research completed its Codex-first verification',
+	]);
+	await expect(updates.locator('time')).toHaveText(['July 31, 2026', 'July 15, 2026']);
+	await expect(updates.getByRole('link').nth(0)).toHaveAttribute('href', '/updates/auto-tomato-1-1-1-manual-package/');
+	await expect(updates.getByRole('link').nth(1)).toHaveAttribute('href', '/updates/verified-person-research-codex-first-release/');
 	expect((await page.locator('main').innerText()).toLowerCase()).not.toContain('blog');
+
+	for (const [slug, project, projectSlug] of [
+		['auto-tomato-1-1-1-manual-package', 'Auto-Tomato', 'auto-tomato'],
+		['verified-person-research-codex-first-release', 'verified-person-research', 'verified-person-research'],
+	] as const) {
+		await page.goto(`/updates/${slug}/`);
+		await expect(page.getByRole('link', { name: project })).toHaveAttribute('href', `/projects/${projectSlug}/`);
+		await expect(page.locator('.update-content')).not.toBeEmpty();
+	}
 });
 
 test('Update drafts are excluded from production routes and public discovery surfaces', async () => {
@@ -427,7 +483,7 @@ test('Update drafts are excluded from production routes and public discovery sur
 	}
 });
 
-test('Updates RSS is valid, production-canonical, empty at launch, and Project-ready', async ({ page }) => {
+test('Updates RSS is valid, production-canonical, and synchronized with published Project relationships', async ({ page }) => {
 	const response = await page.goto('/updates/rss.xml');
 
 	expect(response?.status()).toBe(200);
@@ -437,7 +493,11 @@ test('Updates RSS is valid, production-canonical, empty at launch, and Project-r
 	expect(body).toContain('<link>https://liewcf.org/updates/</link>');
 	expect(body).toContain('<language>en</language>');
 	expect(body).toContain('<channel>');
-	expect(body).not.toContain('<item>');
+	expect(body.match(/<item>/g)).toHaveLength(2);
+	expect(body).toContain('<link>https://liewcf.org/updates/auto-tomato-1-1-1-manual-package/</link>');
+	expect(body).toContain('<category domain="https://liewcf.org/projects/auto-tomato/">Auto-Tomato</category>');
+	expect(body).toContain('<link>https://liewcf.org/updates/verified-person-research-codex-first-release/</link>');
+	expect(body).toContain('<category domain="https://liewcf.org/projects/verified-person-research/">verified-person-research</category>');
 
 	const parseResult = await page.evaluate((xml) => {
 		const document = new DOMParser().parseFromString(xml, 'application/xml');
@@ -447,7 +507,7 @@ test('Updates RSS is valid, production-canonical, empty at launch, and Project-r
 			root: document.documentElement.localName,
 		};
 	}, body);
-	expect(parseResult).toEqual({ items: 0, parseErrors: 0, root: 'rss' });
+	expect(parseResult).toEqual({ items: 2, parseErrors: 0, root: 'rss' });
 
 	const rssSource = await readFile('src/pages/updates/rss.xml.ts', 'utf8');
 	for (const projectReadyElement of ['<item>', '<pubDate>', '<category domain=', 'getUpdateProject(update)']) {
@@ -831,19 +891,28 @@ test('llms.txt and the generated Markdown profile expose the expanded site witho
 	const projects = [
 		{
 			name: 'youtube-watchlist-manager',
+			title: 'youtube-watchlist-manager',
 			summary: 'A Chrome extension that speeds up YouTube Watch Later cleanup with checkboxes, batch removal, and watched-first sorting.',
 		},
 		{
 			name: 'enjinmel-smtp',
+			title: 'enjinmel-smtp',
 			summary: 'A WordPress plugin that routes site email through the Enginemailer REST API for more reliable delivery.',
 		},
 		{
 			name: 'verified-person-research',
+			title: 'verified-person-research',
 			summary: 'A Codex skill that produces cited, evidence-bounded professional background research without inventing missing facts.',
 		},
 		{
 			name: 'imagezoom',
+			title: 'imagezoom',
 			summary: 'A small Chrome extension for zooming images on web pages.',
+		},
+		{
+			name: 'auto-tomato',
+			title: 'Auto-Tomato',
+			summary: 'A native macOS menu-bar Pomodoro timer that follows keyboard and mouse activity, counting focused work as active time and breaks as wall-clock time.',
 		},
 	];
 
@@ -864,13 +933,15 @@ test('llms.txt and the generated Markdown profile expose the expanded site witho
 		expect(markdownProfile).toContain(`- [${label}](${url})`);
 	}
 	for (const project of projects) {
-		expect(markdownProfile).toContain(`### [${project.name}](https://liewcf.org/projects/${project.name}/)`);
+		expect(markdownProfile).toContain(`### [${project.title}](https://liewcf.org/projects/${project.name}/)`);
 		expect(markdownProfile).toContain(project.summary);
 		expect(markdownProfile).toContain(`- Repository: https://github.com/liewcf/${project.name}`);
 		expect(markdownProfile.match(new RegExp(`https://github\\.com/liewcf/${project.name}`, 'g'))).toHaveLength(1);
 	}
-	expect(markdownProfile.match(/^### \[/gm)).toHaveLength(4);
-	expect(markdownProfile).toContain('No Updates have been published yet.');
+	expect(markdownProfile.match(/^### \[/gm)).toHaveLength(5);
+	expect(markdownProfile).toContain('- [Auto-Tomato 1.1.1 manual package verified](https://liewcf.org/updates/auto-tomato-1-1-1-manual-package/) — July 31, 2026, [Auto-Tomato](https://liewcf.org/projects/auto-tomato/)');
+	expect(markdownProfile).toContain('- [Verified Person Research completed its Codex-first verification](https://liewcf.org/updates/verified-person-research-codex-first-release/) — July 15, 2026, [verified-person-research](https://liewcf.org/projects/verified-person-research/)');
+	expect(markdownProfile).not.toContain('No Updates have been published yet.');
 	expect(markdownProfile).not.toContain('https://github.com/liewcf/public-draft-share');
 	expect(markdownProfile).not.toContain('draft-preview');
 	expect(markdownProfile).not.toContain('Draft Update preview');
@@ -903,7 +974,10 @@ test('sitemap.xml exists and contains only live canonical URLs', async ({ page }
 		'<loc>https://liewcf.org/projects/enjinmel-smtp/</loc>',
 		'<loc>https://liewcf.org/projects/verified-person-research/</loc>',
 		'<loc>https://liewcf.org/projects/imagezoom/</loc>',
+		'<loc>https://liewcf.org/projects/auto-tomato/</loc>',
 		'<loc>https://liewcf.org/updates/</loc>',
+		'<loc>https://liewcf.org/updates/auto-tomato-1-1-1-manual-package/</loc>',
+		'<loc>https://liewcf.org/updates/verified-person-research-codex-first-release/</loc>',
 	]);
 	expect(body).toContain('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">');
 	for (const excludedPath of [

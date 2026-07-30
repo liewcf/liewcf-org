@@ -4,7 +4,7 @@ description: Dated notes on changed files, deliverables, tooling, checks, and ve
 doc_type: work_log
 status: active
 created: 2026-07-19
-updated: 2026-07-26
+updated: 2026-07-31
 tags:
   - project-memory
   - changelog
@@ -20,6 +20,16 @@ related:
 ---
 
 # Work Changelog
+
+## 2026-07-31
+
+- Added `src/content/projects/auto-tomato.md` as a published, non-featured fifth Project and expanded `src/content/projects/verified-person-research.md` into an evidence-bounded case study. Both cover the problem, design decisions, implementation, verification evidence, limitations, and current status.
+- Added published Updates `auto-tomato-1-1-1-manual-package.md` and `verified-person-research-codex-first-release.md`, each with an independent slug and a typed reference to its Project.
+- Updated `tests/e2e/navigation.spec.ts` for the five-Project catalog, both case studies and timelines, two-entry Updates index/RSS, generated Markdown, sitemap, metadata, draft exclusion, keyboard focus, and desktop/mobile overflow while preserving the four-item homepage/WebMCP feature contract.
+- Updated `AGENTS.md` and project memory to replace the launch-era four-Project/zero-Update state and to distinguish the uncommitted production output from the older live deployment.
+- Verified the Verified Person Research source package with `python3 scripts/validate.py` and inspected Auto-Tomato read-only. Final status checks found unrelated uncommitted work in both source repositories; none was altered by this task.
+- `npm run check` passed: 0 Astro diagnostics, all Update fixture expectations, a 12-page static `dist/` build, and 38/38 Playwright checks.
+- Production-preview visual QA passed at 1440×900 and 390×844 for the catalog, both affected Project pages, Updates index, and both Update details. Every route had no horizontal overflow, the Auto-Tomato card revealed after scroll, and the skip link became visibly focused. Console result: 0 errors and one non-blocking existing font-preload timing warning.
 
 ## 2026-05-10
 
