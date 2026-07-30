@@ -24,7 +24,7 @@ related:
 
 - Project purpose: Personal profile and credibility page for `liewcf.org`.
 - Primary users: Visitors who want to understand who Liew CheonFong is, what he builds, and how to contact or follow him.
-- Current repository status: The working tree generates a homepage, About page, five-Project catalog/detail surface, and two published Project-linked Updates in the index, detail routes, RSS, sitemap, and generated Markdown profile. Typed draft-aware content, the shared Home/About/Projects/Updates shell, plain semantic HTML, CSS, vanilla browser behavior, unique canonical/social metadata, a real 404 page, static security and agent discovery files, and 38 Playwright public-contract checks remain intact. The 2026-07-31 content changes are uncommitted and have not been deployed; the last live-verified Cloudflare Pages state predates them.
+- Current status: Commit `38e4e2f` generates a homepage, About page, five-Project catalog/detail surface, and two published Project-linked Updates in the index, detail routes, RSS, sitemap, and generated Markdown profile. Typed draft-aware content, the shared Home/About/Projects/Updates shell, plain semantic HTML, CSS, vanilla browser behavior, unique canonical/social metadata, a real 404 page, static security and agent discovery files, and 38 Playwright public-contract checks remain intact. The commit was pushed to `main` and its new routes and discovery output were live-verified on Cloudflare Pages on 2026-07-31.
 
 ## Approved Direction
 

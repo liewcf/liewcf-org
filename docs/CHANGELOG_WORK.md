@@ -30,6 +30,7 @@ related:
 - Verified the Verified Person Research source package with `python3 scripts/validate.py` and inspected Auto-Tomato read-only. Final status checks found unrelated uncommitted work in both source repositories; none was altered by this task.
 - `npm run check` passed: 0 Astro diagnostics, all Update fixture expectations, a 12-page static `dist/` build, and 38/38 Playwright checks.
 - Production-preview visual QA passed at 1440×900 and 390×844 for the catalog, both affected Project pages, Updates index, and both Update details. Every route had no horizontal overflow, the Auto-Tomato card revealed after scroll, and the skip link became visibly focused. Console result: 0 errors and one non-blocking existing font-preload timing warning.
+- Committed the content and regression work as `38e4e2f`, pushed `main` to `origin`, and live-verified both affected Projects, the Updates index, both Update details, RSS, sitemap, generated Markdown, homepage featured-card boundary, and empty API catalog on Cloudflare Pages.
 
 ## 2026-05-10
 
