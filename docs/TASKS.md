@@ -29,6 +29,7 @@ related:
 - Commit `38e4e2f` adds Auto-Tomato as a non-featured fifth Project, expands the Verified Person Research case study, and publishes one source-backed Update for each Project.
 - Production output contains five Project details and two Update details. The Updates index, Project timelines, RSS, sitemap, and `/index.md` derive the new content automatically; the homepage/WebMCP featured set remains the same four curated Projects.
 - Commit `38e4e2f` was pushed to `origin/main`; Cloudflare Pages serves the new content at `liewcf.org`.
+- Deployment-status memory was closed in commit `79427e1`; local `main` and `origin/main` matched at that checkpoint.
 - All seven Astro migration tickets have been reviewed and integrated into `main`, and the private migration tracker is resolved.
 - Verified post-integration fixes keep branded 404 content visible and reject published Updates linked to draft Projects.
 - The `liewcf-org` Pages project now builds from Git with `npm ci && npm run build`, publishes `dist/`, and automatically deploys production branch `main` to `liewcf.org`. No DNS change was needed.
