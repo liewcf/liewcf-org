@@ -13,7 +13,7 @@ const { updates, emptyMessage } = Astro.props;
 {updates.length === 0 ? (
 	<p>{emptyMessage}</p>
 ) : (
-	<ol class="update-timeline">
+	<ol class="update-timeline" role="list">
 		{updates.map((update) => (
 			<li>
 				<time datetime={update.data.publishedAt.toISOString()}>

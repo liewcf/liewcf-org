@@ -4,7 +4,7 @@ description: Current tasks, blockers, verification state, and recommended next a
 doc_type: task_state
 status: active
 created: 2026-07-19
-updated: 2026-07-31
+updated: 2026-10-05
 tags:
   - project-memory
   - tasks
@@ -20,91 +20,25 @@ related:
 
 # Tasks
 
-## Recommended Next Action
+## Current local work — 2026-10-05
 
-- No immediate release action is required. Use the existing release gate and Cloudflare Pages Git integration for the next approved content change.
+- Completed the local source/content audit and refreshed homepage/About copy using existing Project facts.
+- Fixed content disappearing without JavaScript; hid nonfunctional filters until initialized; improved narrow-screen wrapping; added homepage published Updates, catalog links, and RSS discovery.
+- Removed obsolete proof-list styles and added a no-JavaScript regression check.
+- Fetched public GitHub activity on 2026-10-05 and added four source-linked Update articles. Local output now has six Updates; the two 22 September entries appear on the homepage. Auto-Tomato could not be verified through GitHub.
+- User authorized committing and pushing the complete refresh on 2026-10-05. The publication commit contains the validated changes; Cloudflare deployment and live behavior require post-push verification.
 
-## Current
+## Next action
 
-- Commit `38e4e2f` adds Auto-Tomato as a non-featured fifth Project, expands the Verified Person Research case study, and publishes one source-backed Update for each Project.
-- Production output contains five Project details and two Update details. The Updates index, Project timelines, RSS, sitemap, and `/index.md` derive the new content automatically; the homepage/WebMCP featured set remains the same four curated Projects.
-- Commit `38e4e2f` was pushed to `origin/main`; Cloudflare Pages serves the new content at `liewcf.org`.
-- Deployment-status memory was closed in commit `79427e1`; local `main` and `origin/main` matched at that checkpoint.
-- All seven Astro migration tickets have been reviewed and integrated into `main`, and the private migration tracker is resolved.
-- Verified post-integration fixes keep branded 404 content visible and reject published Updates linked to draft Projects.
-- The `liewcf-org` Pages project now builds from Git with `npm ci && npm run build`, publishes `dist/`, and automatically deploys production branch `main` to `liewcf.org`. No DNS change was needed.
+- Verify Cloudflare Pages deployment after the authorized push to `main`.
+- New project milestones or changed release status require current source evidence before adding content.
 
 ## Verification
 
-- `npm run check` passes on 2026-07-31: Astro reports 0 errors, warnings, or hints; the valid Update fixture and four invalid relationships plus one empty-body expectation behave correctly; the static build emits 12 pages into `dist/`; and all 38 Playwright checks pass.
-- Production-preview QA covered `/projects/`, both affected Project details, `/updates/`, and both Update details at 1440×900 and 390×844. Every route measured `scrollWidth === clientWidth`; the Auto-Tomato card revealed to opacity 1 after scrolling; and the first Tab exposed the skip link at `(16, 16)` with a solid focus outline. Console inspection reported 0 errors and one non-blocking existing Outfit font-preload timing warning.
-- Live checks after the `38e4e2f` push returned 200 for both affected Project routes, the Updates index, both Update details, RSS, sitemap, `/index.md`, the homepage, and the API catalog. RSS contains two items, sitemap contains 11 canonical URLs, generated Markdown contains five Projects and both Updates, the homepage retains four featured cards, and the API catalog remains empty.
-- `python3 scripts/validate.py` passed in Verified Person Research, and Auto-Tomato source evidence was inspected read-only. Final status checks found unrelated uncommitted work in both source repositories; none was altered by this task.
-- The curated featured-project update passes all 18 Playwright smoke tests and has been inspected at 1440px and 390px widths with no horizontal overflow.
-- Matt engineering-skill setup uses gitignored `.scratch/` for private local issues, default triage statuses, and single-context domain docs under the conventions in `docs/agents/`.
-- `/grill-with-docs` reached shared understanding for the Astro scope, recorded the Project and Update language in `CONTEXT.md`, and accepted ADR 0001.
-- `/to-spec` published the Astro migration specification to the private local tracker with `ready-for-agent` status and the existing `npm run check` command as its single acceptance seam.
-- `/to-tickets` published seven private `ready-for-agent` tracer-bullet tickets. Ticket 01 is the initial frontier; tickets 04 and 05 can proceed independently after ticket 03.
-- Ticket 01 now generates the preserved homepage and branded 404 through fully static Astro output; `npm run check` covers Astro diagnostics, a clean production build, and 21 Playwright public-contract checks against Astro preview.
-- Ticket 02 now publishes a canonical factual About page through a shared Home/About site shell, removes the obsolete About redirect, adds About to the sitemap, and keeps unfinished Projects/Updates destinations out of navigation.
-- `npm run check` reports clean Astro diagnostics, builds three static pages, and passes 25 Playwright checks, including shared navigation/current-page state, About metadata/content/contact boundaries, skip-link focus, homepage regressions, and 1440px/390px overflow coverage.
-- Ticket 03 adds a typed, repository-slugged, production-draft-aware Project collection; `/projects/`; four canonical detail routes; shared accessible filtering/cards; Projects navigation; sitemap entries; `/uploads/` cover-image support; and the current no-Updates state without introducing Update routes.
-- `npm run check` reports clean Astro diagnostics, builds eight static pages, and passes 30 Playwright checks covering catalog order, four details, metadata, credential-free HTTP(S) live-URL validation, filtering, optional-section rendering, GitHub/detail links, production draft exclusion, and 1440px/390px overflow behavior.
-- `astro dev` locally serves the draft fixture at `/projects/draft-preview/` with HTTP 200, while the production build contains no draft route or listing.
-- Ticket 04 makes published featured Project Markdown the source for homepage cards, ordering, category filters, and WebMCP Project results; the four launch entries carry explicit order metadata and draft/non-featured entries stay excluded.
-- `npm run check` reports clean Astro diagnostics, builds eight static pages, and passes 31 Playwright checks including the four-card homepage contract, manual feature order, all metadata-derived filter counts, internal/GitHub links, draft exclusion, and visible/WebMCP equality.
-- Browser QA at 1440×900 and 390×844 confirms the derived filters wrap without horizontal overflow, pressed state/live counts work, Project actions remain distinct, and no relevant console warnings or errors occur.
-- Ticket 05 adds a typed Project-linked Update collection, zero-entry `/updates/`, Project timelines, slug-based details, production-aware sitemap/RSS generation, final navigation, production draft exclusion, and real 404 handling for former Blog routes.
-- `npm run check` reports clean Astro diagnostics, validates one published fixture plus three invalid relationship fixtures and one empty draft-body fixture, builds nine static pages with zero Update details, and passes 35 Playwright checks including desktop/mobile overflow coverage.
-- `astro dev` locally serves `/updates/draft-preview/` with HTTP 200 and its `imagezoom` relationship, while the production build excludes that draft from routes and discovery surfaces.
-- Ticket 06 generates `/index.md` from published Project and Update content, links the expanded human-facing site from stable agent discovery entry points, updates the public Agent Skill and digest, and makes sitemap/agent helpers explicitly published-only.
-- `npm run check` reports clean Astro diagnostics, passes all Update fixture expectations, builds eight published human-facing pages plus the branded 404 and generated crawler/agent routes, and passes 37 Playwright checks for unique metadata, factual structured data, exact sitemap membership, stable discovery URLs, Markdown synchronization, digest integrity, crawler policy, draft exclusion, and human/WebMCP Project consistency.
-- Ticket 07 locks the generated Cloudflare redirect/header contracts, verifies every established asset and discovery URL, proves the branded real 404 and absence of `/admin/`/Decap/runtime configuration, expands responsive keyboard/focus/overflow coverage to every rendered page type, and replaces stale pre-Astro handoff documentation.
-- Final `npm run check` under Node 22.13.0 reports 0 Astro errors, warnings, or hints; passes one valid Update fixture plus four invalid relationships and one empty draft-body expectation; builds nine static pages; and passes all 38 Playwright checks.
-- Visual inspection used the production preview at 1440×900 for the homepage and 390×844 for Updates. Layout, navigation wrapping, typography, imagery, and empty-state presentation were intact with no visible horizontal overflow. The desktop pass exposed a subpixel edge of the hidden skip link; moving its hidden position from `-48px` to `-56px` removed it, and the final desktop screenshot plus automated hidden/focused-state checks verified the correction.
-- Post-integration review fixes keep branded 404 content visibly revealed without JavaScript and fail production builds when a published Update references a draft Project; both regressions are covered by the release gate.
-- Local production-preview smoke checks returned 200 for the homepage, About, Projects, a Project detail, Updates, and RSS; the draft Project and an unknown route returned 404. Astro preview does not apply Cloudflare-specific redirects or headers.
-- Direct-upload production deployment `1f5b11e8` was built from clean commit `2353fbd`. Live checks returned 200 for the deployment URL, Home, About, Projects, Updates, RSS, generated Markdown, and the API catalog; returned branded 404 responses for the draft Project and an unknown route; and redirected `www` to the apex domain with 301 status.
-- Cloudflare project inspection identified the Git-build failure as a blank output directory despite a successful build stage. Setting the output directory to `dist` and retrying commit `5f4a651` produced Git-triggered deployment `5fa3c773`; queue, initialize, clone, build, and deploy all succeeded.
-- The corrected Git deployment returned 200 for Home, About, Projects, Updates, generated Markdown, and the API-catalog rewrite; returned a branded 404 for an unknown route; and applied the expected HSTS, CSP, clickjacking, content-type, and discovery headers.
-- A subsequent normal `main` push independently triggered deployment `98aba6ea`; every Cloudflare stage passed, its published routes and 404 contract were live, and no direct upload was used.
-- No specification deviation was accepted. The Astro migration is deployed and live-verified.
+- Astro type checking, Update fixture validation, and production build passed; all 40 Playwright checks passed after adding GitHub updates and source/discovery coverage. `git diff --check` passed. Details are recorded in `CHANGELOG_WORK.md`.
+- Desktop (1440×900) and mobile (390×844) preview inspection covered homepage content, project cards, latest updates, and mobile About content.
+- Cloudflare headers and redirects are checked as generated-file contracts; their live behavior was not retested.
 
-## Blockers
+## Last recorded production checkpoint
 
-- None recorded.
-
-## Not Doing
-
-- Cloudflare Markdown for Agents is not currently being enabled because the site is on a Cloudflare Free account, where that feature is not available. Do not keep this as an open launch task unless the account plan or Cloudflare feature availability changes.
-
-## Done
-
-- [x] Add substantial, factual Auto-Tomato and Verified Person Research case studies plus one publishable, Project-linked Update each; synchronize tests and generated discovery output without changing the curated homepage feature set, static architecture, or Cloudflare configuration.
-
-- [x] Decided to replace the Astro site with a static one-page profile.
-- [x] Removed the contact form/API direction in favor of outbound contact links.
-- [x] Kept a tiny npm workflow for preview and smoke checks.
-- [x] Updated Cloudflare guidance to use `exit 0` and keep checks local/CI.
-- [x] Refined one-page copy, renamed "Proof points" to "Things I've Built", and switched the hero to the portrait image.
-- [x] Added a placeholder-backed featured GitHub projects section for later curated repo copy.
-- [x] Featured `project-memory`, `QuickRes`, `enjinmel-smtp`, and `public-draft-share` on the static homepage with direct GitHub links.
-- [x] Removed ignored migration/build leftovers and deleted unused tracked image/favicon files no longer referenced by the static page.
-- [x] Confirmed Cloudflare Pages settings: build command `npm ci && npm run build` works with no-op build script, output directory set to `/`. Live site at `liewcf.org` (custom domain) matches local source.
-- [x] Added sitemap and JSON-LD structured data from `docs/SEO_AUDIT_FIX_PLAN.md`.
-- [x] Added AVIF/WebP hero image sources with JPG fallback and `fetchpriority="high"` for the LCP image.
-- [x] Added Cloudflare Pages `_redirects` rules for removed routes: `/about/`, `/blog/`, `/projects/`, and `/contact/`.
-- [x] Added static agent discovery: Cloudflare Pages `_headers`, open Content Signals in `robots.txt`, an empty API catalog Linkset, an Agent Skills index with verified digest, and read-only homepage WebMCP tools.
-- [x] Applied small accessibility/UI polish in `styles.css`: darker muted text, smooth link/button color transitions, and larger touch targets on coarse-pointer devices.
-- [x] Previewed the final static page on desktop and mobile widths before launch.
-- [x] Configured and verified `www.liewcf.org` redirects cleanly to `https://liewcf.org/` with a live `301` check.
-- [x] Validated Google Search Console indexing and sitemap submission after deployment.
-- [x] Fixed the specification.website audit gaps in source: real Cloudflare Pages 404 page, HSTS, clickjacking protection, CSP, Permissions-Policy, `/.well-known/security.txt`, `/llms.txt`, and `/index.md`.
-- [x] Verified live deployment: real 404 on nonexistent path, HSTS, CSP/frame-ancestors, and Permissions-Policy headers confirmed working.
-- [x] Applied the `redesign-existing-projects` skill in a `redesign/taste-skill` worktree: neutral-premium palette, self-hosted Outfit, zig-zag focus grid, dot+grain texture, glassmorphism cards, staggered scroll reveals, active/hover states, skip-link, `100dvh`, widened shell. 18/18 tests pass.
-- [x] Updated the featured project set to `youtube-watchlist-manager`, `enjinmel-smtp`, `verified-person-research`, and `imagezoom`, including the category filters, Markdown profile, WebMCP output, and regression coverage.
-- [x] Configured the Matt engineering skills with a private local Markdown issue tracker, default triage statuses, and single-context domain-doc conventions.
-- [x] Defined the Astro migration scope through `/grill-with-docs`, including pages, content relationships, publishing boundaries, design preservation, static deployment, and future Decap compatibility.
-- [x] Synthesized and privately published the implementation-ready Astro migration specification with exhaustive user stories, implementation decisions, testing decisions, and exclusions.
-- [x] Split the Astro migration into seven dependency-aware private tickets, one file per vertical slice.
-- [x] Reviewed and integrated all seven private Astro migration tickets into `main`, closing the local tracker after the 38-check release gate passed.
+- `38e4e2f` published five Projects and two Updates; `79427e1` recorded the deployment closeout on 2026-07-31. See `CHANGELOG_WORK.md` for historical evidence. Production was not re-verified. The later GitHub pass verified public source records for four catalog projects, not store publication or fresh runtime behavior.

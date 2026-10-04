@@ -33,7 +33,7 @@ ${project.data.summary}
 		: 'No Updates have been published yet. The [Updates index](https://liewcf.org/updates/) will list them when available.';
 	const body = `# Liew CheonFong
 
-I build practical WordPress tools, macOS utilities, developer utilities, and focused websites.
+I build WordPress plugins, browser extensions, macOS utilities, and focused websites that make everyday work simpler.
 
 ## Site
 

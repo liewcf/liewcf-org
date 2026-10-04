@@ -4,7 +4,7 @@ description: Important project, product, technical, process, or content decision
 doc_type: decision_log
 status: active
 created: 2026-07-19
-updated: 2026-07-31
+updated: 2026-10-05
 tags:
   - project-memory
   - decisions
@@ -19,6 +19,14 @@ related:
 ---
 
 # Decisions
+
+## 2026-10-05
+
+- On the user’s request, fetch live GitHub repository/commit/release data and add meaningful changes for existing catalog projects. Link immutable commit evidence, use source milestone dates, preserve older articles, and distinguish repository test records and prepared packages from public store releases. Keep the manually curated Project set unchanged.
+
+- Replace unsupported durability and maintenance promises with examples from existing Project content. Preserve the curated featured set and dated release evidence; do not imply new releases or re-verification of external projects.
+- Replace the repeated homepage proof list with the two latest published Updates, derived from the collection. Expose catalog and RSS links.
+- Make all content visible before JavaScript, and enable optional filter controls only when their script runs. Keep modest motion without opacity-based hiding.
 
 ## 2026-07-31
 

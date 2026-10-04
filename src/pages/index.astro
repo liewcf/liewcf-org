@@ -1,5 +1,8 @@
 ---
 import SiteLayout from '../layouts/SiteLayout.astro';
+import UpdateTimeline from '../components/UpdateTimeline.astro';
+import { getPublishedUpdates } from '../lib/updates';
+
 import ProjectCard from '../components/ProjectCard.astro';
 import ProjectFilter from '../components/ProjectFilter.astro';
 import {
@@ -8,6 +11,7 @@ import {
 	getPublishedFeaturedProjects,
 } from '../lib/projects';
 
+const latestUpdates = (await getPublishedUpdates()).slice(0, 2);
 const structuredData = {
 	'@context': 'https://schema.org',
 	'@graph': [
@@ -60,7 +64,7 @@ const featuredProjectData = featuredProjects.map((project) => {
 				<div class="hero-copy">
 					<h1 id="intro-title">Hello, I'm Liew CheonFong</h1>
 					<p class="lede">
-						I build WordPress plugins, macOS utilities, and focused websites — the kind of tools that make the next time faster than the first.
+						I build WordPress plugins, browser extensions, macOS utilities, and focused websites that make everyday work simpler.
 					</p>
 					<nav class="profile-links" aria-label="Profile links">
 						<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#105;&#101;&#119;&#99;&#102;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;" class="profile-link-primary">Email</a>
@@ -91,26 +95,27 @@ const featuredProjectData = featuredProjects.map((project) => {
 				<div class="focus-grid">
 					<article class="focus-tile">
 						<span class="tile-number" aria-hidden="true">01</span>
-						<h3>WordPress plugins that stay out of the way.</h3>
-						<p>Routing email through reliable APIs. Generating secure draft preview links. Solving the small WordPress problems that come up on every site, once, properly.</p>
+						<h3>WordPress tools for everyday site work.</h3>
+						<p>EnjinMel SMTP connects WordPress email to the Enginemailer API, with delivery logs and test-email tools in the dashboard.</p>
 					</article>
 					<article class="focus-tile">
 						<span class="tile-number" aria-hidden="true">02</span>
-						<h3>macOS utilities built for the menu bar.</h3>
-						<p>Lightweight apps that live quietly in the menu bar and do one thing without a Dock icon, a preferences window, or a subscription.</p>
+						<h3>Small utilities for your browser and Mac.</h3>
+						<p>Clean up a YouTube Watch Later queue, enlarge an image, or track focused computer time with Auto-Tomato.</p>
 					</article>
 					<article class="focus-tile">
 						<span class="tile-number" aria-hidden="true">03</span>
-						<h3>Focused websites that explain the useful thing.</h3>
-						<p>Pages that load fast, read clearly, and don't need a CMS to maintain. Built to be handed off without a training session.</p>
+						<h3>Clear websites and research tools.</h3>
+						<p>Readable pages and tools that help people find what they need. Verified Person Research pairs professional background summaries with sources and clear limits.</p>
 					</article>
 				</div>
 			</section>
 
 			<section class="section projects" aria-labelledby="projects-title">
 				<div class="section-heading">
-					<h2 id="projects-title">A few shipped tools from my workbench.</h2>
-					<p class="section-lede">Four repositories I keep coming back to. Each solves a problem I ran into more than once.</p>
+					<h2 id="projects-title">Selected projects from my workbench.</h2>
+					<p class="section-lede">Browser utilities, a WordPress plugin, and a research skill. Explore what each does and how it works.</p>
+					<p class="section-lede"><a href="/projects/">Browse all projects</a></p>
 				</div>
 				<div class="projects-column">
 					<ProjectFilter categories={featuredCategories} />
@@ -120,20 +125,22 @@ const featuredProjectData = featuredProjects.map((project) => {
 				</div>
 			</section>
 
-			<section class="section proof" aria-labelledby="proof-title">
-				<div class="section-heading">
-					<h2 id="proof-title">The work I keep coming back to.</h2>
-				</div>
-				<ul class="proof-list" role="list">
-					<li>WordPress plugins — email routing, draft previews, WooCommerce tweaks — written to be installed and forgotten, not maintained.</li>
-					<li>macOS menu bar utilities in Swift: small, focused, no Dock icon, no subscription. The tools I wished existed before I built them.</li>
-					<li>Websites and landing pages built for longevity — fast to load, easy to hand off, and still working correctly two years later.</li>
-				</ul>
-			</section>
+			{latestUpdates.length > 0 && (
+				<section class="section" aria-labelledby="latest-updates-title">
+					<div class="section-heading">
+						<h2 id="latest-updates-title">Latest project updates.</h2>
+						<p class="section-lede">Release notes and verification milestones, with their limitations.</p>
+					</div>
+					<div>
+						<UpdateTimeline updates={latestUpdates} emptyMessage="" />
+						<p class="section-lede"><a href="/updates/">All updates</a> · <a href="/updates/rss.xml">Subscribe via RSS</a></p>
+					</div>
+				</section>
+			)}
 			<script is:inline define:vars={{ featuredProjects: featuredProjectData }}>
 		(() => {
 			const revealTargets = document.querySelectorAll(
-				'.hero-copy, .hero-image, .focus-tile, .proof-list li',
+				'.hero-copy, .hero-image, .focus-tile',
 			);
 
 			if (!('IntersectionObserver' in window)) {

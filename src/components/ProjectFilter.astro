@@ -6,7 +6,7 @@ interface Props {
 const { categories } = Astro.props;
 ---
 
-<div class="filter-bar" role="group" aria-label="Filter projects by category">
+<div hidden class="filter-bar" role="group" aria-label="Filter projects by category">
 	<button class="filter-btn active" type="button" data-filter="all" aria-pressed="true">All</button>
 	{categories.map((category) => (
 		<button class="filter-btn" type="button" data-filter={category} aria-pressed="false">{category}</button>
@@ -15,6 +15,9 @@ const { categories } = Astro.props;
 <p class="filter-status" role="status" aria-live="polite" aria-atomic="true"></p>
 
 <script>
+	const filterBar = document.querySelector<HTMLElement>('.filter-bar');
+	if (filterBar) filterBar.hidden = false;
+
 	const filterButtons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
 	const projectCards = document.querySelectorAll<HTMLElement>('.project-card');
 	const filterStatus = document.querySelector<HTMLElement>('.filter-status');

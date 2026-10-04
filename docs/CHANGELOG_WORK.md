@@ -4,7 +4,7 @@ description: Dated notes on changed files, deliverables, tooling, checks, and ve
 doc_type: work_log
 status: active
 created: 2026-07-19
-updated: 2026-07-31
+updated: 2026-10-05
 tags:
   - project-memory
   - changelog
@@ -20,6 +20,27 @@ related:
 ---
 
 # Work Changelog
+
+## 2026-10-05
+
+- User subsequently authorized commit and push of the full validated refresh on 2026-10-05. Remote synchronization was checked before publication; deployment success must be verified separately.
+
+### GitHub content refresh
+
+- Read the public `liewcf` repository listing and recent commits/releases for existing catalog projects through the GitHub API. Inspected exact implementation, documentation, and verification patches for four meaningful changes.
+- Added source-linked articles for YouTube Watchlist Manager 0.1.6 watched-first repair (22 September), ImageZoom 0.1.4 overlay listener lifecycle (22 September), Verified Person Research evidence/identity guidance corrections (8 September source record), and EnjinMel SMTP WordPress 7.1-RC4 testing (19 August source record).
+- Kept Chrome Web Store availability unconfirmed, distinguished research contract validation from behavioral reruns, and kept RC4 testing separate from final WordPress compatibility. Auto-Tomato API reads were unavailable; its existing historical article remains unchanged.
+- Updated public-surface tests, project counts, and current task state. `npm run check` passed under Node 22.13.0: zero Astro diagnostics, all fixture expectations, 16-page build, and 40/40 Playwright checks. New coverage verifies source links and propagation into homepage, RSS, Markdown, and Project timelines.
+- Local content only; no commit, push, or deployment.
+
+### Site audit
+
+- Audited local Astro source, page content, shared components, generated discovery contracts, and tests. An independent read-only source audit confirmed the no-JavaScript visibility defect and unsupported homepage generalizations.
+- Refreshed homepage/About copy with existing Project examples; synchronized the Markdown introduction; replaced repetitive proof copy with the latest two published Updates, and added catalog/RSS links plus shared RSS autodiscovery. No new release claims or publication dates were invented.
+- Made reveal content visible by default, hid filter controls until initialized, added navigation/repository/title wrapping, preserved list semantics, and removed unused proof-list styles.
+- Added no-JavaScript regression coverage. Consolidated the current task file; historical completion evidence remains in this changelog.
+- Preview inspected at desktop and mobile sizes. Required checks initially encountered sandbox port restrictions and a missing Playwright browser; rerun uses Node 22.13.0 and a matching test browser downloaded into `/tmp/liewcf-playwright`.
+- Validation: Astro type checking passed with zero errors/warnings/hints, all Update fixture expectations passed, and the 12-page production build succeeded. The first runnable E2E pass found an outdated About-copy assertion; after aligning it with the revised copy, all 39 Playwright checks passed (8.3s). `git diff --check` passed. Desktop/mobile visual inspection passed. No commit, push, deployment, or external mutation.
 
 ## 2026-07-31
 
