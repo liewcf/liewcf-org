@@ -168,7 +168,8 @@ img {
 	color: var(--accent-dark);
 }
 
-.site-navigation a[aria-current="page"] {
+.site-navigation a[aria-current="page"],
+.site-navigation a[aria-current="location"] {
 	background-color: var(--ink);
 	color: var(--paper);
 }

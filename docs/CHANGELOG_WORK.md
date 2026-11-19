@@ -4,7 +4,7 @@ description: Dated notes on changed files, deliverables, tooling, checks, and ve
 doc_type: work_log
 status: active
 created: 2026-07-19
-updated: 2026-10-05
+updated: 2026-11-19
 tags:
   - project-memory
   - changelog
@@ -20,6 +20,12 @@ related:
 ---
 
 # Work Changelog
+
+## 2026-11-19
+
+- Added project-specific accessible names for card actions, current-section semantics on detail pages, and the missing `/contact` redirect rule. Migrated the three homepage WebMCP tools to `document.modelContext.registerTool()`. The CSP was preserved.
+- Confirmed the WebMCP zone setting was enabled by a dashboard update on 2026-08-06. With owner authorization, disabled zone Web Analytics auto-injection and verified that Home, About, Projects, and Updates returned no beacon in HTML or browser requests. The CSP and bridge were preserved.
+- The full `npm run check` passed on Node 22 with 40 Playwright tests in isolated Chrome. An additional local preview check registered and executed all three tools in Chrome 158 with the WebMCP testing feature enabled. Inspected the detail navigation at 1440 px and 390 px. Cloudflare redirects were verified in the generated configuration.
 
 ## 2026-10-05
 

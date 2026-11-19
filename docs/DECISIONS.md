@@ -4,7 +4,7 @@ description: Important project, product, technical, process, or content decision
 doc_type: decision_log
 status: active
 created: 2026-07-19
-updated: 2026-10-05
+updated: 2026-11-19
 tags:
   - project-memory
   - decisions
@@ -19,6 +19,11 @@ related:
 ---
 
 # Decisions
+
+## 2026-11-19
+
+- Keep the CSP intact. The owner approved disabling zone-level Cloudflare Web Analytics auto-injection.
+- Preserve the three repository-owned WebMCP tools and migrate them to the current optional browser API. Cloudflare's zone bridge has its own controls and can register additional tools.
 
 ## 2026-10-05
 

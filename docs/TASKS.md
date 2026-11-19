@@ -4,7 +4,7 @@ description: Current tasks, blockers, verification state, and recommended next a
 doc_type: task_state
 status: active
 created: 2026-07-19
-updated: 2026-10-05
+updated: 2026-11-19
 tags:
   - project-memory
   - tasks
@@ -20,25 +20,12 @@ related:
 
 # Tasks
 
-## Current local work — 2026-10-05
+## Audit fixes — 2026-11-19
 
-- Completed the local source/content audit and refreshed homepage/About copy using existing Project facts.
-- Fixed content disappearing without JavaScript; hid nonfunctional filters until initialized; improved narrow-screen wrapping; added homepage published Updates, catalog links, and RSS discovery.
-- Removed obsolete proof-list styles and added a no-JavaScript regression check.
-- Fetched public GitHub activity on 2026-10-05 and added four source-linked Update articles. Local output now has six Updates; the two 22 September entries appear on the homepage. Auto-Tomato could not be verified through GitHub.
-- User authorized committing and pushing the complete refresh on 2026-10-05. The publication commit contains the validated changes; Cloudflare deployment and live behavior require post-push verification.
+- Fixed the audited project-link names, detail navigation, and contact redirect configuration. Migrated the three homepage WebMCP tools to the current browser API and kept the CSP intact.
+- The full release check passed with 40 Playwright tests. Chrome 158 registered and executed all three tools locally with the WebMCP testing feature enabled. Playwright verified the generated redirect rules.
+- Disabled zone analytics auto-injection and confirmed the beacon was absent from HTML and requests across the four top-level pages. The CSP and zone WebMCP bridge were preserved.
 
 ## Next action
 
-- Verify Cloudflare Pages deployment after the authorized push to `main`.
-- New project milestones or changed release status require current source evidence before adding content.
-
-## Verification
-
-- Astro type checking, Update fixture validation, and production build passed; all 40 Playwright checks passed after adding GitHub updates and source/discovery coverage. `git diff --check` passed. Details are recorded in `CHANGELOG_WORK.md`.
-- Desktop (1440×900) and mobile (390×844) preview inspection covered homepage content, project cards, latest updates, and mobile About content.
-- Cloudflare headers and redirects are checked as generated-file contracts; their live behavior was not retested.
-
-## Last recorded production checkpoint
-
-- `38e4e2f` published five Projects and two Updates; `79427e1` recorded the deployment closeout on 2026-07-31. See `CHANGELOG_WORK.md` for historical evidence. Production was not re-verified. The later GitHub pass verified public source records for four catalog projects, not store publication or fresh runtime behavior.
+- The owner authorized publishing the audit fixes. Verify both contact redirects, the homepage tools, the zone bridge, the CSP, and beacon absence on the production deployment.

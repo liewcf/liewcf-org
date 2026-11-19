@@ -1,7 +1,30 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 import { createHash } from 'node:crypto';
 import { readdir, readFile } from 'node:fs/promises';
 import { projectLiveUrl } from '../../src/lib/project-schema';
+
+type WebMcpTool = {
+	name: string;
+	annotations: { readOnlyHint: boolean };
+	execute: () => Promise<unknown>;
+};
+
+type WebMcpTestWindow = Window & { __webMcpTools?: WebMcpTool[] };
+
+async function captureWebMcpTools(page: Page) {
+	await page.addInitScript(() => {
+		const tools: WebMcpTool[] = [];
+		(window as WebMcpTestWindow).__webMcpTools = tools;
+		Object.defineProperty(document, 'modelContext', {
+			configurable: true,
+			value: {
+				async registerTool(tool: WebMcpTool) {
+					tools.push(tool);
+				},
+			},
+		});
+	});
+}
 
 async function listFiles(directory: string): Promise<string[]> {
 	const entries = await readdir(directory, { withFileTypes: true });
@@ -124,19 +147,21 @@ test('established public asset, crawler, well-known, and agent URLs resolve from
 	}
 });
 
-test('shared navigation exposes only live destinations and identifies the current page', async ({ page }) => {
-	for (const [path, currentPage] of [
-		['/', 'Home'],
-		['/about/', 'About'],
-		['/projects/', 'Projects'],
-		['/projects/imagezoom/', 'Projects'],
-		['/updates/', 'Updates'],
+test('shared navigation identifies the current page or section', async ({ page }) => {
+	for (const [path, currentLink, currentValue] of [
+		['/', 'Home', 'page'],
+		['/about/', 'About', 'page'],
+		['/projects/', 'Projects', 'page'],
+		['/projects/imagezoom/', 'Projects', 'location'],
+		['/updates/', 'Updates', 'page'],
+		['/updates/imagezoom-0-1-4-overlay-listeners/', 'Updates', 'location'],
 	] as const) {
 		await page.goto(path);
 
 		const navigation = page.getByRole('navigation', { name: 'Primary navigation' });
 		await expect(navigation.getByRole('link')).toHaveText(['Home', 'About', 'Projects', 'Updates']);
-		await expect(navigation.getByRole('link', { name: currentPage })).toHaveAttribute('aria-current', 'page');
+		await expect(navigation.locator('[aria-current]')).toHaveCount(1);
+		await expect(navigation.getByRole('link', { name: currentLink })).toHaveAttribute('aria-current', currentValue);
 	}
 });
 
@@ -333,6 +358,7 @@ test('project catalog lists five published projects in order with accessible fil
 
 	for (const [slug, title] of projectNames.map((project) => [project, project === 'auto-tomato' ? 'Auto-Tomato' : project])) {
 		await expect(page.getByRole('link', { name: title, exact: true })).toHaveAttribute('href', `/projects/${slug}/`);
+		await expect(page.getByRole('link', { name: `View project ${title}`, exact: true })).toHaveAttribute('href', `/projects/${slug}/`);
 		await expect(page.getByRole('link', { name: `View ${title} on GitHub` })).toHaveAttribute(
 			'href',
 			`https://github.com/liewcf/${slug}`,
@@ -719,16 +745,7 @@ test('homepage Project cards, filters, and WebMCP share published featured conte
 	expect(draft).toContain('draft: true');
 	expect(draft).not.toContain('featuredOrder:');
 
-	await page.addInitScript(() => {
-		Object.defineProperty(navigator, 'modelContext', {
-			configurable: true,
-			value: {
-				provideContext(context: unknown) {
-					(window as typeof window & { __webMcpContext?: unknown }).__webMcpContext = context;
-				},
-			},
-		});
-	});
+	await captureWebMcpTools(page);
 	await page.goto('/');
 
 	const visibleProjects = await page.locator('#project-grid .project-card').evaluateAll((cards) => (
@@ -747,12 +764,7 @@ test('homepage Project cards, filters, and WebMCP share published featured conte
 	expect(visibleProjects).toEqual(expectedProjects);
 
 	const webMcpProjects = await page.evaluate(async () => {
-		const context = (window as typeof window & {
-			__webMcpContext?: {
-				tools: Array<{ name: string; execute: () => Promise<unknown> }>;
-			};
-		}).__webMcpContext;
-		const tool = context?.tools.find(({ name }) => name === 'list_featured_projects');
+		const tool = (window as WebMcpTestWindow).__webMcpTools?.find(({ name }) => name === 'list_featured_projects');
 
 		if (!tool) {
 			throw new Error('Featured Project WebMCP tool was not registered');
@@ -850,6 +862,7 @@ test('Cloudflare keeps contact redirect while former Blog routes remain real 404
 	expect(redirects).toBe(sourceRedirects);
 	expect(rules).toEqual([
 		'/.well-known/api-catalog /.well-known/api-catalog.json 200',
+		'/contact / 301',
 		'/contact/ / 301',
 	]);
 	for (const liveOrRemovedRoute of ['/about/', '/projects/', '/updates/', '/blog/']) {
@@ -1119,8 +1132,7 @@ test('agent skills index advertises a verifiable static profile skill', async ()
 test('homepage registers externally callable read-only WebMCP tools when supported', async ({ page }) => {
 	const html = await readFile('dist/index.html', 'utf8');
 
-	expect(html).toContain('navigator.modelContext');
-	expect(html).toContain('provideContext');
+	expect(html).not.toContain('provideContext');
 	expect(html).toContain('get_profile_summary');
 	expect(html).toContain('list_featured_projects');
 	expect(html).toContain('get_contact_links');
@@ -1129,32 +1141,15 @@ test('homepage registers externally callable read-only WebMCP tools when support
 	}
 	expect(html).not.toContain('https://github.com/liewcf/public-draft-share');
 
-	await page.addInitScript(() => {
-		Object.defineProperty(navigator, 'modelContext', {
-			configurable: true,
-			value: {
-				provideContext(context: unknown) {
-					(window as typeof window & { __webMcpContext?: unknown }).__webMcpContext = context;
-				},
-			},
-		});
-	});
+	await captureWebMcpTools(page);
 	await page.goto('/');
 
 	const results = await page.evaluate(async () => {
-		const context = (window as typeof window & {
-			__webMcpContext?: {
-				tools: Array<{ name: string; execute: () => Promise<unknown> }>;
-			};
-		}).__webMcpContext;
-
-		if (!context) {
-			throw new Error('WebMCP context was not registered');
-		}
-
+		const tools = (window as WebMcpTestWindow).__webMcpTools ?? [];
 		return Promise.all(
-			context.tools.map(async (tool) => ({
+			tools.map(async (tool) => ({
 				name: tool.name,
+				readOnly: tool.annotations.readOnlyHint,
 				output: await tool.execute(),
 			})),
 		);
@@ -1165,6 +1160,7 @@ test('homepage registers externally callable read-only WebMCP tools when support
 		'list_featured_projects',
 		'get_contact_links',
 	]);
+	expect(results.map(({ readOnly }) => readOnly)).toEqual([true, true, true]);
 	expect(results[0]?.output).toMatchObject({
 		name: 'Liew CheonFong',
 		url: 'https://liewcf.org/',
