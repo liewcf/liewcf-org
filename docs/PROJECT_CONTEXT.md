@@ -24,7 +24,7 @@ related:
 
 - Project purpose: Personal profile and credibility page for `liewcf.org`.
 - Primary users: Visitors who want to understand who Liew CheonFong is, what he builds, and how to contact or follow him.
-- Last recorded deployment: Commit `38e4e2f` generates a homepage, About page, five-Project catalog/detail surface, and two published Project-linked Updates in the index, detail routes, RSS, sitemap, and generated Markdown profile. Typed draft-aware content, the shared Home/About/Projects/Updates shell, plain semantic HTML, CSS, vanilla browser behavior, unique canonical/social metadata, a real 404 page, static security and agent discovery files, and 38 Playwright public-contract checks remained intact. The commit was pushed to `main` and its new routes and discovery output were live-verified on Cloudflare Pages on 2026-07-31.
+- Last verified production deployment: [`4076118`](https://github.com/liewcf/liewcf-org/commit/40761187d7d3b6bcdec1b51ebac46167376f030c) on `main` deployed successfully to [Cloudflare Pages](https://637ca0d1.liewcf-org.pages.dev/) on 2026-11-19. Live verification covered both contact redirects, the three native WebMCP tools, the zone bridge, CSP, and analytics beacon absence. See `docs/CHANGELOG_WORK.md` for evidence and scope.
 
 - The October refresh was observed live on 2026-11-19. The homepage showed the latest two published Updates, and the sitemap listed five Projects and six Updates. All 15 sitemap URLs returned successfully with matching canonicals.
 
@@ -32,7 +32,7 @@ related:
 
 - Replace the current implementation with an Astro-generated static multi-page site while preserving the current design and public contracts.
 - Add About, Projects, Project details, Updates, and Update details. Updates replaces Blog; old Blog URLs return 404, and contact remains outbound-only.
-- Store Projects and Updates as local Markdown content collections with typed frontmatter and draft support. The initial launch used four Projects and no Updates; the local repository now contains five Projects and six published Updates. The last recorded deployment contained five Projects and two Updates.
+- Store Projects and Updates as local Markdown content collections with typed frontmatter and draft support. The site publishes five Projects and six Updates.
 - Keep production fully static on Cloudflare Pages. Decap CMS compatibility is planned, but CMS administration, authentication, SSR, databases, runtime APIs, Tailwind, and client-side UI frameworks are outside the initial migration.
 - The accepted rationale and consequences are recorded in `docs/adr/0001-reintroduce-astro-as-static-multipage-site.md`.
 
@@ -67,7 +67,7 @@ related:
 - Update acceptance fixtures: `npm run check` temporarily builds one valid published fixture and confirms missing, multiple, nonexistent, and draft-Project relationships plus an empty draft body fail before regenerating the actual six-Update production output.
 - E2E tests: `npm run test:e2e`.
 - Cloudflare Pages: the `liewcf-org` Git integration runs `npm ci && npm run build` from the repository root and publishes `dist/` from production branch `main`. Custom domain `liewcf.org` with fallback `liewcf-org.pages.dev`; `www.liewcf.org` redirects to `https://liewcf.org/`. Run `npm run check` locally or in CI before deployment.
-- Cloudflare zone settings verified on 2026-11-19: Web Analytics auto-injection is disabled. The WebMCP bridge is enabled by a separate zone setting. The Pages project has no analytics beacon configured.
+- Cloudflare zone settings verified on 2026-11-19: Web Analytics auto-injection is disabled. The WebMCP bridge is enabled by a separate zone setting and runs with no tool packs selected. The Pages project has no analytics beacon configured.
 - Release status: commit `2353fbd` was initially deployed on 2026-07-26 by direct upload after the Git integration built successfully but published an empty output directory. The Pages project output directory was corrected from blank to `dist`; both a retry and a subsequent normal `main` push completed every Git-triggered build/deploy stage successfully, and their unique deployment URLs plus `liewcf.org` were live-verified.
 - Cloudflare Markdown for Agents product feature: not enabled while the site is on the current Cloudflare Free account because the feature is not available there. The repo still provides static `llms.txt` and `index.md`.
 - Matt engineering skills use private local Markdown under gitignored `.scratch/` for specs and issues, the default triage status vocabulary, and a single-context domain-doc layout described in `docs/agents/`. Root `CONTEXT.md` and `docs/adr/` are created lazily when domain terms or decisions are resolved.

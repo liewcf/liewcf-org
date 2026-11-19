@@ -20,12 +20,13 @@ related:
 
 # Tasks
 
-## Audit fixes — 2026-11-19
+## Audit fixes — complete on 2026-11-19
 
 - Fixed the audited project-link names, detail navigation, and contact redirect configuration. Migrated the three homepage WebMCP tools to the current browser API and kept the CSP intact.
 - The full release check passed with 40 Playwright tests. Chrome 158 registered and executed all three tools locally with the WebMCP testing feature enabled. Playwright verified the generated redirect rules.
-- Disabled zone analytics auto-injection and confirmed the beacon was absent from HTML and requests across the four top-level pages. The CSP and zone WebMCP bridge were preserved.
+- Shipped as [`4076118`](https://github.com/liewcf/liewcf-org/commit/40761187d7d3b6bcdec1b51ebac46167376f030c) on `main`. Cloudflare Pages reported [production deployment success](https://637ca0d1.liewcf-org.pages.dev/) for that commit.
+- Verified on production that both contact paths return one 301 to the homepage, all three native WebMCP tools return the expected results, and the Cloudflare bridge still loads. Home, About, Projects, and Updates preserved the CSP and showed no analytics beacon in HTML or browser requests.
 
 ## Next action
 
-- The owner authorized publishing the audit fixes. Verify both contact redirects, the homepage tools, the zone bridge, the CSP, and beacon absence on the production deployment.
+- No follow-up remains for the audit fixes.

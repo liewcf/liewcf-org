@@ -26,6 +26,9 @@ related:
 - Added project-specific accessible names for card actions, current-section semantics on detail pages, and the missing `/contact` redirect rule. Migrated the three homepage WebMCP tools to `document.modelContext.registerTool()`. The CSP was preserved.
 - Confirmed the WebMCP zone setting was enabled by a dashboard update on 2026-08-06. With owner authorization, disabled zone Web Analytics auto-injection and verified that Home, About, Projects, and Updates returned no beacon in HTML or browser requests. The CSP and bridge were preserved.
 - The full `npm run check` passed on Node 22 with 40 Playwright tests in isolated Chrome. An additional local preview check registered and executed all three tools in Chrome 158 with the WebMCP testing feature enabled. Inspected the detail navigation at 1440 px and 390 px. Cloudflare redirects were verified in the generated configuration.
+- Pushed [`4076118`](https://github.com/liewcf/liewcf-org/commit/40761187d7d3b6bcdec1b51ebac46167376f030c) to `main`. Cloudflare Pages marked [deployment `637ca0d1`](https://637ca0d1.liewcf-org.pages.dev/) successful at 16:07 MYT and identified the commit as the canonical production deployment.
+- Verified that live `/contact` and `/contact/` each return one 301 to `/`, which returns 200. In Chrome 158 with WebMCP testing enabled, `get_profile_summary`, `list_featured_projects`, and `get_contact_links` registered and returned the expected profile, four featured Projects, and contact links. The zone bridge was enabled, served identical bytes, and ran with no tool packs selected.
+- The live CSP matched the pre-release policy on Home, About, Projects, and Updates. Chrome found no analytics beacon in the HTML and made no analytics requests on those four pages after deployment. Closed the audit fixes.
 
 ## 2026-10-05
 
