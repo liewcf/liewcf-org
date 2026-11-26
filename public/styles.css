@@ -905,6 +905,14 @@ h1 {
 		flex-direction: column;
 		gap: 8px;
 	}
+
+	.site-navigation {
+		gap: 2px;
+	}
+
+	.site-navigation a {
+		padding-inline: 8px;
+	}
 }
 
 .contact-page {

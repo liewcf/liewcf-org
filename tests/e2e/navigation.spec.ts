@@ -156,11 +156,13 @@ test('shared navigation identifies the current page or section', async ({ page }
 		['/projects/imagezoom/', 'Projects', 'location'],
 		['/updates/', 'Updates', 'page'],
 		['/updates/imagezoom-0-1-4-overlay-listeners/', 'Updates', 'location'],
+		['/contact/', 'Contact', 'page'],
 	] as const) {
 		await page.goto(path);
 
 		const navigation = page.getByRole('navigation', { name: 'Primary navigation' });
-		await expect(navigation.getByRole('link')).toHaveText(['Home', 'About', 'Projects', 'Updates']);
+		await expect(navigation.getByRole('link')).toHaveText(['Home', 'About', 'Projects', 'Updates', 'Contact']);
+		await expect(navigation.getByRole('link', { name: 'Contact' })).toHaveAttribute('href', '/contact/');
 		await expect(navigation.locator('[aria-current]')).toHaveCount(1);
 		await expect(navigation.getByRole('link', { name: currentLink })).toHaveAttribute('aria-current', currentValue);
 	}
