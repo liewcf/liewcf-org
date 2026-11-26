@@ -23,6 +23,8 @@ related:
 
 ## 2026-11-26
 
+- The contact form now shows a focused thank-you panel after an accepted send. “Write another message” opens a fresh form. Verified the success, retry, and restart flows locally and inspected the panel at 1440 px and 390 px.
+
 - Added the contact form, fixed-recipient Worker, direct email fallback, and local coverage for accepted and failed sends. Replaced the contact redirects and updated the sitemap, WebMCP contact links, and agent discovery guide.
 - Node 22.13 passed the full release check with five Worker tests and 42 Playwright tests. Wrangler bundled the Worker in a dry run. The local Pages emulator served the contact-specific CSP and the original About CSP. Inspected the contact page at 1440 px and 390 px. A subsequent production test is recorded below.
 - Committed and pushed the feature as `112be8e`. Cloudflare activated [Pages deployment 63654900](https://63654900.liewcf-org.pages.dev/) and the separate Worker on `/api/contact`. Reused existing Email Routing and Turnstile configuration. Verified the homepage and About contact links, the contact-specific CSP, and the public form. One browser retained the old permanent redirect during rollout. A fresh request to the canonical URL served the form.

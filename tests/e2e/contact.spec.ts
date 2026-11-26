@@ -37,8 +37,12 @@ test('preserves a failed message, gets a new token, and clears an accepted messa
 	await expect(page.getByRole('status')).toHaveText('Please try again.');
 	await expect(page.getByLabel('Message', { exact: true })).toHaveValue('Hello');
 	await send.click();
-	await expect(page.getByRole('status')).toContainText('accepted for sending');
+	await expect(page.getByRole('heading', { name: 'Thanks for getting in touch!' })).toBeFocused();
+	await expect(page.getByText('Your message is on its way to me.')).toBeVisible();
+	await expect(send).toBeHidden();
+	await page.getByRole('link', { name: 'Write another message' }).click();
 	await expect(page.getByLabel('Your email')).toBeEmpty();
 	await expect(page.getByLabel('Message', { exact: true })).toBeEmpty();
+	await expect(send).toBeEnabled();
 	expect(submissions).toBe(2);
 });

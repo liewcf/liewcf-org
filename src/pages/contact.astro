@@ -16,6 +16,12 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 			<p role="status" aria-live="polite"></p>
 			<noscript><p>To send a message without JavaScript, use the email link above.</p></noscript>
 		</form>
+		<div id="contact-confirmation" hidden>
+			<span class="confirmation-check" aria-hidden="true">✓</span>
+			<h2 tabindex="-1">Thanks for getting in touch!</h2>
+			<p>Your message is on its way to me.</p>
+			<a href="/contact/">Write another message</a>
+		</div>
 	</section>
 	<script is:inline src="/contact.js" defer></script>
 </SiteLayout>

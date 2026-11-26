@@ -1,6 +1,7 @@
 const form = document.querySelector('#contact-form');
 const button = form.querySelector('button');
 const statusLine = form.querySelector('[role="status"]');
+const confirmation = document.querySelector('#contact-confirmation');
 const email = form.elements.email;
 const message = form.elements.message;
 const unavailable = 'The form is unavailable. You can still use the email link above.';
@@ -61,7 +62,9 @@ form.addEventListener('submit', async (event) => {
 		const result = await response.json();
 		if (response.ok && result.accepted === true) {
 			form.reset();
-			statusLine.textContent = 'Thanks. Your message was accepted for sending.';
+			form.hidden = true;
+			confirmation.hidden = false;
+			confirmation.querySelector('h2').focus();
 		} else {
 			statusLine.textContent = result.error || unavailable;
 		}
@@ -71,7 +74,7 @@ form.addEventListener('submit', async (event) => {
 		sending = false;
 		email.readOnly = message.readOnly = false;
 		clearCheck();
-		window.turnstile.reset(widgetId);
+		if (!form.hidden) window.turnstile.reset(widgetId);
 	}
 });
 
