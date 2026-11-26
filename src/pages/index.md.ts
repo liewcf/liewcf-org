@@ -44,6 +44,7 @@ I build WordPress plugins, browser extensions, macOS utilities, and focused webs
 
 ## Contact
 
+- Contact form: https://liewcf.org/contact/
 - Email: mailto:liewcf@gmail.com
 - GitHub: https://github.com/liewcf
 - Facebook: https://www.facebook.com/LiewCheonFong

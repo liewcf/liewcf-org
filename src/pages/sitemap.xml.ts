@@ -10,6 +10,7 @@ export const GET: APIRoute = async () => {
 	const paths = [
 		'/',
 		'/about/',
+		'/contact/',
 		'/projects/',
 		...projects.map((project) => `/projects/${getProjectSlug(project)}/`),
 		'/updates/',

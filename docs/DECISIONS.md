@@ -4,7 +4,7 @@ description: Important project, product, technical, process, or content decision
 doc_type: decision_log
 status: active
 created: 2026-07-19
-updated: 2026-11-19
+updated: 2026-11-26
 tags:
   - project-memory
   - decisions
@@ -19,6 +19,10 @@ related:
 ---
 
 # Decisions
+
+## 2026-11-26
+
+- Use a static two-field contact page and one Cloudflare Worker for verified-recipient email. Keep Gmail public as a fallback, use Turnstile on the contact page, and direct replies to the visitor. This supersedes the outbound-only contact decision.
 
 ## 2026-11-19
 

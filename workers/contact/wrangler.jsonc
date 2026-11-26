@@ -1,0 +1,10 @@
+{
+	"name": "liewcf-contact",
+	"main": "index.js",
+	"compatibility_date": "2026-11-24",
+	"workers_dev": false,
+	"keep_vars": true,
+	"preview_urls": false,
+	"routes": [{ "pattern": "https://liewcf.org/api/contact", "zone_name": "liewcf.org" }],
+	"send_email": [{ "name": "EMAIL", "destination_address": "liewcf@gmail.com" }]
+}

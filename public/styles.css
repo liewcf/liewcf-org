@@ -906,3 +906,59 @@ h1 {
 		gap: 8px;
 	}
 }
+
+.contact-page {
+	max-width: 40rem;
+	margin: clamp(3rem, 7vw, 6rem) auto;
+}
+
+.contact-page h1 {
+	font-size: clamp(3rem, 7vw, 5rem);
+}
+
+.contact-page form {
+	display: grid;
+	gap: 0.5rem;
+}
+
+.contact-page label {
+	font-weight: 600;
+}
+
+.contact-page input,
+.contact-page textarea {
+	width: 100%;
+	margin-bottom: 0.75rem;
+	padding: 0.65rem 0.85rem;
+	border: 1px solid var(--muted);
+	border-radius: 0.5rem;
+	background: var(--panel);
+	color: var(--ink);
+	font: inherit;
+}
+
+.contact-page textarea {
+	resize: vertical;
+}
+
+.contact-page button {
+	justify-self: start;
+	padding: 0.65rem 1.4rem;
+	border: 0;
+	border-radius: 999px;
+	background: var(--ink);
+	color: var(--paper);
+	font: inherit;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.contact-page button:disabled {
+	opacity: 0.65;
+	cursor: default;
+}
+
+.contact-page [role="status"] {
+	min-height: 1.6em;
+	color: var(--muted);
+}

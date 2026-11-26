@@ -60,9 +60,9 @@ const currentPath = Astro.url.pathname;
 		<main id="main-content" class="page-shell" tabindex="-1">
 			<slot />
 		</main>
-		<footer class="site-footer">
+		{canonicalPath !== '/contact/' && <footer class="site-footer">
 			<p>Got a WordPress, macOS, or web tooling idea? I’d be happy to chat.</p>
-			<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#105;&#101;&#119;&#99;&#102;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#108;&#105;&#101;&#119;&#99;&#102;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a>
-		</footer>
+			<a href="/contact/">Contact</a>
+		</footer>}
 	</body>
 </html>

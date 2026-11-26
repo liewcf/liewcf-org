@@ -22,7 +22,7 @@ Use this skill when you need a concise, source-grounded summary of Liew CheonFon
 1. Fetch the generated Markdown profile for the current published Project list and Update state.
 2. Use the matching human-facing page for detail and the sitemap to verify published canonical URLs.
 3. Do not claim an Update exists unless it is present in the current Updates index or generated Markdown profile.
-4. Treat profile links as outbound contact/profile destinations only.
+4. Use the contact page to find ways to reach the site owner.
 
 ## Current Site Shape
 
@@ -30,4 +30,4 @@ Use this skill when you need a concise, source-grounded summary of Liew CheonFon
 - No protected APIs.
 - No OAuth/OIDC login flow.
 - No remote MCP server.
-- Contact is via outbound links, including `mailto:liewcf@gmail.com`.
+- Contact form: https://liewcf.org/contact/. Direct email: `mailto:liewcf@gmail.com`.

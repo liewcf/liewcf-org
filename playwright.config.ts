@@ -5,10 +5,12 @@ export default defineConfig({
 	use: {
 		baseURL: 'http://127.0.0.1:4332',
 		browserName: 'chromium',
+		channel: process.env.PLAYWRIGHT_CHROMIUM_CHANNEL,
+		launchOptions: { chromiumSandbox: true },
 		trace: 'on-first-retry',
 	},
 	webServer: {
-		command: './node_modules/.bin/astro preview --host 0.0.0.0 --port 4332',
+		command: './node_modules/.bin/astro preview --host 127.0.0.1 --port 4332',
 		url: 'http://127.0.0.1:4332',
 		reuseExistingServer: false,
 		stdout: 'pipe',

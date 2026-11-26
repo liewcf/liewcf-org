@@ -2,7 +2,7 @@
 
 Astro-generated static profile, About, Project catalog, and Updates publication surface for `liewcf.org`.
 
-The visitor-facing site uses semantic HTML, plain CSS, vanilla browser JavaScript, and typed local Markdown for Projects and Updates. Astro provides build and preview tooling only; production has no server runtime, adapter, database, API backend, runtime environment variables, Tailwind, or client-side UI framework.
+The visitor-facing site uses semantic HTML, plain CSS, vanilla browser JavaScript, and typed local Markdown for Projects and Updates. Astro generates static pages. A separate Cloudflare Worker handles contact submissions.
 
 ## Development
 
@@ -19,7 +19,7 @@ Open `http://localhost:4321`. The development server also binds to the local net
 npm run check
 ```
 
-This is the release gate. It checks Astro diagnostics, validates valid and invalid Update fixtures, creates a clean production build in `dist/`, serves that output, and runs the Playwright public-contract suite across the homepage, About, Projects, Updates, RSS, discovery, routing, security artifacts, assets, responsive behavior, and draft exclusion.
+This is the release gate. It runs offline Worker tests, checks Astro diagnostics, validates valid and invalid Update fixtures, creates a clean production build in `dist/`, serves that output, and runs the Playwright public-contract suite across the homepage, About, Projects, Updates, RSS, discovery, routing, security artifacts, assets, responsive behavior, and draft exclusion.
 
 ## Files
 
@@ -50,6 +50,19 @@ The generated `_redirects` and `_headers` files preserve the site’s routing, d
 
 No production deployment, Cloudflare dashboard change, or DNS change is performed by this repository handoff.
 
+## Contact form
+
+The homepage, About page, and footer link to `/contact/`. The direct Gmail link also works without JavaScript. Astro preview serves the page. The browser tests simulate the spam check and email responses locally.
+
+To enable delivery on the production domain:
+
+1. Onboard `liewcf.org` as a Cloudflare Email Sending domain and verify `liewcf@gmail.com` as a destination address in the same account.
+2. Create a managed Turnstile widget for `liewcf.org`. The contact Worker needs its public site key as `TURNSTILE_SITE_KEY` and its secret as the encrypted Worker secret `TURNSTILE_SECRET_KEY`. The site key is returned to the browser. Keep the secret in Cloudflare.
+3. Deploy the Worker using `workers/contact/wrangler.jsonc` and configure those two bindings on `liewcf-contact`. The config routes only `https://liewcf.org/api/contact` and restricts the email binding to the verified Gmail inbox. The Pages build needs no keys.
+4. Publish the static Pages build. Verify the contact-page headers and make an authorized test submission. Check receipt in Gmail and that Reply addresses the visitor.
+
+The Worker validates the spam check, sends plain text from `contact@liewcf.org`, and sets the visitor’s email as `Reply-To`. The success message means Cloudflare accepted the send. The form sends one message and stores no submissions in the application.
+
 ## Future Decap compatibility
 
-The typed local Markdown collections are compatible with a future Decap CMS phase, but this release intentionally contains no `/admin/` route, Decap bundle, authentication or backend configuration, secret, server runtime, or runtime environment requirement. Adding that phase requires a separate accepted decision and implementation.
+The typed local Markdown collections are compatible with a future Decap CMS phase, but this release intentionally contains no `/admin/` route, Decap bundle, authentication or backend configuration, CMS credentials or CMS runtime. Adding that phase requires a separate accepted decision and implementation.

@@ -4,7 +4,7 @@ description: Current tasks, blockers, verification state, and recommended next a
 doc_type: task_state
 status: active
 created: 2026-07-19
-updated: 2026-11-19
+updated: 2026-11-26
 tags:
   - project-memory
   - tasks
@@ -19,6 +19,10 @@ related:
 ---
 
 # Tasks
+
+## Contact form rollout
+
+- Local release checks passed. Production setup and a real delivery test remain pending. See the contact form section in the README for the Worker, Turnstile, email verification, and Pages steps.
 
 ## Audit fixes — complete on 2026-11-19
 

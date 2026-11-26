@@ -4,7 +4,7 @@ description: Dated notes on changed files, deliverables, tooling, checks, and ve
 doc_type: work_log
 status: active
 created: 2026-07-19
-updated: 2026-11-19
+updated: 2026-11-26
 tags:
   - project-memory
   - changelog
@@ -20,6 +20,11 @@ related:
 ---
 
 # Work Changelog
+
+## 2026-11-26
+
+- Added the contact form, fixed-recipient Worker, direct email fallback, and local coverage for accepted and failed sends. Replaced the contact redirects and updated the sitemap, WebMCP contact links, and agent discovery guide.
+- Node 22.13 passed the full release check with five Worker tests and 42 Playwright tests. Wrangler bundled the Worker in a dry run. The local Pages emulator served the contact-specific CSP and the original About CSP. Inspected the contact page at 1440 px and 390 px. Production configuration and Gmail delivery remain unverified.
 
 ## 2026-11-19
 
