@@ -48,7 +48,7 @@ Recommended settings:
 
 The generated `_redirects` and `_headers` files preserve the site’s routing, discovery, content-type, and security contracts. Run `npm run check` locally or in CI before deploying. Cloudflare Pages should upload only `dist/`.
 
-No production deployment, Cloudflare dashboard change, or DNS change is performed by this repository handoff.
+The Pages Git integration publishes changes pushed to the production branch. Deploy the contact Worker separately when its code changes.
 
 ## Contact form
 
@@ -56,8 +56,8 @@ The homepage, About page, and footer link to `/contact/`. The direct Gmail link 
 
 To enable delivery on the production domain:
 
-1. Onboard `liewcf.org` as a Cloudflare Email Sending domain and verify `liewcf@gmail.com` as a destination address in the same account.
-2. Create a managed Turnstile widget for `liewcf.org`. The contact Worker needs its public site key as `TURNSTILE_SITE_KEY` and its secret as the encrypted Worker secret `TURNSTILE_SECRET_KEY`. The site key is returned to the browser. Keep the secret in Cloudflare.
+1. Confirm the account has a verified destination for `liewcf@gmail.com`. The production Worker uses the domain’s existing Email Routing configuration to send to this address. Cloudflare also supports onboarding a dedicated Email Sending domain.
+2. Reuse the existing managed Turnstile widget for `liewcf.org`. The contact Worker needs its public site key as `TURNSTILE_SITE_KEY` and its secret as the encrypted Worker secret `TURNSTILE_SECRET_KEY`. The site key is returned to the browser. Keep the secret in Cloudflare.
 3. Deploy the Worker using `workers/contact/wrangler.jsonc` and configure those two bindings on `liewcf-contact`. The config routes only `https://liewcf.org/api/contact` and restricts the email binding to the verified Gmail inbox. The Pages build needs no keys.
 4. Publish the static Pages build. Verify the contact-page headers and make an authorized test submission. Check receipt in Gmail and that Reply addresses the visitor.
 

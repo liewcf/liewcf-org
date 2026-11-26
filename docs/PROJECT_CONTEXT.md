@@ -24,7 +24,8 @@ related:
 
 - Project purpose: Personal profile and credibility page for `liewcf.org`.
 - Primary users: Visitors who want to understand who Liew CheonFong is, what he builds, and how to contact or follow him.
-- Last verified production deployment: [`4076118`](https://github.com/liewcf/liewcf-org/commit/40761187d7d3b6bcdec1b51ebac46167376f030c) on `main` deployed successfully to [Cloudflare Pages](https://637ca0d1.liewcf-org.pages.dev/) on 2026-11-19. Live verification covered both contact redirects, the three native WebMCP tools, the zone bridge, CSP, and analytics beacon absence. See `docs/CHANGELOG_WORK.md` for evidence and scope.
+- Contact form release: Pages deployed [`112be8e`](https://github.com/liewcf/liewcf-org/commit/112be8e) on 2026-11-26. The separate `liewcf-contact` Worker uses the existing Email Routing domain, verified destination, and managed Turnstile widget. The first production submission reached Gmail Spam.
+- Previous verified production deployment: [`4076118`](https://github.com/liewcf/liewcf-org/commit/40761187d7d3b6bcdec1b51ebac46167376f030c) on `main` deployed successfully to [Cloudflare Pages](https://637ca0d1.liewcf-org.pages.dev/) on 2026-11-19. Live verification covered both contact redirects, the three native WebMCP tools, the zone bridge, CSP, and analytics beacon absence. See `docs/CHANGELOG_WORK.md` for evidence and scope.
 
 - The October refresh was observed live on 2026-11-19. The homepage showed the latest two published Updates, and the sitemap listed five Projects and six Updates. All 15 sitemap URLs returned successfully with matching canonicals.
 

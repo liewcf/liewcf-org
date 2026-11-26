@@ -22,7 +22,7 @@ related:
 
 ## Contact form rollout
 
-- Local release checks passed. Production setup and a real delivery test remain pending. See the contact form section in the README for the Worker, Turnstile, email verification, and Pages steps.
+- The production form delivered a test message on 26 November. Gmail placed it in Spam. SPF and DKIM passed and the Reply-To header matched the submitted address. Inbox placement remains unverified.
 
 ## Audit fixes — complete on 2026-11-19
 
