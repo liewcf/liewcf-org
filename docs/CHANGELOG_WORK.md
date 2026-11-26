@@ -23,6 +23,11 @@ related:
 
 ## 2026-11-26
 
+- Added Public Draft Share and Project Memory with dated Updates for the October preview-link fixes and November handoffs. Featured Public Draft Share, linked Project Memory from About, and switched four project headings to their product names.
+- Preserved Auto-Tomato’s project and Update URLs while removing its unavailable GitHub link from cards, project details, and generated Markdown. Repository URLs remain required for featured projects.
+- Verified the local production build on Node 22.13. Astro diagnostics, Update fixtures, five Worker tests, and 42 Playwright tests passed. Inspected the revised pages at 1440 px and 390 px.
+- Cloudflare Pages published [`24c6a98`](https://github.com/liewcf/liewcf-org/commit/24c6a98043e4a58179270d5e61be5d3964239011) in [deployment 5d079f73](https://5d079f73.liewcf-org.pages.dev/). Verified nine canonical pages on liewcf.org, both new project timelines, the homepage and About links, seven Projects in the sitemap, eight Updates in RSS, the generated Markdown entries, and removal of the unavailable Auto-Tomato link.
+
 - The contact form now shows a focused thank-you panel after an accepted send. “Write another message” opens a fresh form. Verified the success, retry, and restart flows locally and inspected the panel at 1440 px and 390 px.
 
 - Added the contact form, fixed-recipient Worker, direct email fallback, and local coverage for accepted and failed sends. Replaced the contact redirects and updated the sitemap, WebMCP contact links, and agent discovery guide.

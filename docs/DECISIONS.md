@@ -22,6 +22,8 @@ related:
 
 ## 2026-11-26
 
+- Feature Public Draft Share alongside the four existing homepage projects. Include Project Memory in the catalog and link it from About. Keep Auto-Tomato’s write-up at its existing URL and omit its unavailable repository link from all visitor and agent surfaces. Featured projects still require a repository URL.
+
 - Use a static two-field contact page and one Cloudflare Worker for verified-recipient email. Keep Gmail public as a fallback, use Turnstile on the contact page, and direct replies to the visitor. This supersedes the outbound-only contact decision.
 
 ## 2026-11-19
