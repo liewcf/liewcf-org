@@ -1,5 +1,5 @@
 ---
-title: imagezoom
+title: ImageZoom
 summary: A small Chrome extension for zooming images on web pages.
 repositoryUrl: https://github.com/liewcf/imagezoom
 categories:

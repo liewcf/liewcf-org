@@ -1,5 +1,5 @@
 ---
-title: enjinmel-smtp
+title: EnjinMel SMTP
 summary: A WordPress plugin that routes site email through the Enginemailer REST API for more reliable delivery.
 repositoryUrl: https://github.com/liewcf/enjinmel-smtp
 categories:

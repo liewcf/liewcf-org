@@ -47,12 +47,14 @@ const description = project.data.summary;
 						<dd>{project.data.status}</dd>
 					</div>
 				)}
-				<div>
-					<dt>Source</dt>
-					<dd>
-						<a href={project.data.repositoryUrl} rel="noopener noreferrer" target="_blank">View on GitHub</a>
-					</dd>
-				</div>
+				{project.data.repositoryUrl && (
+					<div>
+						<dt>Source</dt>
+						<dd>
+							<a href={project.data.repositoryUrl} rel="noopener noreferrer" target="_blank">View on GitHub</a>
+						</dd>
+					</div>
+				)}
 				{project.data.liveUrl && (
 					<div>
 						<dt>Live</dt>

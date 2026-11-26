@@ -31,7 +31,7 @@ const projects = defineCollection({
 		.object({
 			title: z.string().min(1),
 			summary: z.string().min(1),
-			repositoryUrl: githubRepositoryUrl,
+			repositoryUrl: githubRepositoryUrl.optional(),
 			categories: z.array(z.string().min(1)).min(1),
 			featured: z.boolean(),
 			featuredOrder: z.number().int().positive().optional(),
@@ -41,6 +41,14 @@ const projects = defineCollection({
 			coverImage: publicUploadUrl.optional(),
 		})
 		.superRefine((project, context) => {
+			if (project.featured && !project.repositoryUrl) {
+				context.addIssue({
+					code: 'custom',
+					message: 'Featured Projects require a public GitHub repository URL.',
+					path: ['repositoryUrl'],
+				});
+			}
+
 			if (project.featured && project.featuredOrder === undefined) {
 				context.addIssue({
 					code: 'custom',

@@ -1,5 +1,5 @@
 ---
-title: verified-person-research
+title: Verified Person Research
 summary: A Codex skill that produces cited, evidence-bounded professional background research without inventing missing facts.
 repositoryUrl: https://github.com/liewcf/verified-person-research
 categories:

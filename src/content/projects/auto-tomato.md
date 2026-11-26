@@ -1,7 +1,6 @@
 ---
 title: Auto-Tomato
 summary: A native macOS menu-bar Pomodoro timer that follows keyboard and mouse activity, counting focused work as active time and breaks as wall-clock time.
-repositoryUrl: https://github.com/liewcf/auto-tomato
 categories:
   - macOS
   - Swift

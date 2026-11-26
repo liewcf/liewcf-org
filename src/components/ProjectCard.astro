@@ -14,7 +14,7 @@ const detailLinkId = `project-${slug}-detail-link`;
 
 <article class="project-card" data-tags={project.data.categories.join(',')}>
 	<div class="project-card-body">
-		<p class="project-repo">liewcf/{slug}</p>
+		{project.data.repositoryUrl && <p class="project-repo">liewcf/{slug}</p>}
 		<h3 id={titleId}><a href={`/projects/${slug}/`}>{project.data.title}</a></h3>
 		<p class="project-summary">{project.data.summary}</p>
 	</div>
@@ -23,13 +23,15 @@ const detailLinkId = `project-${slug}-detail-link`;
 	</ul>
 	<div class="project-links">
 		<a id={detailLinkId} href={`/projects/${slug}/`} class="project-link-primary" aria-labelledby={`${detailLinkId} ${titleId}`}>View project</a>
-		<a
-			href={project.data.repositoryUrl}
-			rel="noopener noreferrer"
-			target="_blank"
-			aria-label={`View ${project.data.title} on GitHub`}
-		>
-			GitHub
-		</a>
+		{project.data.repositoryUrl && (
+			<a
+				href={project.data.repositoryUrl}
+				rel="noopener noreferrer"
+				target="_blank"
+				aria-label={`View ${project.data.title} on GitHub`}
+			>
+				GitHub
+			</a>
+		)}
 	</div>
 </article>

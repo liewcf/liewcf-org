@@ -15,13 +15,13 @@ export const GET: APIRoute = async () => {
 	const projectEntries = projects.map((project) => {
 		const slug = getProjectSlug(project);
 		const categories = project.data.categories.join(', ');
+		const repository = project.data.repositoryUrl ? `\n- Repository: ${project.data.repositoryUrl}` : '';
 
 		return `### [${project.data.title}](${siteUrl}/projects/${slug}/)
 
 ${project.data.summary}
 
-- Categories: ${categories}
-- Repository: ${project.data.repositoryUrl}`;
+- Categories: ${categories}${repository}`;
 	});
 	const updateEntries = await Promise.all(updates.map(async (update) => {
 		const project = await getUpdateProject(update);

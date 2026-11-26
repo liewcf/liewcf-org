@@ -8,6 +8,8 @@ export function getRepositoryName(repositoryUrl: string): string {
 }
 
 export function getProjectSlug(project: Project): string {
+	if (!project.data.repositoryUrl) return project.id;
+
 	const repositoryName = getRepositoryName(project.data.repositoryUrl);
 
 	if (project.id !== repositoryName) {

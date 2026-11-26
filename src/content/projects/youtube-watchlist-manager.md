@@ -1,5 +1,5 @@
 ---
-title: youtube-watchlist-manager
+title: YouTube Watchlist Manager
 summary: A Chrome extension that speeds up YouTube Watch Later cleanup with checkboxes, batch removal, and watched-first sorting.
 repositoryUrl: https://github.com/liewcf/youtube-watchlist-manager
 categories:
