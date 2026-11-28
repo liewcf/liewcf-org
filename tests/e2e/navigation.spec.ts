@@ -68,6 +68,12 @@ const featuredProjects = [
 		summary: 'Share a WordPress draft for review. Anyone with the link can read it without an account. You can choose when the link expires or turn it off at any time.',
 		categories: ['WordPress', 'Plugin'],
 	},
+	{
+		slug: 'hydrogen-review-skill',
+		title: 'Hydrogen Review',
+		summary: 'Get a second code review in Codex. Gemini reviews the changes you select, and Codex checks its findings against the code.',
+		categories: ['Codex', 'Developer Tool'],
+	},
 ];
 
 const catalogProjects = [
@@ -76,11 +82,6 @@ const catalogProjects = [
 		slug: 'auto-tomato',
 		title: 'Auto-Tomato',
 		summary: 'A native macOS menu-bar Pomodoro timer that follows keyboard and mouse activity, counting focused work as active time and breaks as wall-clock time.',
-	},
-	{
-		slug: 'hydrogen-review-skill',
-		title: 'Hydrogen Review',
-		summary: 'Get a second code review in Codex. Gemini reviews the changes you select, and Codex checks its findings against the code.',
 	},
 	{
 		slug: 'project-memory',
@@ -771,7 +772,8 @@ test('static project filters narrow the curated project list', async ({ page }) 
 
 	await developerToolButton.click();
 	await expect(developerToolButton).toHaveAttribute('aria-pressed', 'true');
-	await expect(status).toHaveText('1 project in Developer Tool');
+	await expect(status).toHaveText('2 projects in Developer Tool');
+	await expect(projectCards.filter({ hasText: 'Hydrogen Review' })).toBeVisible();
 	await expect(projectCards.filter({ hasText: 'Verified Person Research' })).toBeVisible();
 	await expect(projectCards.filter({ hasText: 'YouTube Watchlist Manager' })).toBeHidden();
 

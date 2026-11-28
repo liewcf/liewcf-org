@@ -5,7 +5,8 @@ repositoryUrl: https://github.com/liewcf/hydrogen-review-skill
 categories:
   - Codex
   - Developer Tool
-featured: false
+featured: true
+featuredOrder: 6
 draft: false
 ---
 

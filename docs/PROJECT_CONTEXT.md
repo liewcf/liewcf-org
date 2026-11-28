@@ -33,7 +33,7 @@ related:
 
 - Replace the current implementation with an Astro-generated static multi-page site while preserving the current design and public contracts.
 - Add About, Projects, Project details, Updates, and Update details. Updates replaces Blog; old Blog URLs return 404.
-- Store Projects and Updates as local Markdown content collections with typed frontmatter and draft support. The current source includes eight published Projects and nine published Updates. Five Projects are featured on the homepage.
+- Store Projects and Updates as local Markdown content collections with typed frontmatter and draft support. The current source includes eight published Projects and nine published Updates. Six Projects are featured on the homepage.
 - Keep production fully static on Cloudflare Pages. Decap CMS compatibility is planned, but CMS administration, authentication, SSR, databases, runtime APIs, Tailwind, and client-side UI frameworks are outside the initial migration.
 - The accepted rationale and consequences are recorded in `docs/adr/0001-reintroduce-astro-as-static-multipage-site.md`.
 
