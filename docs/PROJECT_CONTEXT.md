@@ -53,10 +53,10 @@ related:
 - Security contact: `/.well-known/security.txt` publishes the public email contact for security reports.
 - Assets: `public/assets/` contains the unchanged portrait, AVIF/WebP/JPG hero image fallback, Open Graph image, SVG favicon, touch icon, self-hosted Outfit variable woff2, and grain overlay; `public/favicon.ico` preserves conventional browser and bot compatibility. Project media may use stable files placed under `public/uploads/` and referenced as `/uploads/…`.
 - Contact: The static form uses a same-origin Cloudflare Worker with Turnstile and a single verified Gmail recipient. Direct email remains public.
-- API: None; `/.well-known/api-catalog` intentionally returns an empty Linkset instead of inventing a public API.
+- The contact form uses `GET /api/contact` for the public Turnstile site key and `POST /api/contact` for submissions. The API catalog advertises no developer-facing APIs.
 - Auth discovery: None; do not add OAuth/OIDC or OAuth protected-resource metadata unless the site gains protected APIs.
 - MCP: Browser-only WebMCP tools are exposed on the homepage. Its featured-Project result is serialized from the same published featured entries as the visible cards, including synchronized names, summaries, categories, repository URLs, and canonical detail URLs; there is no remote MCP server card unless an actual MCP server is introduced.
-- Runtime environment variables: None.
+- Astro Pages needs no runtime configuration. The contact Worker owns the email binding and Turnstile configuration. See the contact form section of the README.
 
 ## Development Workflow
 

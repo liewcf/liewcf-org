@@ -22,6 +22,7 @@ related:
 
 ## Contact form rollout
 
+- The confirmation panel in `0f43a06` passed local browser checks. Its appearance after a production submission is unverified.
 - The production form delivered a test message on 26 November. Gmail placed it in Spam. SPF and DKIM passed and the Reply-To header matched the submitted address. Inbox placement remains unverified.
 
 ## Audit fixes — complete on 2026-11-19
@@ -33,4 +34,4 @@ related:
 
 ## Next action
 
-- No follow-up remains for the audit fixes.
+- Check where Gmail places the next genuine contact-form message. The rollout test confirmed receipt in Spam.

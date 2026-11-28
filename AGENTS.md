@@ -70,7 +70,7 @@ Cloudflare Pages should publish Astro's generated static output.
 
 - Build command: `npm run build`
 - Output directory: `dist`
-- Runtime environment variables: none
+- Pages needs no runtime variables. Deploy contact Worker changes separately using `workers/contact/wrangler.jsonc`. The Pages Git build publishes only the static site.
 - Run `npm run check` locally or in CI before deployment.
 
 ## Project Memory Requirement

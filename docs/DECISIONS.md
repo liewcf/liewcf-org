@@ -25,6 +25,7 @@ related:
 - Feature Public Draft Share alongside the four existing homepage projects. Include Project Memory in the catalog and link it from About. Keep Auto-Tomato’s write-up at its existing URL and omit its unavailable repository link from all visitor and agent surfaces. Featured projects still require a repository URL.
 
 - Use a static two-field contact page and one Cloudflare Worker for verified-recipient email. Keep Gmail public as a fallback, use Turnstile on the contact page, and direct replies to the visitor. This supersedes the outbound-only contact decision.
+- The owner chose a standalone thank-you panel with friendly wording so visitors can tell their message was submitted. After the Worker accepts a message, the panel replaces the form and its Turnstile success indicator. “Write another message” starts a fresh form.
 
 ## 2026-11-19
 
