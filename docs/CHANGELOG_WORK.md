@@ -25,6 +25,9 @@ related:
 
 - Added the Hydrogen Review Project and its public launch Update from the [initial public source](https://github.com/liewcf/hydrogen-review-skill/commit/35f68b5cae6d3eadce53ebec38904dfeb05caa78). The Update appears on the homepage, in RSS, and on the Project timeline.
 - The local Node 22 build, Astro diagnostics, Update fixtures, five Worker tests, and 42 Playwright tests passed. Inspected both new pages at 1440 px and 390 px.
+- Pushed [`3bea360`](https://github.com/liewcf/liewcf-org/commit/3bea36092a11d68dccdad20f03ead1c5bd3ab026) to `main`. Cloudflare Pages deployment `d0bc4feb` succeeded. Verified both canonical pages and their links, the homepage announcement, the Projects and Updates indexes, the RSS entry, the sitemap, and the generated Markdown on `liewcf.org`.
+- Featured Hydrogen Review as the sixth homepage Project in [`be411b6`](https://github.com/liewcf/liewcf-org/commit/be411b604683f7f0470c1bbda7dba9b47b305956). The full check passed with 42 Playwright tests, and the card was inspected at 1440 px and 390 px. Cloudflare Pages deployment `e2417b32` succeeded. Verified the live homepage card, categories, and links, and the canonical Project page.
+- Moved Hydrogen Review to the first featured position in [`0ce3f3e`](https://github.com/liewcf/liewcf-org/commit/0ce3f3e2bb1f5301b5fd1ae4476b8596c295c6e1). The full check passed with 42 Playwright tests, and the first card was inspected at 1440 px and 390 px. Cloudflare Pages deployment `f784c5b9` succeeded. Verified the order on the live homepage and in the Projects catalog.
 
 ## 2026-11-26
 

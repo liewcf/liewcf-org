@@ -27,7 +27,7 @@ related:
 - Contact form release: Pages deployed [`112be8e`](https://github.com/liewcf/liewcf-org/commit/112be8e) on 2026-11-26. The separate `liewcf-contact` Worker uses the existing Email Routing domain, verified destination, and managed Turnstile widget. The first production submission reached Gmail Spam.
 - Previous verified production deployment: [`4076118`](https://github.com/liewcf/liewcf-org/commit/40761187d7d3b6bcdec1b51ebac46167376f030c) on `main` deployed successfully to [Cloudflare Pages](https://637ca0d1.liewcf-org.pages.dev/) on 2026-11-19. Live verification covered both contact redirects, the three native WebMCP tools, the zone bridge, CSP, and analytics beacon absence. See `docs/CHANGELOG_WORK.md` for evidence and scope.
 
-- Current catalog release: [`24c6a98`](https://github.com/liewcf/liewcf-org/commit/24c6a98043e4a58179270d5e61be5d3964239011) went live on 2026-11-26. The public sitemap lists seven Projects, and RSS contains eight Updates. Production checks are recorded in `docs/CHANGELOG_WORK.md`.
+- Current catalog release: [`0ce3f3e`](https://github.com/liewcf/liewcf-org/commit/0ce3f3e2bb1f5301b5fd1ae4476b8596c295c6e1) went live on 2026-11-28 with Hydrogen Review first on the homepage and in the Projects catalog. Production checks are recorded in `docs/CHANGELOG_WORK.md`.
 
 ## Approved Direction
 
