@@ -78,6 +78,11 @@ const catalogProjects = [
 		summary: 'A native macOS menu-bar Pomodoro timer that follows keyboard and mouse activity, counting focused work as active time and breaks as wall-clock time.',
 	},
 	{
+		slug: 'hydrogen-review-skill',
+		title: 'Hydrogen Review',
+		summary: 'Get a second code review in Codex. Gemini reviews the changes you select, and Codex checks its findings against the code.',
+	},
+	{
 		slug: 'project-memory',
 		title: 'Project Memory',
 		summary: 'Pick up a coding task in Codex, Claude Code, or OpenCode. Shared Markdown files record what you decided, what you checked, and what to do next.',
@@ -85,6 +90,13 @@ const catalogProjects = [
 ];
 
 const githubUpdates = [
+	{
+		slug: 'hydrogen-review-public-launch',
+		title: 'Hydrogen Review is now public',
+		project: 'hydrogen-review-skill',
+		date: 'November 28, 2026',
+		source: 'https://github.com/liewcf/hydrogen-review-skill/commit/35f68b5cae6d3eadce53ebec38904dfeb05caa78',
+	},
 	{
 		slug: 'project-memory-cross-agent-handoffs',
 		title: 'Project Memory adds handoffs between Codex, Claude Code, and OpenCode',
@@ -341,6 +353,7 @@ test('representative page types remain keyboard-usable and readable without hori
 		['/projects/', true],
 		...catalogProjects.map(({ slug }) => [`/projects/${slug}/`, true] as const),
 		['/updates/', true],
+		['/updates/hydrogen-review-public-launch/', true],
 		['/updates/project-memory-cross-agent-handoffs/', true],
 		['/updates/public-draft-share-1-0-2-preview-links/', true],
 		['/updates/auto-tomato-1-1-1-manual-package/', true],
@@ -456,7 +469,8 @@ test('project catalog lists published projects in order with accessible filterin
 	await expect(cards.filter({ hasText: 'ImageZoom' })).toBeVisible();
 
 	await filters.getByRole('button', { name: 'Developer Tool' }).click();
-	await expect(status).toHaveText('2 projects in Developer Tool');
+	await expect(status).toHaveText('3 projects in Developer Tool');
+	await expect(cards.filter({ hasText: 'Hydrogen Review' })).toBeVisible();
 	await expect(cards.filter({ hasText: 'Project Memory' })).toBeVisible();
 	await expect(cards.filter({ hasText: 'Verified Person Research' })).toBeVisible();
 

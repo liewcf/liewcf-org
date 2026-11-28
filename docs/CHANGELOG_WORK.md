@@ -4,7 +4,7 @@ description: Dated notes on changed files, deliverables, tooling, checks, and ve
 doc_type: work_log
 status: active
 created: 2026-07-19
-updated: 2026-11-26
+updated: 2026-11-28
 tags:
   - project-memory
   - changelog
@@ -20,6 +20,11 @@ related:
 ---
 
 # Work Changelog
+
+## 2026-11-28
+
+- Added the Hydrogen Review Project and its public launch Update from the [initial public source](https://github.com/liewcf/hydrogen-review-skill/commit/35f68b5cae6d3eadce53ebec38904dfeb05caa78). The Update appears on the homepage, in RSS, and on the Project timeline.
+- The local Node 22 build, Astro diagnostics, Update fixtures, five Worker tests, and 42 Playwright tests passed. Inspected both new pages at 1440 px and 390 px.
 
 ## 2026-11-26
 
