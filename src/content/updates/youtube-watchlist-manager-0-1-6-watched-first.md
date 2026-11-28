@@ -1,5 +1,5 @@
 ---
-title: YouTube Watchlist Manager 0.1.6 fixes watched-first sorting
+title: Watch Later Manager for YouTube™ 0.1.6 fixes watched-first sorting
 summary: Watched-first sorting now recognises YouTube’s changed progress indicators; the repository records passing tests and a manual check.
 publishedAt: 2026-09-22
 draft: false

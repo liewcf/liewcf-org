@@ -37,6 +37,9 @@ async function listFiles(directory: string): Promise<string[]> {
 	return paths.flat();
 }
 
+const watchLaterTitle = 'Watch Later Manager for YouTube™';
+const watchLaterStoreUrl = 'https://chromewebstore.google.com/detail/jleceiefdnhnjifpebbnlgjbmhijnmpn';
+
 const featuredProjects = [
 	{
 		slug: 'hydrogen-review-skill',
@@ -46,7 +49,7 @@ const featuredProjects = [
 	},
 	{
 		slug: 'youtube-watchlist-manager',
-		title: 'YouTube Watchlist Manager',
+		title: watchLaterTitle,
 		summary: 'A Chrome extension that speeds up YouTube Watch Later cleanup with checkboxes, batch removal, and watched-first sorting.',
 		categories: ['Chrome Extension', 'JavaScript', 'YouTube'],
 	},
@@ -90,13 +93,20 @@ const catalogProjects = [
 	},
 ];
 
-const githubUpdates = [
+const sourcedUpdates = [
 	{
 		slug: 'imagezoom-0-1-5',
 		title: 'Image Zoom 0.1.5 fixes zoom and pan on more sites',
 		project: 'imagezoom',
 		date: 'November 29, 2026',
 		source: 'https://github.com/liewcf/imagezoom/commit/7e7da46c42cbebd7f5803d9ad42b37bb87dd1265',
+	},
+	{
+		slug: 'youtube-watchlist-manager-0-1-7',
+		title: `${watchLaterTitle} 0.1.7 fixes sorting and selection`,
+		project: 'youtube-watchlist-manager',
+		date: 'November 29, 2026',
+		source: watchLaterStoreUrl,
 	},
 	{
 		slug: 'hydrogen-review-public-launch',
@@ -127,7 +137,7 @@ const githubUpdates = [
 	},
 	{
 		slug: 'youtube-watchlist-manager-0-1-6-watched-first',
-		title: 'YouTube Watchlist Manager 0.1.6 fixes watched-first sorting',
+		title: `${watchLaterTitle} 0.1.6 fixes watched-first sorting`,
 		project: 'youtube-watchlist-manager',
 		date: 'September 22, 2026',
 	},
@@ -146,7 +156,7 @@ const githubUpdates = [
 ];
 
 const publishedUpdates = [
-	...githubUpdates,
+	...sourcedUpdates,
 	{
 		slug: 'auto-tomato-1-1-1-manual-package',
 		title: 'Auto-Tomato 1.1.1 manual package verified',
@@ -330,6 +340,7 @@ test('about page has unique canonical metadata, factual scope, and the contact l
 
 	await expect(page.getByRole('heading', { level: 1, name: 'Practical work, built to stay useful.' })).toBeVisible();
 	const mainText = await page.locator('main').innerText();
+	expect(mainText).toContain(watchLaterTitle);
 	for (const theme of ['WordPress', 'macOS', 'browser extensions', 'developer tools', 'websites', 'what I changed and tested', 'limits']) {
 		expect(mainText.toLowerCase()).toContain(theme.toLowerCase());
 	}
@@ -473,7 +484,7 @@ test('project catalog lists published projects in order with accessible filterin
 
 	await filters.getByRole('button', { name: 'Chrome Extension' }).click();
 	await expect(status).toHaveText('2 projects in Chrome Extension');
-	await expect(cards.filter({ hasText: 'YouTube Watchlist Manager' })).toBeVisible();
+	await expect(cards.filter({ hasText: watchLaterTitle })).toBeVisible();
 	await expect(cards.filter({ hasText: 'ImageZoom' })).toBeVisible();
 
 	await filters.getByRole('button', { name: 'Developer Tool' }).click();
@@ -499,6 +510,9 @@ test('published project details are canonical case studies with factual Updates 
 		);
 		await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /.+/);
 		await expect(page.getByRole('heading', { level: 1, name: project.title })).toBeVisible();
+		if (project.slug === 'youtube-watchlist-manager') {
+			await expect(page.getByRole('link', { name: `Get ${watchLaterTitle} in the Chrome Web Store` })).toHaveAttribute('href', watchLaterStoreUrl);
+		}
 		if (project.slug === 'auto-tomato') {
 			await expect(page.locator('main a[href*="github.com"]')).toHaveCount(0);
 		} else {
@@ -772,7 +786,7 @@ test('static project filters narrow the curated project list', async ({ page }) 
 	await chromeExtensionButton.click();
 	await expect(chromeExtensionButton).toHaveAttribute('aria-pressed', 'true');
 	await expect(status).toHaveText('2 projects in Chrome Extension');
-	await expect(projectCards.filter({ hasText: 'YouTube Watchlist Manager' })).toBeVisible();
+	await expect(projectCards.filter({ hasText: watchLaterTitle })).toBeVisible();
 	await expect(projectCards.filter({ hasText: 'ImageZoom' })).toBeVisible();
 	await expect(projectCards.filter({ hasText: 'Public Draft Share' })).toBeHidden();
 	await expect(projectCards.filter({ hasText: 'EnjinMel SMTP' })).toBeHidden();
@@ -782,7 +796,7 @@ test('static project filters narrow the curated project list', async ({ page }) 
 	await expect(status).toHaveText('2 projects in Developer Tool');
 	await expect(projectCards.filter({ hasText: 'Hydrogen Review' })).toBeVisible();
 	await expect(projectCards.filter({ hasText: 'Verified Person Research' })).toBeVisible();
-	await expect(projectCards.filter({ hasText: 'YouTube Watchlist Manager' })).toBeHidden();
+	await expect(projectCards.filter({ hasText: watchLaterTitle })).toBeHidden();
 
 	await allButton.click();
 	await expect(allButton).toHaveAttribute('aria-pressed', 'true');
@@ -1242,12 +1256,12 @@ test('content remains readable and filters stay hidden without JavaScript', asyn
 });
 
 
-test('GitHub updates carry source links and flow through homepage, RSS, Markdown, and project timelines', async ({ page }) => {
+test('sourced updates carry links and flow through homepage, RSS, Markdown, and project timelines', async ({ page }) => {
 	await page.goto('/');
-	await expect(page.locator('.update-timeline h3')).toHaveText(githubUpdates.slice(0, 2).map((update) => update.title));
+	await expect(page.locator('.update-timeline h3')).toHaveText(sourcedUpdates.slice(0, 2).map((update) => update.title));
 	const rss = await readFile('dist/updates/rss.xml', 'utf8');
 	const markdown = await readFile('dist/index.md', 'utf8');
-	for (const update of githubUpdates) {
+	for (const update of sourcedUpdates) {
 		expect(rss).toContain(`https://liewcf.org/updates/${update.slug}/`);
 		expect(markdown).toContain(`https://liewcf.org/updates/${update.slug}/`);
 		await page.goto(`/updates/${update.slug}/`);

@@ -23,6 +23,8 @@ related:
 
 ## 2026-11-29
 
+- Renamed the extension to Watch Later Manager for YouTube™ in the Project catalog, About page, and Update titles. Kept the existing Project and 0.1.6 Update URLs. Added a 0.1.7 release note and installation links after verifying the name and version in the [Chrome Web Store](https://chromewebstore.google.com/detail/jleceiefdnhnjifpebbnlgjbmhijnmpn).
+- Verified the local build with Astro diagnostics, Update fixtures, five Worker tests, and 42 Playwright tests. Inspected the homepage, Project page, and release note at 1440 px and 390 px.
 - Added the Image Zoom 0.1.5 Update after confirming the version in Google's Chrome extension update feed and on the [Chrome Web Store listing](https://chromewebstore.google.com/detail/lkegbkodpcgmeaphnkmfcbdmdbnnaini).
 - Astro diagnostics, Update fixtures, the production build, five Worker tests, and all 42 Playwright tests passed locally. Verified the Update on the homepage, Updates index, ImageZoom Project timeline, RSS, sitemap, and generated Markdown.
 - Cloudflare Pages deployed [`bad2079`](https://github.com/liewcf/liewcf-org/commit/bad20792d7c861a10af65a908621d88d45765ce4) from `main`. Verified the [release note](https://liewcf.org/updates/imagezoom-0-1-5/) and its Chrome Web Store and GitHub links, plus the release entry on the live homepage, Updates index, ImageZoom Project timeline, RSS, sitemap, and generated Markdown.
