@@ -6,7 +6,7 @@ categories:
   - Codex
   - Developer Tool
 featured: true
-featuredOrder: 6
+featuredOrder: 1
 draft: false
 ---
 

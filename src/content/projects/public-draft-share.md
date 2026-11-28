@@ -6,7 +6,7 @@ categories:
   - WordPress
   - Plugin
 featured: true
-featuredOrder: 5
+featuredOrder: 6
 draft: false
 ---
 

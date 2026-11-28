@@ -39,6 +39,12 @@ async function listFiles(directory: string): Promise<string[]> {
 
 const featuredProjects = [
 	{
+		slug: 'hydrogen-review-skill',
+		title: 'Hydrogen Review',
+		summary: 'Get a second code review in Codex. Gemini reviews the changes you select, and Codex checks its findings against the code.',
+		categories: ['Codex', 'Developer Tool'],
+	},
+	{
 		slug: 'youtube-watchlist-manager',
 		title: 'YouTube Watchlist Manager',
 		summary: 'A Chrome extension that speeds up YouTube Watch Later cleanup with checkboxes, batch removal, and watched-first sorting.',
@@ -67,12 +73,6 @@ const featuredProjects = [
 		title: 'Public Draft Share',
 		summary: 'Share a WordPress draft for review. Anyone with the link can read it without an account. You can choose when the link expires or turn it off at any time.',
 		categories: ['WordPress', 'Plugin'],
-	},
-	{
-		slug: 'hydrogen-review-skill',
-		title: 'Hydrogen Review',
-		summary: 'Get a second code review in Codex. Gemini reviews the changes you select, and Codex checks its findings against the code.',
-		categories: ['Codex', 'Developer Tool'],
 	},
 ];
 
