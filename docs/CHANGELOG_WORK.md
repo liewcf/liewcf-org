@@ -23,6 +23,8 @@ related:
 
 ## 2026-11-29
 
+- Added Rewrite Text to the Projects catalog with a shortcut download and setup instructions. Added its [v1.0.0 release](https://github.com/liewcf/rewrite-text-shortcut/releases/tag/v1.0.0) to Updates and confirmed that it appears on the homepage, the Project timeline, RSS, the sitemap, and generated Markdown.
+- Verified the local Astro build, Update fixtures, five Worker tests, and 42 Playwright tests using installed Chrome. Inspected the new Project and Update pages at 1440 px and 390 px.
 - Renamed the extension to Watch Later Manager for YouTube™ in the Project catalog, About page, and Update titles. Kept the existing Project and 0.1.6 Update URLs. Added a 0.1.7 release note and installation links after verifying the name and version in the [Chrome Web Store](https://chromewebstore.google.com/detail/jleceiefdnhnjifpebbnlgjbmhijnmpn).
 - Verified the local build with Astro diagnostics, Update fixtures, five Worker tests, and 42 Playwright tests. Inspected the homepage, Project page, and release note at 1440 px and 390 px.
 - Added the Image Zoom 0.1.5 Update after confirming the version in Google's Chrome extension update feed and on the [Chrome Web Store listing](https://chromewebstore.google.com/detail/lkegbkodpcgmeaphnkmfcbdmdbnnaini).

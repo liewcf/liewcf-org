@@ -39,6 +39,8 @@ async function listFiles(directory: string): Promise<string[]> {
 
 const watchLaterTitle = 'Watch Later Manager for YouTube™';
 const watchLaterStoreUrl = 'https://chromewebstore.google.com/detail/jleceiefdnhnjifpebbnlgjbmhijnmpn';
+const rewriteTextReleaseUrl = 'https://github.com/liewcf/rewrite-text-shortcut/releases/tag/v1.0.0';
+const rewriteTextDownloadUrl = 'https://github.com/liewcf/rewrite-text-shortcut/releases/download/v1.0.0/Rewrite.Text.shortcut';
 
 const featuredProjects = [
 	{
@@ -91,6 +93,11 @@ const catalogProjects = [
 		title: 'Project Memory',
 		summary: 'Pick up a coding task in Codex, Claude Code, or OpenCode. Shared Markdown files record what you decided, what you checked, and what to do next.',
 	},
+	{
+		slug: 'rewrite-text-shortcut',
+		title: 'Rewrite Text',
+		summary: 'A macOS shortcut that uses on-device Apple Intelligence to make English drafts clearer and more concise.',
+	},
 ];
 
 const sourcedUpdates = [
@@ -100,6 +107,13 @@ const sourcedUpdates = [
 		project: 'imagezoom',
 		date: 'November 29, 2026',
 		source: 'https://github.com/liewcf/imagezoom/commit/7e7da46c42cbebd7f5803d9ad42b37bb87dd1265',
+	},
+	{
+		slug: 'rewrite-text-1-0-0',
+		title: 'Rewrite Text v1.0.0 is now available',
+		project: 'rewrite-text-shortcut',
+		date: 'November 29, 2026',
+		source: rewriteTextReleaseUrl,
 	},
 	{
 		slug: 'youtube-watchlist-manager-0-1-7',
@@ -494,8 +508,9 @@ test('project catalog lists published projects in order with accessible filterin
 	await expect(cards.filter({ hasText: 'Verified Person Research' })).toBeVisible();
 
 	await filters.getByRole('button', { name: 'macOS' }).click();
-	await expect(status).toHaveText('1 project in macOS');
+	await expect(status).toHaveText('2 projects in macOS');
 	await expect(cards.filter({ hasText: 'Auto-Tomato' })).toBeVisible();
+	await expect(cards.filter({ hasText: 'Rewrite Text' })).toBeVisible();
 	await expect(cards.filter({ hasText: 'Verified Person Research' })).toBeHidden();
 });
 
@@ -512,6 +527,9 @@ test('published project details are canonical case studies with factual Updates 
 		await expect(page.getByRole('heading', { level: 1, name: project.title })).toBeVisible();
 		if (project.slug === 'youtube-watchlist-manager') {
 			await expect(page.getByRole('link', { name: `Get ${watchLaterTitle} in the Chrome Web Store` })).toHaveAttribute('href', watchLaterStoreUrl);
+		}
+		if (project.slug === 'rewrite-text-shortcut') {
+			await expect(page.getByRole('link', { name: 'Download Rewrite Text v1.0.0' })).toHaveAttribute('href', rewriteTextDownloadUrl);
 		}
 		if (project.slug === 'auto-tomato') {
 			await expect(page.locator('main a[href*="github.com"]')).toHaveCount(0);
