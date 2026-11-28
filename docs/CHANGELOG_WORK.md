@@ -4,7 +4,7 @@ description: Dated notes on changed files, deliverables, tooling, checks, and ve
 doc_type: work_log
 status: active
 created: 2026-07-19
-updated: 2026-11-28
+updated: 2026-11-29
 tags:
   - project-memory
   - changelog
@@ -20,6 +20,11 @@ related:
 ---
 
 # Work Changelog
+
+## 2026-11-29
+
+- Added the Image Zoom 0.1.5 Update after confirming the version in Google's Chrome extension update feed and on the [Chrome Web Store listing](https://chromewebstore.google.com/detail/lkegbkodpcgmeaphnkmfcbdmdbnnaini).
+- Astro diagnostics, Update fixtures, the production build, five Worker tests, and all 42 Playwright tests passed locally. Verified the Update on the homepage, Updates index, ImageZoom Project timeline, RSS, sitemap, and generated Markdown.
 
 ## 2026-11-28
 

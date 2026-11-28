@@ -92,6 +92,13 @@ const catalogProjects = [
 
 const githubUpdates = [
 	{
+		slug: 'imagezoom-0-1-5',
+		title: 'Image Zoom 0.1.5 fixes zoom and pan on more sites',
+		project: 'imagezoom',
+		date: 'November 29, 2026',
+		source: 'https://github.com/liewcf/imagezoom/commit/7e7da46c42cbebd7f5803d9ad42b37bb87dd1265',
+	},
+	{
 		slug: 'hydrogen-review-public-launch',
 		title: 'Hydrogen Review is now public',
 		project: 'hydrogen-review-skill',
